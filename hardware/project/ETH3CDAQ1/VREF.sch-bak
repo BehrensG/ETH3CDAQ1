@@ -1,0 +1,194 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 9 9
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Reference_Voltage:ADR4550 U?
+U 1 1 5FC87D57
+P 3100 1800
+AR Path="/60084F28/5FC87D57" Ref="U?"  Part="1" 
+AR Path="/5FC7BBB3/5FC87D57" Ref="U901"  Part="1" 
+F 0 "U901" H 2857 1846 50  0000 R CNN
+F 1 "ADR4550" H 2857 1755 50  0000 R CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 3200 1500 50  0001 C CIN
+F 3 "https://www.analog.com/media/en/technical-documentation/data-sheets/ADR4520_4525_4530_4533_4540_4550.pdf" H 3200 1450 50  0001 C CIN
+	1    3100 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+7.5V #PWR?
+U 1 1 5FC87D5D
+P 3000 1500
+AR Path="/60084F28/5FC87D5D" Ref="#PWR?"  Part="1" 
+AR Path="/5FC7BBB3/5FC87D5D" Ref="#PWR0903"  Part="1" 
+F 0 "#PWR0903" H 3000 1350 50  0001 C CNN
+F 1 "+7.5V" H 3015 1673 50  0000 C CNN
+F 2 "" H 3000 1500 50  0001 C CNN
+F 3 "" H 3000 1500 50  0001 C CNN
+	1    3000 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5FC87D63
+P 3000 2300
+AR Path="/60084F28/5FC87D63" Ref="#PWR?"  Part="1" 
+AR Path="/5FC7BBB3/5FC87D63" Ref="#PWR0904"  Part="1" 
+F 0 "#PWR0904" H 3000 2050 50  0001 C CNN
+F 1 "GND" H 3005 2127 50  0000 C CNN
+F 2 "" H 3000 2300 50  0001 C CNN
+F 3 "" H 3000 2300 50  0001 C CNN
+	1    3000 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5FC87D69
+P 3550 2050
+AR Path="/60084F28/5FC87D69" Ref="C?"  Part="1" 
+AR Path="/5FC7BBB3/5FC87D69" Ref="C903"  Part="1" 
+F 0 "C903" H 3665 2096 50  0000 L CNN
+F 1 "100n" H 3665 2005 50  0000 L CNN
+F 2 "" H 3588 1900 50  0001 C CNN
+F 3 "~" H 3550 2050 50  0001 C CNN
+	1    3550 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3550 1900 3550 1800
+Wire Wire Line
+	3550 1800 3400 1800
+$Comp
+L Device:C C?
+U 1 1 5FC87D71
+P 4100 2050
+AR Path="/60084F28/5FC87D71" Ref="C?"  Part="1" 
+AR Path="/5FC7BBB3/5FC87D71" Ref="C904"  Part="1" 
+F 0 "C904" H 4215 2096 50  0000 L CNN
+F 1 "10u" H 4215 2005 50  0000 L CNN
+F 2 "" H 4138 1900 50  0001 C CNN
+F 3 "~" H 4100 2050 50  0001 C CNN
+	1    4100 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4100 1900 4100 1800
+Wire Wire Line
+	4100 1800 3550 1800
+Connection ~ 3550 1800
+Wire Wire Line
+	3000 2300 3000 2250
+Wire Wire Line
+	3550 2200 3550 2250
+Wire Wire Line
+	3550 2250 3000 2250
+Connection ~ 3000 2250
+Wire Wire Line
+	3000 2250 3000 2100
+Wire Wire Line
+	3550 2250 4100 2250
+Wire Wire Line
+	4100 2250 4100 2200
+Connection ~ 3550 2250
+Wire Wire Line
+	4100 1750 4100 1800
+Connection ~ 4100 1800
+$Comp
+L power:+7.5V #PWR?
+U 1 1 5FC87D84
+P 1900 1800
+AR Path="/60084F28/5FC87D84" Ref="#PWR?"  Part="1" 
+AR Path="/5FC7BBB3/5FC87D84" Ref="#PWR0901"  Part="1" 
+F 0 "#PWR0901" H 1900 1650 50  0001 C CNN
+F 1 "+7.5V" H 1915 1973 50  0000 C CNN
+F 2 "" H 1900 1800 50  0001 C CNN
+F 3 "" H 1900 1800 50  0001 C CNN
+	1    1900 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5FC87D8A
+P 1650 2050
+AR Path="/60084F28/5FC87D8A" Ref="C?"  Part="1" 
+AR Path="/5FC7BBB3/5FC87D8A" Ref="C901"  Part="1" 
+F 0 "C901" H 1765 2096 50  0000 L CNN
+F 1 "100n" H 1765 2005 50  0000 L CNN
+F 2 "" H 1688 1900 50  0001 C CNN
+F 3 "~" H 1650 2050 50  0001 C CNN
+	1    1650 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5FC87D90
+P 2200 2050
+AR Path="/60084F28/5FC87D90" Ref="C?"  Part="1" 
+AR Path="/5FC7BBB3/5FC87D90" Ref="C902"  Part="1" 
+F 0 "C902" H 2315 2096 50  0000 L CNN
+F 1 "10u" H 2315 2005 50  0000 L CNN
+F 2 "" H 2238 1900 50  0001 C CNN
+F 3 "~" H 2200 2050 50  0001 C CNN
+	1    2200 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1650 1900 1650 1850
+Wire Wire Line
+	1650 1850 1900 1850
+Wire Wire Line
+	2200 1850 2200 1900
+Wire Wire Line
+	1900 1800 1900 1850
+Connection ~ 1900 1850
+Wire Wire Line
+	1900 1850 2200 1850
+Wire Wire Line
+	1650 2200 1650 2250
+Wire Wire Line
+	1650 2250 1900 2250
+Wire Wire Line
+	2200 2250 2200 2200
+$Comp
+L power:GND #PWR?
+U 1 1 5FC87D9F
+P 1900 2300
+AR Path="/60084F28/5FC87D9F" Ref="#PWR?"  Part="1" 
+AR Path="/5FC7BBB3/5FC87D9F" Ref="#PWR0902"  Part="1" 
+F 0 "#PWR0902" H 1900 2050 50  0001 C CNN
+F 1 "GND" H 1905 2127 50  0000 C CNN
+F 2 "" H 1900 2300 50  0001 C CNN
+F 3 "" H 1900 2300 50  0001 C CNN
+	1    1900 2300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1900 2300 1900 2250
+Connection ~ 1900 2250
+Wire Wire Line
+	1900 2250 2200 2250
+$Comp
+L power:+5VP #PWR?
+U 1 1 5FC87DA8
+P 4100 1750
+AR Path="/60084F28/5FC87DA8" Ref="#PWR?"  Part="1" 
+AR Path="/5FC7BBB3/5FC87DA8" Ref="#PWR0905"  Part="1" 
+F 0 "#PWR0905" H 4100 1600 50  0001 C CNN
+F 1 "+5VP" H 4115 1923 50  0000 C CNN
+F 2 "" H 4100 1750 50  0001 C CNN
+F 3 "" H 4100 1750 50  0001 C CNN
+	1    4100 1750
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
