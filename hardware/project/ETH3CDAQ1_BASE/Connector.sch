@@ -1,0 +1,326 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 3 6
+Title "Connector"
+Date "2020-03-07"
+Rev "1.00"
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+NoConn ~ 4950 5850
+NoConn ~ 4950 5750
+NoConn ~ 4950 5650
+NoConn ~ 4950 5550
+NoConn ~ 4950 5450
+NoConn ~ 4950 5350
+NoConn ~ 4950 5250
+NoConn ~ 4950 5150
+Wire Wire Line
+	4450 3750 4950 3750
+Wire Wire Line
+	4900 3850 4950 3850
+$Comp
+L ETH3CDAQ1:GND_TRIG #PWR0311
+U 1 1 5EC065BC
+P 4900 3850
+F 0 "#PWR0311" H 4900 3600 50  0001 C CNN
+F 1 "GND_TRIG" V 4905 3722 50  0000 R CNN
+F 2 "" H 4900 3850 50  0001 C CNN
+F 3 "" H 4900 3850 50  0001 C CNN
+	1    4900 3850
+	0    1    1    0   
+$EndComp
+Text Label 4650 4850 0    50   ~ 0
+TX-
+Text Label 4650 4650 0    50   ~ 0
+TX+
+Text Label 4650 4750 0    50   ~ 0
+RX-
+NoConn ~ 4950 4050
+NoConn ~ 4950 3950
+NoConn ~ 4950 3650
+NoConn ~ 4950 3550
+NoConn ~ 4950 3450
+NoConn ~ 4950 3350
+NoConn ~ 4950 4450
+NoConn ~ 4950 4350
+Wire Wire Line
+	4900 4200 4900 4250
+Connection ~ 4900 4200
+Wire Wire Line
+	4850 4200 4900 4200
+$Comp
+L power:Earth #PWR0307
+U 1 1 5DED2C4C
+P 4850 4200
+F 0 "#PWR0307" H 4850 3950 50  0001 C CNN
+F 1 "Earth" H 4850 4050 50  0001 C CNN
+F 2 "" H 4850 4200 50  0001 C CNN
+F 3 "~" H 4850 4200 50  0001 C CNN
+	1    4850 4200
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4900 4250 4950 4250
+Wire Wire Line
+	4900 4150 4900 4200
+Wire Wire Line
+	4950 4150 4900 4150
+Wire Wire Line
+	4900 5000 4900 5050
+Connection ~ 4900 5000
+Wire Wire Line
+	4850 5000 4900 5000
+$Comp
+L power:Earth #PWR0308
+U 1 1 5DECE77F
+P 4850 5000
+F 0 "#PWR0308" H 4850 4750 50  0001 C CNN
+F 1 "Earth" H 4850 4850 50  0001 C CNN
+F 2 "" H 4850 5000 50  0001 C CNN
+F 3 "~" H 4850 5000 50  0001 C CNN
+	1    4850 5000
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4900 5050 4950 5050
+Wire Wire Line
+	4900 4950 4900 5000
+Wire Wire Line
+	4950 4950 4900 4950
+NoConn ~ 4950 850 
+NoConn ~ 4950 750 
+Wire Wire Line
+	4950 4850 4650 4850
+Wire Wire Line
+	4950 4750 4650 4750
+Wire Wire Line
+	4950 4650 4650 4650
+Wire Wire Line
+	4900 6100 4900 6050
+Connection ~ 4900 6100
+Wire Wire Line
+	4850 6100 4900 6100
+Wire Wire Line
+	4900 6150 4900 6100
+Connection ~ 4900 6150
+Wire Wire Line
+	4950 6150 4900 6150
+Wire Wire Line
+	4900 6050 4900 5950
+Connection ~ 4900 6050
+Wire Wire Line
+	4950 6050 4900 6050
+Wire Wire Line
+	4900 5950 4950 5950
+Wire Wire Line
+	4900 6250 4900 6150
+Wire Wire Line
+	4950 6250 4900 6250
+NoConn ~ 4950 6350
+NoConn ~ 4950 6450
+NoConn ~ 4950 6550
+NoConn ~ 4950 6650
+Wire Wire Line
+	4900 6900 4900 6850
+Connection ~ 4900 6900
+Wire Wire Line
+	4850 6900 4900 6900
+$Comp
+L power:+24V #PWR0310
+U 1 1 5DE97137
+P 4850 6900
+F 0 "#PWR0310" H 4850 6750 50  0001 C CNN
+F 1 "+24V" V 4865 7028 50  0000 L CNN
+F 2 "" H 4850 6900 50  0001 C CNN
+F 3 "" H 4850 6900 50  0001 C CNN
+	1    4850 6900
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4900 6950 4900 6900
+Connection ~ 4900 6950
+Wire Wire Line
+	4950 6950 4900 6950
+Wire Wire Line
+	4900 6850 4900 6750
+Connection ~ 4900 6850
+Wire Wire Line
+	4950 6850 4900 6850
+Wire Wire Line
+	4900 6750 4950 6750
+Wire Wire Line
+	4900 7050 4900 6950
+Wire Wire Line
+	4950 7050 4900 7050
+$Comp
+L Connector:C64AC J303
+U 1 1 5DE8758D
+P 5250 3950
+F 0 "J303" H 5430 4046 50  0000 L CNN
+F 1 "C64AC" H 5430 3955 50  0000 L CNN
+F 2 "ETH3CDAQ1:Socket_DIN41612-CaseC1-AC-Male-64Pin-2rows" H 5250 4000 50  0001 C CNN
+F 3 " ~" H 5250 4000 50  0001 C CNN
+	1    5250 3950
+	1    0    0    -1  
+$EndComp
+NoConn ~ 4950 3250
+NoConn ~ 4950 3150
+NoConn ~ 4950 3050
+NoConn ~ 4950 2950
+NoConn ~ 4950 2850
+NoConn ~ 4950 2750
+NoConn ~ 4950 2650
+NoConn ~ 4950 2550
+NoConn ~ 4950 2450
+NoConn ~ 4950 2350
+NoConn ~ 4950 2250
+NoConn ~ 4950 2150
+NoConn ~ 4950 2050
+NoConn ~ 4950 1950
+NoConn ~ 4950 1850
+NoConn ~ 4950 1150
+NoConn ~ 4950 1250
+NoConn ~ 4950 1350
+NoConn ~ 4950 1450
+NoConn ~ 4950 1550
+NoConn ~ 4950 1650
+NoConn ~ 4950 1750
+NoConn ~ 4950 1050
+NoConn ~ 4950 950 
+$Comp
+L power:GND #PWR0309
+U 1 1 602571EB
+P 4850 6100
+F 0 "#PWR0309" H 4850 5850 50  0001 C CNN
+F 1 "GND" V 4855 5972 50  0000 R CNN
+F 2 "" H 4850 6100 50  0001 C CNN
+F 3 "" H 4850 6100 50  0001 C CNN
+	1    4850 6100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4950 4550 4650 4550
+Text Label 4650 4550 0    50   ~ 0
+RX+
+Text Label 3550 4600 2    50   ~ 0
+TX-
+Text Label 3550 4500 2    50   ~ 0
+TX+
+Text Label 2450 4600 0    50   ~ 0
+RX-
+Wire Wire Line
+	3250 4600 3550 4600
+Wire Wire Line
+	2750 4600 2450 4600
+Wire Wire Line
+	3250 4500 3550 4500
+Wire Wire Line
+	2750 4500 2450 4500
+Text Label 2450 4500 0    50   ~ 0
+RX+
+$Comp
+L power:Earth #PWR0303
+U 1 1 6014B5B9
+P 2750 4700
+F 0 "#PWR0303" H 2750 4450 50  0001 C CNN
+F 1 "Earth" H 2750 4550 50  0001 C CNN
+F 2 "" H 2750 4700 50  0001 C CNN
+F 3 "~" H 2750 4700 50  0001 C CNN
+	1    2750 4700
+	0    1    1    0   
+$EndComp
+$Comp
+L power:Earth #PWR0302
+U 1 1 6014C4E8
+P 2750 4400
+F 0 "#PWR0302" H 2750 4150 50  0001 C CNN
+F 1 "Earth" H 2750 4250 50  0001 C CNN
+F 2 "" H 2750 4400 50  0001 C CNN
+F 3 "~" H 2750 4400 50  0001 C CNN
+	1    2750 4400
+	0    1    1    0   
+$EndComp
+$Comp
+L power:Earth #PWR0305
+U 1 1 6014CAD6
+P 3250 4400
+F 0 "#PWR0305" H 3250 4150 50  0001 C CNN
+F 1 "Earth" H 3250 4250 50  0001 C CNN
+F 2 "" H 3250 4400 50  0001 C CNN
+F 3 "~" H 3250 4400 50  0001 C CNN
+	1    3250 4400
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:Earth #PWR0306
+U 1 1 6014D84E
+P 3250 4700
+F 0 "#PWR0306" H 3250 4450 50  0001 C CNN
+F 1 "Earth" H 3250 4550 50  0001 C CNN
+F 2 "" H 3250 4700 50  0001 C CNN
+F 3 "~" H 3250 4700 50  0001 C CNN
+	1    3250 4700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L ETH3CDAQ1:GND_TRIG #PWR0301
+U 1 1 601571FF
+P 2750 3950
+F 0 "#PWR0301" H 2750 3700 50  0001 C CNN
+F 1 "GND_TRIG" V 2755 3822 50  0000 R CNN
+F 2 "" H 2750 3950 50  0001 C CNN
+F 3 "" H 2750 3950 50  0001 C CNN
+	1    2750 3950
+	0    1    1    0   
+$EndComp
+$Comp
+L ETH3CDAQ1:GND_TRIG #PWR0304
+U 1 1 60157950
+P 3250 3950
+F 0 "#PWR0304" H 3250 3700 50  0001 C CNN
+F 1 "GND_TRIG" V 3255 3822 50  0000 R CNN
+F 2 "" H 3250 3950 50  0001 C CNN
+F 3 "" H 3250 3950 50  0001 C CNN
+	1    3250 3950
+	0    -1   -1   0   
+$EndComp
+Text Label 4450 3750 0    50   ~ 0
+EXT_TRIG
+Wire Wire Line
+	2250 3850 2750 3850
+Text Label 2250 3850 0    50   ~ 0
+EXT_TRIG
+Wire Wire Line
+	3750 3850 3250 3850
+Text Label 3750 3850 2    50   ~ 0
+EXT_TRIG
+$Comp
+L Connector_Generic:Conn_02x04_Odd_Even J302
+U 1 1 6016F587
+P 2950 4500
+F 0 "J302" H 3000 4817 50  0000 C CNN
+F 1 "Conn_02x04_Odd_Even" H 3000 4726 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical" H 2950 4500 50  0001 C CNN
+F 3 "~" H 2950 4500 50  0001 C CNN
+	1    2950 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_02x02_Odd_Even J301
+U 1 1 60173249
+P 2950 3850
+F 0 "J301" H 3000 4067 50  0000 C CNN
+F 1 "Conn_02x02_Odd_Even" H 3000 3976 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical" H 2950 3850 50  0001 C CNN
+F 3 "~" H 2950 3850 50  0001 C CNN
+	1    2950 3850
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
