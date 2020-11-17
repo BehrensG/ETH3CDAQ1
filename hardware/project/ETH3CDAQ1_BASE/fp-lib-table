@@ -1,4 +1,4 @@
 (fp_lib_table
-  (lib (name ETH3CDAQ1_LINUX)(type KiCad)(uri /home/grzegorz/git/ETH3CDAQ1/hardware/lib/pcb/ETH3CDAQ1.pretty)(options "")(descr ""))
-  (lib (name ETH3CDAQ1)(type KiCad)(uri C:/Users/behrensg/git-repos/ETH3CDAQ1/hardware/lib/pcb/ETH3CDAQ1.pretty)(options "")(descr ""))
+  (lib (name ETH3CDAQ1)(type KiCad)(uri /home/grzegorz/git/ETH3CDAQ1/hardware/lib/pcb/ETH3CDAQ1.pretty)(options "")(descr ""))
+  (lib (name ETH3CDAQ1_WINDOWS)(type KiCad)(uri C:/Users/behrensg/git-repos/ETH3CDAQ1/hardware/lib/pcb/ETH3CDAQ1.pretty)(options "")(descr ""))
 )
