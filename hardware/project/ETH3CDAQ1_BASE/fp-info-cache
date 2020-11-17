@@ -1,4 +1,4 @@
-18765885932415323
+18767491499785323
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -50924,6 +50924,13 @@ DC/DC Converter TSR 1 Series, 1 A
 0
 3
 3
+ETH3CDAQ1
+TSR1SM
+
+
+0
+6
+6
 ETH3CDAQ1
 TSR2
 DC/DC Converter TSR 2 Series, 2 A
