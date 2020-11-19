@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 7
+Sheet 1 10
 Title ""
 Date ""
 Rev ""
@@ -14,13 +14,13 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Sheet
-S 3250 2050 2700 2100
+S 3650 900  2700 2100
 U 5FB582AF
 F0 "MCU" 50
 F1 "MCU.sch" 50
 $EndSheet
 $Sheet
-S 3100 5000 2350 1300
+S 3650 3250 2350 1300
 U 5FB85416
 F0 "Channel 1" 50
 F1 "Channel1.sch" 50
@@ -66,9 +66,27 @@ F0 "Ethernet" 50
 F1 "Ethernet.sch" 50
 $EndSheet
 $Sheet
-S 1250 2600 1600 1800
+S 1550 1800 1600 1800
 U 5FC84995
 F0 "Connectors" 50
 F1 "Connectors.sch" 50
+$EndSheet
+$Sheet
+S 8950 4200 1350 1150
+U 5FC8249B
+F0 "VREF" 50
+F1 "VREF.sch" 50
+$EndSheet
+$Sheet
+S 3750 5350 2100 1150
+U 5FB6952A
+F0 "DAC" 50
+F1 "DAC.sch" 50
+$EndSheet
+$Sheet
+S 1600 5050 1600 1250
+U 5FED0BD8
+F0 "Power" 50
+F1 "Power.sch" 50
 $EndSheet
 $EndSCHEMATC
