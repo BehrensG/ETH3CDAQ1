@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A3 16535 11693
 encoding utf-8
-Sheet 2 10
+Sheet 2 15
 Title "MCU"
 Date "2020-03-07"
 Rev "1.00"
@@ -2090,23 +2090,17 @@ Wire Wire Line
 	3400 6050 3350 6050
 Text HLabel 3350 6050 0    50   Input ~ 0
 MCU_MISO
-NoConn ~ 3400 6150
 Text HLabel 3350 4750 0    50   Output ~ 0
-MCU_CNV
+MCU_~CS
 Wire Wire Line
 	3350 4750 3400 4750
-Text HLabel 14850 3150 2    50   Output ~ 0
-MCU_~CS1
-Text HLabel 14850 3250 2    50   Output ~ 0
-MCU_~CS2
-Text HLabel 14850 3350 2    50   Output ~ 0
-MCU_~CS3
+Text HLabel 3350 6150 0    50   Output ~ 0
+MCU_MOSI
 Wire Wire Line
-	14800 3150 14850 3150
-Wire Wire Line
-	14850 3250 14800 3250
-Wire Wire Line
-	14800 3350 14850 3350
+	3350 6150 3400 6150
+NoConn ~ 14800 3150
+NoConn ~ 14800 3250
+NoConn ~ 14800 3350
 Wire Bus Line
 	1400 3500 1400 4800
 Wire Bus Line
