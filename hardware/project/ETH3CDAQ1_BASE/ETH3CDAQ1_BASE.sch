@@ -49,7 +49,7 @@ U 1 1 5FD1DE86
 P 900 6700
 F 0 "H101" H 1000 6746 50  0000 L CNN
 F 1 "MountingHole" H 1000 6655 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.7mm_M2.5_DIN965_Pad" H 900 6700 50  0001 C CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 900 6700 50  0001 C CNN
 F 3 "~" H 900 6700 50  0001 C CNN
 	1    900  6700
 	1    0    0    -1  
@@ -60,7 +60,7 @@ U 1 1 5FD1EC9A
 P 1750 6700
 F 0 "H102" H 1850 6746 50  0000 L CNN
 F 1 "MountingHole" H 1850 6655 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.7mm_M2.5_DIN965_Pad" H 1750 6700 50  0001 C CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 1750 6700 50  0001 C CNN
 F 3 "~" H 1750 6700 50  0001 C CNN
 	1    1750 6700
 	1    0    0    -1  

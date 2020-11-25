@@ -389,4 +389,20 @@ Wire Wire Line
 	7000 3900 7000 1600
 Wire Wire Line
 	7000 1600 7050 1600
+Wire Wire Line
+	6550 3400 6800 3400
+Wire Wire Line
+	6800 3400 6800 2250
+Connection ~ 6800 2250
+Wire Wire Line
+	6550 3300 6750 3300
+Wire Wire Line
+	6750 3300 6750 2150
+Connection ~ 6750 2150
+Wire Wire Line
+	6550 3200 6650 3200
+Wire Wire Line
+	6650 3200 6650 2350
+Wire Wire Line
+	6650 2350 6550 2350
 $EndSCHEMATC
