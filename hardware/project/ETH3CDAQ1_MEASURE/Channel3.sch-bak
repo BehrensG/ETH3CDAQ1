@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A3 16535 11693
 encoding utf-8
-Sheet 15 15
+Sheet 8 15
 Title ""
 Date ""
 Rev ""
@@ -1540,7 +1540,7 @@ Wire Wire Line
 	5150 4650 5300 4650
 Connection ~ 5150 4650
 Wire Wire Line
-	4200 4750 4450 4750
+	4200 4750 4400 4750
 $Comp
 L Device:C C?
 U 1 1 5FC0EB44
@@ -2082,4 +2082,29 @@ F 3 "" H 12100 4100 50  0001 C CNN
 	1    12100 4100
 	1    0    0    -1  
 $EndComp
+$Comp
+L Device:R R?
+U 1 1 6058396B
+P 4650 5450
+AR Path="/5FB85416/6058396B" Ref="R?"  Part="1" 
+AR Path="/5FF801EB/6058396B" Ref="R?"  Part="1" 
+AR Path="/5FBD66F6/6058396B" Ref="R814"  Part="1" 
+F 0 "R814" V 4443 5450 50  0000 C CNN
+F 1 "0" V 4534 5450 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" V 4580 5450 50  0001 C CNN
+F 3 "~" H 4650 5450 50  0001 C CNN
+	1    4650 5450
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4500 5450 4400 5450
+Wire Wire Line
+	4400 5450 4400 4750
+Connection ~ 4400 4750
+Wire Wire Line
+	4400 4750 4450 4750
+Wire Wire Line
+	4800 5450 5150 5450
+Wire Wire Line
+	5150 5450 5150 4650
 $EndSCHEMATC

@@ -1,4 +1,4 @@
-update=Sun Nov 22 19:33:52 2020
+update=Thu Nov 26 18:15:20 2020
 version=1
 last_client=kicad
 [general]
@@ -42,6 +42,10 @@ TrackWidth1=0.127
 TrackWidth2=0.254
 TrackWidth3=0.381
 TrackWidth4=0.508
+TrackWidth5=0.636
+TrackWidth6=0.763
+TrackWidth7=0.89
+TrackWidth8=1.27
 ViaDiameter1=0.5
 ViaDrill1=0.2
 ViaDiameter2=0.7
@@ -78,20 +82,20 @@ Name=F.Cu
 Type=0
 Enabled=1
 [pcbnew/Layer.In1.Cu]
-Name=GND
-Type=1
+Name=INT0
+Type=2
 Enabled=1
 [pcbnew/Layer.In2.Cu]
-Name=POWER_A
-Type=1
+Name=INT1
+Type=2
 Enabled=1
 [pcbnew/Layer.In3.Cu]
-Name=POWER_B
-Type=1
+Name=INT2
+Type=2
 Enabled=1
 [pcbnew/Layer.In4.Cu]
-Name=In4.Cu
-Type=1
+Name=INT3
+Type=2
 Enabled=1
 [pcbnew/Layer.In5.Cu]
 Name=In5.Cu
