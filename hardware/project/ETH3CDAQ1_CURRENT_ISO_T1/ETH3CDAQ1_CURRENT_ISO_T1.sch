@@ -290,10 +290,6 @@ Text Label 9750 3700 0    50   ~ 0
 A1
 Wire Wire Line
 	9750 3700 9900 3700
-Text Label 9750 3800 0    50   ~ 0
-A2
-Wire Wire Line
-	9750 3800 9900 3800
 Text Label 8650 1300 2    50   ~ 0
 EEPROM_WP
 Wire Wire Line
@@ -396,17 +392,6 @@ F 3 "" H 10400 4300 50  0001 C CNN
 	1    10400 4300
 	0    1    1    0   
 $EndComp
-$Comp
-L power:GND #PWR019
-U 1 1 5FC3CF72
-P 10400 3800
-F 0 "#PWR019" H 10400 3550 50  0001 C CNN
-F 1 "GND" V 10400 3650 50  0000 R CNN
-F 2 "" H 10400 3800 50  0001 C CNN
-F 3 "" H 10400 3800 50  0001 C CNN
-	1    10400 3800
-	0    -1   -1   0   
-$EndComp
 Wire Wire Line
 	10400 3600 10700 3600
 Text Label 10700 3600 2    50   ~ 0
@@ -500,7 +485,6 @@ $EndComp
 Wire Wire Line
 	10050 5400 10050 5350
 Connection ~ 10050 5350
-NoConn ~ 10400 4400
 $Comp
 L ETH3CDAQ1:-18V #PWR014
 U 1 1 5FC529D4
@@ -770,12 +754,12 @@ $EndComp
 $Comp
 L Interface_CAN_LIN:MCP2551-I-SN U5
 U 1 1 5FCB9237
-P 7600 5550
-F 0 "U5" H 7600 6131 50  0000 C CNN
-F 1 "MCP2551-I-SN" H 7600 6040 50  0000 C CNN
-F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 7600 5050 50  0001 C CIN
-F 3 "http://ww1.microchip.com/downloads/en/devicedoc/21667d.pdf" H 7600 5550 50  0001 C CNN
-	1    7600 5550
+P 8400 5400
+F 0 "U5" H 8700 5850 50  0000 C CNN
+F 1 "MCP2551-I-SN" H 8750 5750 50  0000 C CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 8400 4900 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/devicedoc/21667d.pdf" H 8400 5400 50  0001 C CNN
+	1    8400 5400
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -800,4 +784,82 @@ F 3 "~" H 1800 4500 50  0001 C CNN
 	1    1800 4500
 	1    0    0    -1  
 $EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5FC1802D
+P 10400 4400
+F 0 "#PWR?" H 10400 4250 50  0001 C CNN
+F 1 "+5V" V 10400 4550 50  0000 L CNN
+F 2 "" H 10400 4400 50  0001 C CNN
+F 3 "" H 10400 4400 50  0001 C CNN
+	1    10400 4400
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	10400 3800 10700 3800
+Text Label 10700 3800 2    50   ~ 0
+CANL
+Wire Wire Line
+	9900 3800 9600 3800
+Text Label 9600 3800 0    50   ~ 0
+CANH
+Wire Wire Line
+	9100 5200 9400 5200
+Text Label 9400 5200 2    50   ~ 0
+CANH
+$Comp
+L Device:R R?
+U 1 1 5FC28721
+P 9100 5400
+F 0 "R?" H 9170 5446 50  0000 L CNN
+F 1 "120" H 9170 5355 50  0000 L CNN
+F 2 "" V 9030 5400 50  0001 C CNN
+F 3 "~" H 9100 5400 50  0001 C CNN
+	1    9100 5400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8900 5300 8950 5300
+Wire Wire Line
+	8950 5300 8950 5200
+Wire Wire Line
+	8950 5200 9100 5200
+Wire Wire Line
+	9100 5200 9100 5250
+Wire Wire Line
+	8900 5500 8950 5500
+Wire Wire Line
+	8950 5500 8950 5600
+Wire Wire Line
+	8950 5600 9100 5600
+Wire Wire Line
+	9100 5600 9100 5550
+Connection ~ 9100 5200
+Wire Wire Line
+	9100 5600 9400 5600
+Text Label 9400 5600 2    50   ~ 0
+CANL
+$Comp
+L power:+5V #PWR?
+U 1 1 5FC39469
+P 8400 5000
+F 0 "#PWR?" H 8400 4850 50  0001 C CNN
+F 1 "+5V" H 8415 5173 50  0000 C CNN
+F 2 "" H 8400 5000 50  0001 C CNN
+F 3 "" H 8400 5000 50  0001 C CNN
+	1    8400 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5FC39C9E
+P 8400 5800
+F 0 "#PWR?" H 8400 5550 50  0001 C CNN
+F 1 "GND" H 8405 5627 50  0000 C CNN
+F 2 "" H 8400 5800 50  0001 C CNN
+F 3 "" H 8400 5800 50  0001 C CNN
+	1    8400 5800
+	1    0    0    -1  
+$EndComp
+Connection ~ 9100 5600
 $EndSCHEMATC

@@ -1,3 +1,4 @@
 (sym_lib_table
-  (lib (name ETH3CDAQ1)(type Legacy)(uri C:/Users/behrensg/git-repos/ETH3CDAQ1/hardware/lib/sch/ETH3CDAQ1.lib)(options "")(descr ""))
+  (lib (name ETH3CDAQ1_WIN)(type Legacy)(uri C:/Users/behrensg/git-repos/ETH3CDAQ1/hardware/lib/sch/ETH3CDAQ1.lib)(options "")(descr "")(disabled))
+  (lib (name ETH3CDAQ1)(type Legacy)(uri /home/grzegorz/git/ETH3CDAQ1/hardware/lib/sch/ETH3CDAQ1.lib)(options "")(descr ""))
 )
