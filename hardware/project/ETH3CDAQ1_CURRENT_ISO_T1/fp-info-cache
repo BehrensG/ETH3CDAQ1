@@ -1,4 +1,4 @@
-18696277496201717
+18778711510747323
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -50644,6 +50644,370 @@ One digit LED 7 segment SA39-11 SC39-11 SA39-12 SC39-12
 0
 10
 10
+ETH3CDAQ1
+7448013501
+WE-CMBNC Common Mode PowerLine Choke Nanocrystalline
+
+0
+4
+4
+ETH3CDAQ1
+7448014501
+WE-CMBNC Common Mode PowerLine Choke Nanocrystalline
+
+0
+4
+4
+ETH3CDAQ1
+4032
+
+
+0
+2
+2
+ETH3CDAQ1
+9012
+COTO Miniature Molded SIP Reed Relay
+
+0
+4
+4
+ETH3CDAQ1
+60817-096
+
+
+0
+1
+1
+ETH3CDAQ1
+36107406S
+WE-SHC Shielding Cabinet
+EMC shielding
+0
+32
+1
+ETH3CDAQ1
+744031004
+WE-TPC SMD Shielded Tiny Power Inductor
+
+0
+2
+2
+ETH3CDAQ1
+744053220
+WE-TPC SMD Shielded Tiny Power Inductor
+
+0
+2
+2
+ETH3CDAQ1
+744233121
+ Filter, Line, Common Mode, WE-CNSW Series, 120 ohm, 280 mA, 2mm x 1.2mm x 1.2mm 
+
+0
+4
+4
+ETH3CDAQ1
+749010012A
+Transformer, LAN, 1 Port, 10/100 Base-T, 1500VAC, 350µH, 1:1 Turn Ratio
+
+0
+16
+16
+ETH3CDAQ1
+74489440068
+COUPLED INDUCTOR  WE-TDC 8038
+
+0
+4
+4
+ETH3CDAQ1
+AQY212GS
+Load current greatly increased using next-generation MOSFET High Capacity 4-pin Type
+
+0
+4
+4
+ETH3CDAQ1
+BFC2
+Film Dielectric Trimmers
+
+0
+4
+2
+ETH3CDAQ1
+CG3_15mm
+Resistor, Axial, RM 15mm,
+Resistor Axial RM 15mm
+0
+2
+2
+ETH3CDAQ1
+CW252016
+CW252016 Series - High Q Chip Inductors
+
+0
+2
+2
+ETH3CDAQ1
+DO_214AA_REV
+
+
+0
+2
+2
+ETH3CDAQ1
+DVA
+
+
+0
+8
+8
+ETH3CDAQ1
+DVB
+
+
+0
+12
+12
+ETH3CDAQ1
+D_SOD-323HE
+SOD-323HE
+SOD-323HE
+0
+2
+2
+ETH3CDAQ1
+ECS
+
+
+0
+4
+4
+ETH3CDAQ1
+Fuse_SMD2920
+MF-LSMFSeries-PTCResettableFuses
+Fuse SMD2920
+0
+2
+2
+ETH3CDAQ1
+GDT
+
+
+0
+2
+2
+ETH3CDAQ1
+GU-SOP8
+
+
+0
+8
+8
+ETH3CDAQ1
+HE360_x-5050462-8
+HE3600 Miniature Single In-line Reed Relay
+
+0
+4
+4
+ETH3CDAQ1
+HSOP-32-1EP_7.5x11.0mm_P0.65mm_ThermalVias
+HSOP32, plastic, thermal enhanced small outline package; 32 terminals; 0.65 mm pitch; 7.5 mm x 11 mmx 2.22 mm body
+HSOP 7.5 x 11.0mm Pitch 0.65mm
+0
+33
+33
+ETH3CDAQ1
+IPC_5_2-GF-7_62
+
+
+0
+6
+2
+ETH3CDAQ1
+JZ
+J Series Outperforms All Other Similar Trimmers
+
+0
+2
+2
+ETH3CDAQ1
+LFCSP-6_2x2mm_1EP_P0.65mm
+6-Lead Lead Frame Chip Scale Package [LFCSP]2.00 x 2.00 mm Body and 0.55 mm Package Height(CP-6-3)
+
+0
+7
+7
+ETH3CDAQ1
+LGA-24_5x4mm_P0.5mm
+
+
+0
+24
+24
+ETH3CDAQ1
+LMx99
+
+
+0
+4
+4
+ETH3CDAQ1
+NLV32
+
+
+0
+2
+2
+ETH3CDAQ1
+NX3225GD
+ A small surface-mount type crystal unit, ideal for an engine control CPU clock
+
+0
+2
+2
+ETH3CDAQ1
+NX5032GA
+Crystal
+
+0
+2
+2
+ETH3CDAQ1
+OKI-T3-W40
+Adjustable Output 3-Amp DOSA-SMT DC/DC Converters
+
+0
+5
+5
+ETH3CDAQ1
+PowerPAD
+
+
+0
+49
+21
+ETH3CDAQ1
+SA
+LOW-PROFILE SURFACE-MOUNT RELAY
+
+0
+10
+10
+ETH3CDAQ1
+SO8E
+module CMS SOJ 8 pins etroit
+CMS SOJ
+0
+8
+8
+ETH3CDAQ1
+SO8N
+Module CMS SOJ 8 pins large
+CMS SOJ
+0
+8
+8
+ETH3CDAQ1
+Socket_DIN41612-CaseC1-AC-Male-64Pin-2rows
+
+
+0
+66
+65
+ETH3CDAQ1
+Symbol_HighVoltage_Type2_CopperTop_VerySmall
+Symbol, High Voltage, Type 2, Copper Top, Very Small,
+Symbol, High Voltage, Type 2, Copper Top, Very Small,
+0
+0
+0
+ETH3CDAQ1
+T60404-N4646-X400
+
+
+0
+9
+9
+ETH3CDAQ1
+TCK-141
+Inductor
+
+0
+2
+2
+ETH3CDAQ1
+THL15
+THL 15WI Series, 15 Watt
+
+0
+6
+6
+ETH3CDAQ1
+TO-71
+
+
+0
+6
+6
+ETH3CDAQ1
+TO-252-2_Rectifier
+TO-252-2
+TO-252-2 Rectifier
+0
+3
+3
+ETH3CDAQ1
+TQFP-144_20x20mm_P0.5mm
+TQFP, 144 Pin (http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095), generated with kicad-footprint-generator ipc_qfp_generator.py
+TQFP QFP
+0
+144
+144
+ETH3CDAQ1
+TSR1
+DC/DC Converter TSR 1 Series, 1 A
+
+0
+3
+3
+ETH3CDAQ1
+TSR1SM
+
+
+0
+6
+6
+ETH3CDAQ1
+TSR2
+DC/DC Converter TSR 2 Series, 2 A
+
+0
+3
+3
+ETH3CDAQ1
+TSRN1
+TSRN1 SERIES1 Watt Non-Isolated  POL Power Supply
+
+0
+3
+3
+ETH3CDAQ1
+TSSOP-54
+
+SSOP 0.8
+0
+54
+54
+ETH3CDAQ1
+WSR5
+
+
+0
+2
+2
 Ferrite_THT
 LairdTech_28C0236-0JW-10
 Ferrite, vertical, LairdTech 28C0236-0JW-10, https://assets.lairdtech.com/home/brandworld/files/28C0236-0JW-10.pdf, JW Miller core https://www.bourns.com/products/magnetic-products/j.w.-miller-through-hole-ferrite-beads-emi-filters
