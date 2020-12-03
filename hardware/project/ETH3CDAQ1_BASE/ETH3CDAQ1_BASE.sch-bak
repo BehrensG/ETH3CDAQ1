@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 6
+Sheet 1 7
 Title ""
 Date ""
 Rev ""
@@ -14,34 +14,40 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Sheet
-S 5650 1850 1650 3700
+S 9550 3200 1650 3700
 U 5FCCA2B9
 F0 "Power" 50
 F1 "Power.sch" 50
 $EndSheet
 $Sheet
-S 7500 1850 1650 3700
+S 9850 2150 1650 3700
 U 60134E7C
 F0 "Connector" 50
 F1 "Connector.sch" 50
 $EndSheet
 $Sheet
-S 3750 1850 1700 1000
+S 2150 1650 1700 1000
 U 601F1EBA
 F0 "Channel 1" 50
 F1 "Channel1.sch" 50
+F2 "SCL" B R 3850 1750 50 
+F3 "SDA" B R 3850 1850 50 
 $EndSheet
 $Sheet
-S 3750 3200 1700 1000
+S 2150 3000 1700 1000
 U 602A05D8
 F0 "Channel 2" 50
 F1 "Channel2.sch" 50
+F2 "SCL" B R 3850 3100 50 
+F3 "SDA" B R 3850 3200 50 
 $EndSheet
 $Sheet
-S 3750 4550 1700 1000
+S 2150 4350 1700 1000
 U 602C0344
 F0 "Channel 3" 50
 F1 "Channel3.sch" 50
+F2 "SCL" B R 3850 4450 50 
+F3 "SDA" B R 3850 4550 50 
 $EndSheet
 $Comp
 L Mechanical:MountingHole H101
@@ -55,10 +61,10 @@ F 3 "~" H 600 6850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Mechanical:MountingHole H102
+L Mechanical:MountingHole H105
 U 1 1 5FD1EC9A
 P 1400 6850
-F 0 "H102" H 1500 6896 50  0000 L CNN
+F 0 "H105" H 1500 6896 50  0000 L CNN
 F 1 "MountingHole" H 1500 6805 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3_DIN965_Pad" H 1400 6850 50  0001 C CNN
 F 3 "~" H 1400 6850 50  0001 C CNN
@@ -66,10 +72,10 @@ F 3 "~" H 1400 6850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Mechanical:MountingHole H105
+L Mechanical:MountingHole H104
 U 1 1 5FB9C26E
 P 600 7600
-F 0 "H105" H 700 7646 50  0000 L CNN
+F 0 "H104" H 700 7646 50  0000 L CNN
 F 1 "MountingHole" H 700 7555 50  0000 L CNN
 F 2 "MountingHole:MountingHole_2.7mm_M2.5_DIN965_Pad" H 600 7600 50  0001 C CNN
 F 3 "~" H 600 7600 50  0001 C CNN
@@ -88,10 +94,10 @@ F 3 "~" H 1400 7600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Mechanical:MountingHole H104
+L Mechanical:MountingHole H103
 U 1 1 5FB9C81C
 P 600 7350
-F 0 "H104" H 700 7396 50  0000 L CNN
+F 0 "H103" H 700 7396 50  0000 L CNN
 F 1 "MountingHole" H 700 7305 50  0000 L CNN
 F 2 "MountingHole:MountingHole_2.7mm_M2.5_DIN965_Pad" H 600 7350 50  0001 C CNN
 F 3 "~" H 600 7350 50  0001 C CNN
@@ -110,10 +116,10 @@ F 3 "~" H 1400 7350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Mechanical:MountingHole H103
+L Mechanical:MountingHole H102
 U 1 1 5FB9CAB2
 P 600 7100
-F 0 "H103" H 700 7146 50  0000 L CNN
+F 0 "H102" H 700 7146 50  0000 L CNN
 F 1 "MountingHole" H 700 7055 50  0000 L CNN
 F 2 "MountingHole:MountingHole_2.7mm_M2.5_DIN965_Pad" H 600 7100 50  0001 C CNN
 F 3 "~" H 600 7100 50  0001 C CNN
@@ -329,15 +335,40 @@ F 3 "~" H 6000 7100 50  0001 C CNN
 	1    6000 7100
 	1    0    0    -1  
 $EndComp
-$Comp
-L ETH3CDAQ1:60817-096 M101
-U 1 1 5FD06917
-P 550 6550
-F 0 "M101" H 878 6896 50  0000 L CNN
-F 1 "60817-096" H 878 6805 50  0000 L CNN
-F 2 "ETH3CDAQ1:60817-096" H 550 6550 50  0001 C CNN
-F 3 "" H 550 6550 50  0001 C CNN
-	1    550  6550
-	1    0    0    -1  
-$EndComp
+$Sheet
+S 4200 1650 1700 3700
+U 5FCCC26E
+F0 "Selftest" 50
+F1 "Selftest.sch" 50
+F2 "SCL" B L 4200 1750 50 
+F3 "SDA" B L 4200 1850 50 
+$EndSheet
+Wire Wire Line
+	4200 1850 4000 1850
+Wire Wire Line
+	3850 1750 4100 1750
+Wire Wire Line
+	4100 1750 4100 3100
+Wire Wire Line
+	4100 4450 3850 4450
+Connection ~ 4100 1750
+Wire Wire Line
+	4100 1750 4200 1750
+Wire Wire Line
+	3850 3100 4100 3100
+Connection ~ 4100 3100
+Wire Wire Line
+	4100 3100 4100 4450
+Wire Wire Line
+	3850 4550 4000 4550
+Wire Wire Line
+	4000 4550 4000 3200
+Connection ~ 4000 1850
+Wire Wire Line
+	4000 1850 3850 1850
+Wire Wire Line
+	3850 3200 4000 3200
+Connection ~ 4000 3200
+Wire Wire Line
+	4000 3200 4000 1850
 $EndSCHEMATC
