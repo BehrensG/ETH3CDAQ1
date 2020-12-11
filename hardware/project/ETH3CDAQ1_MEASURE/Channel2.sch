@@ -1261,7 +1261,6 @@ Text HLabel 14150 4800 2    50   BiDi ~ 0
 ADC2_SDI
 Text HLabel 14150 4900 2    50   BiDi ~ 0
 ADC2_SDO
-NoConn ~ 13350 4400
 Wire Wire Line
 	2900 4700 2950 4700
 $Comp
@@ -2007,4 +2006,5 @@ Wire Wire Line
 	4900 5400 5250 5400
 Wire Wire Line
 	5250 5400 5250 4600
+NoConn ~ 13350 4400
 $EndSCHEMATC

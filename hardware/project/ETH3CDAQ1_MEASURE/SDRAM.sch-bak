@@ -13,17 +13,6 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-$Comp
-L Memory_RAM:IS42S16400J-xC U1401
-U 1 1 5EB98CAA
-P 5650 3200
-F 0 "U1401" H 6400 4600 50  0000 C CNN
-F 1 "IS42S16400J-xC/MT48LC16M16A2P-6A" H 6750 4500 50  0000 C CNN
-F 2 "ETH3CDAQ1:TSSOP-54" H 5650 3200 50  0001 C CNN
-F 3 "http://www.issi.com/WW/pdf/42-45S16400J.pdf" H 5050 4450 50  0001 C CNN
-	1    5650 3200
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	5350 4600 5350 4650
 Wire Wire Line
@@ -285,9 +274,9 @@ Wire Bus Line
 Text Label 7150 2100 2    50   ~ 0
 D[0..15]
 Text Label 4000 2200 0    50   ~ 0
-A[0..11]
+A[0..12]
 Text HLabel 4000 2200 0    50   BiDi ~ 0
-A[0..11]
+A[0..12]
 Text HLabel 7150 2100 2    50   BiDi ~ 0
 D[0..15]
 $Comp
@@ -477,8 +466,25 @@ F 3 "" H 2500 7000 50  0001 C CNN
 	1    2500 7000
 	1    0    0    -1  
 $EndComp
+$Comp
+L ETH3CDAQ1:MT48LC16M16A2P-6A U1401
+U 1 1 5FD364EC
+P 5650 3200
+F 0 "U1401" H 6400 4550 50  0000 C CNN
+F 1 "MT48LC16M16A2P-6A" H 6400 4450 50  0000 C CNN
+F 2 "Package_SO:TSOP-II-54_10.16x22.22mm_P0.8mm" H 5650 3200 50  0001 C CNN
+F 3 "" H 5050 4450 50  0001 C CNN
+	1    5650 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4850 3500 4600 3500
+Text Label 4600 3500 0    50   ~ 0
+A12
+Entry Wire Line
+	4600 3500 4500 3600
 Wire Bus Line
-	4500 2200 4500 3500
+	4500 2200 4500 3600
 Wire Bus Line
 	6800 2100 6800 3700
 $EndSCHEMATC
