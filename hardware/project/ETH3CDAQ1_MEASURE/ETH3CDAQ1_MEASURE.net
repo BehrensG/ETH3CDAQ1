@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/grzegorz/git/ETH3CDAQ1/hardware/project/ETH3CDAQ1_MEASURE/ETH3CDAQ1_MEASURE.sch)
-    (date "Thu Dec 10 12:40:11 2020")
+    (date "Sun Dec 13 14:15:40 2020")
     (tool "Eeschema 5.1.8")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
