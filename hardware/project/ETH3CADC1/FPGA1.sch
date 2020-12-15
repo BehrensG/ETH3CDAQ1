@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 9 13
+Sheet 9 15
 Title ""
 Date ""
 Rev ""
@@ -1434,65 +1434,10 @@ F 3 "" H 5400 7000 50  0001 C CNN
 	1    5400 7000
 	1    0    0    -1  
 $EndComp
-$Comp
-L Device:R R903
-U 1 1 60AA348D
-P 6900 1550
-F 0 "R903" V 6800 1550 50  0000 C CNN
-F 1 "150" V 6900 1550 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder" V 6830 1550 50  0001 C CNN
-F 3 "~" H 6900 1550 50  0001 C CNN
-	1    6900 1550
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	6750 1550 6450 1550
 Text Label 6450 1550 0    50   ~ 0
 AD_IIN
-$Comp
-L Device:R R904
-U 1 1 60ABCDB4
-P 6900 1750
-F 0 "R904" V 6800 1750 50  0000 C CNN
-F 1 "150" V 6900 1750 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder" V 6830 1750 50  0001 C CNN
-F 3 "~" H 6900 1750 50  0001 C CNN
-	1    6900 1750
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:R R905
-U 1 1 60AC7F60
-P 6900 1950
-F 0 "R905" V 6800 1950 50  0000 C CNN
-F 1 "150" V 6900 1950 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder" V 6830 1950 50  0001 C CNN
-F 3 "~" H 6900 1950 50  0001 C CNN
-	1    6900 1950
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:R R906
-U 1 1 60AD49B0
-P 6900 2150
-F 0 "R906" V 6800 2150 50  0000 C CNN
-F 1 "150" V 6900 2150 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder" V 6830 2150 50  0001 C CNN
-F 3 "~" H 6900 2150 50  0001 C CNN
-	1    6900 2150
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:R R907
-U 1 1 60AE0626
-P 6900 2350
-F 0 "R907" V 6800 2350 50  0000 C CNN
-F 1 "150" V 6900 2350 50  0000 C CNN
-F 2 "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder" V 6830 2350 50  0001 C CNN
-F 3 "~" H 6900 2350 50  0001 C CNN
-	1    6900 2350
-	0    1    1    0   
-$EndComp
 Text Label 6450 1750 0    50   ~ 0
 AD_ID
 Wire Wire Line

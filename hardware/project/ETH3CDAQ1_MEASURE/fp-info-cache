@@ -1,4 +1,4 @@
-18781432100034323
+18775524197419323
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -50736,13 +50736,6 @@ Film Dielectric Trimmers
 4
 2
 ETH3CDAQ1
-CG3_15mm
-Resistor, Axial, RM 15mm,
-Resistor Axial RM 15mm
-0
-2
-2
-ETH3CDAQ1
 CW252016
 CW252016 Series - High Q Chip Inductors
 
@@ -50883,13 +50876,6 @@ Adjustable Output 3-Amp DOSA-SMT DC/DC Converters
 5
 5
 ETH3CDAQ1
-PC5_2-G-7_62
-
-
-0
-6
-2
-ETH3CDAQ1
 PowerPAD
 
 
@@ -50924,13 +50910,6 @@ Socket_DIN41612-CaseC1-AC-Male-64Pin-2rows
 0
 66
 65
-ETH3CDAQ1
-Symbol_HighVoltage_Type2_CopperTop_VerySmall
-Symbol, High Voltage, Type 2, Copper Top, Very Small,
-Symbol, High Voltage, Type 2, Copper Top, Very Small,
-0
-0
-0
 ETH3CDAQ1
 T60404-N4646-X400
 
