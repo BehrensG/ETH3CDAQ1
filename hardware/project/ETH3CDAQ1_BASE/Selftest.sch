@@ -905,4 +905,6 @@ Wire Wire Line
 	3300 5700 3650 5700
 Wire Wire Line
 	3250 5700 3300 5700
+Text Notes 5950 5200 0    50   ~ 0
+Need to add 18VF and -18VF. Replace TL072 with TL074.
 $EndSCHEMATC
