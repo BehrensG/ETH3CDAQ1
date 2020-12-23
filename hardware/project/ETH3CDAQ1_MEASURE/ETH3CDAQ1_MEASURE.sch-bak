@@ -152,8 +152,8 @@ Wire Wire Line
 $Sheet
 S 8050 750  900  1750
 U 5FC84995
-F0 "Connector 1" 50
-F1 "Connector1.sch" 50
+F0 "Connector" 50
+F1 "Connector.sch" 50
 F2 "RX+" B L 8050 1700 50 
 F3 "RX-" B L 8050 1800 50 
 F4 "TX+" B L 8050 1500 50 
