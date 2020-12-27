@@ -312,7 +312,7 @@ F 3 "~" H 3000 5450 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Analog_Switch:DG419LDY U?
+L Analog_Switch:DG419xY U?
 U 1 1 5FC0E905
 P 5600 4550
 AR Path="/5FB85416/5FC0E905" Ref="U?"  Part="1" 
@@ -326,7 +326,7 @@ F 3 "https://datasheets.maximintegrated.com/en/ds/DG417-DG419.pdf" H 5600 4550 5
 	1    0    0    -1  
 $EndComp
 $Comp
-L Analog_Switch:DG419LDY U?
+L Analog_Switch:DG419xY U?
 U 1 1 5FC0E90B
 P 9950 4550
 AR Path="/5FB85416/5FC0E90B" Ref="U?"  Part="1" 

@@ -3,3 +3,4 @@
 3. Make LT3032 pads larger. Status : OPEN
 4. Socket with header have distance 11 mm not 10 mm as intendent. Status: OPEN
 5. DG419Lx has a lower supply voltage then DG419Dx. Status: DONE
+6. Wrong 1nF packaged ordered, was 0306 should be 0603. Status: OPEN 
