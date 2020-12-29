@@ -43,6 +43,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 
+SDRAM_HandleTypeDef hsdram2;
+
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
@@ -52,12 +54,15 @@ const osThreadAttr_t defaultTask_attributes = {
 };
 /* USER CODE BEGIN PV */
 
+FMC_SDRAM_CommandTypeDef command;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MPU_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_FMC_Init(void);
 void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
@@ -66,6 +71,8 @@ void StartDefaultTask(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+static void SDRAM_Initialization_Sequence(SDRAM_HandleTypeDef *hsdram, FMC_SDRAM_CommandTypeDef *Command);
 
 /* USER CODE END 0 */
 
@@ -106,9 +113,56 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_FMC_Init();
   /* USER CODE BEGIN 2 */
   HAL_Delay(100);
   MX_LWIP_Init();
+  SDRAM_Initialization_Sequence(&hsdram2, &command);
+
+
+  uint32_t i = 1;
+  	uint32_t j = 0;
+  	uint32_t l = 0;
+
+  	uint32_t TxBuffer32[] = { 0x01234567, 0x1248ABCD, 0x23456789 };
+
+  	uint32_t RxBuffer32[3] ={0, 0, 0};
+
+  	// Assign SDRAM address to pointer
+
+  	uint32_t *test32;
+
+  	test32 = 0xD0000000;
+
+  	// 32bit write
+
+  	//GPIOG->BSRR = 0x00000200; // PG9 trigger
+
+  	for (uint32_t k = 0; k < 100000; k++) {
+
+  		for (i = 0; i < 3; i++) {
+  			*(test32 + i) = TxBuffer32[i];
+  		}
+  		// 32bit read
+  		for (i = 0; i < 3; i++) {
+  			RxBuffer32[i] = *(test32 + i);
+  		}
+
+  		if (TxBuffer32[0] != RxBuffer32[0]) {
+  			j = j + 1;
+  		}
+  		if (TxBuffer32[1] != RxBuffer32[1]) {
+  			j = j + 1;
+  		}
+  		if (TxBuffer32[2] != RxBuffer32[2]) {
+  			j = j + 1;
+  		}
+
+
+  	}
+
+  	j = j;
+
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -135,7 +189,7 @@ int main(void)
   //defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
+  scpi_server_init();
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -144,6 +198,7 @@ int main(void)
 
   /* Start scheduler */
   osKernelStart();
+
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -164,6 +219,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 
   /** Supply configuration update enable
   */
@@ -180,12 +236,12 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 2;
-  RCC_OscInitStruct.PLL.PLLN = 240;
+  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLN = 480;
   RCC_OscInitStruct.PLL.PLLP = 2;
-  RCC_OscInitStruct.PLL.PLLQ = 2;
+  RCC_OscInitStruct.PLL.PLLQ = 6;
   RCC_OscInitStruct.PLL.PLLR = 2;
-  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_1;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
   RCC_OscInitStruct.PLL.PLLFRACN = 0;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -209,6 +265,59 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_FMC;
+  PeriphClkInitStruct.FmcClockSelection = RCC_FMCCLKSOURCE_PLL;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/* FMC initialization function */
+static void MX_FMC_Init(void)
+{
+
+  /* USER CODE BEGIN FMC_Init 0 */
+
+  /* USER CODE END FMC_Init 0 */
+
+  FMC_SDRAM_TimingTypeDef SdramTiming = {0};
+
+  /* USER CODE BEGIN FMC_Init 1 */
+
+  /* USER CODE END FMC_Init 1 */
+
+  /** Perform the SDRAM2 memory initialization sequence
+  */
+  hsdram2.Instance = FMC_SDRAM_DEVICE;
+  /* hsdram2.Init */
+  hsdram2.Init.SDBank = FMC_SDRAM_BANK2;
+  hsdram2.Init.ColumnBitsNumber = FMC_SDRAM_COLUMN_BITS_NUM_8;
+  hsdram2.Init.RowBitsNumber = FMC_SDRAM_ROW_BITS_NUM_13;
+  hsdram2.Init.MemoryDataWidth = FMC_SDRAM_MEM_BUS_WIDTH_16;
+  hsdram2.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
+  hsdram2.Init.CASLatency = FMC_SDRAM_CAS_LATENCY_3;
+  hsdram2.Init.WriteProtection = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
+  hsdram2.Init.SDClockPeriod = FMC_SDRAM_CLOCK_PERIOD_3;
+  hsdram2.Init.ReadBurst = FMC_SDRAM_RBURST_ENABLE;
+  hsdram2.Init.ReadPipeDelay = FMC_SDRAM_RPIPE_DELAY_0;
+  /* SdramTiming */
+  SdramTiming.LoadToActiveDelay = 2;
+  SdramTiming.ExitSelfRefreshDelay = 11;
+  SdramTiming.SelfRefreshTime = 7;
+  SdramTiming.RowCycleDelay = 10;
+  SdramTiming.WriteRecoveryTime = 4;
+  SdramTiming.RPDelay = 3;
+  SdramTiming.RCDDelay = 3;
+
+  if (HAL_SDRAM_Init(&hsdram2, &SdramTiming) != HAL_OK)
+  {
+    Error_Handler( );
+  }
+
+  /* USER CODE BEGIN FMC_Init 2 */
+
+  /* USER CODE END FMC_Init 2 */
 }
 
 /**
@@ -220,14 +329,104 @@ static void MX_GPIO_Init(void)
 {
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOF_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOG_CLK_ENABLE();
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
 }
 
 /* USER CODE BEGIN 4 */
+
+static void SDRAM_Initialization_Sequence(SDRAM_HandleTypeDef *hsdram,
+		FMC_SDRAM_CommandTypeDef *Command)
+
+{
+
+	__IO uint32_t tmpmrd = 0;
+
+	/* Step 3:  Configure a clock configuration enable command */
+
+	Command->CommandMode = FMC_SDRAM_CMD_CLK_ENABLE;
+
+	Command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+
+	Command->AutoRefreshNumber = 1;
+
+	Command->ModeRegisterDefinition = 0;
+
+	/* Send the command */
+
+	HAL_SDRAM_SendCommand(hsdram, Command, 0x1000);
+
+	/* Step 4: Insert 10 ms delay */
+
+	HAL_Delay(100);
+
+	/* Step 5: Configure a PALL (precharge all) command */
+
+	Command->CommandMode = FMC_SDRAM_CMD_PALL;
+
+	Command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+
+	Command->AutoRefreshNumber = 1;
+
+	Command->ModeRegisterDefinition = 0;
+
+	/* Send the command */
+
+	HAL_SDRAM_SendCommand(hsdram, Command, 0x1000);
+
+	HAL_Delay(10);
+
+	/* Step 6 : Configure a Auto-Refresh command */
+
+	Command->CommandMode = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
+
+	Command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+
+	Command->AutoRefreshNumber = 1;
+
+	Command->ModeRegisterDefinition = 0;
+
+	/* Send the command */
+
+	HAL_SDRAM_SendCommand(hsdram, Command, 0x1000);
+	HAL_Delay(10);
+
+	/* Step 7: Program the external memory mode register */
+
+	// Write burst: single location access
+	// Standard operation, CAS latency: 3, Sequential
+	// Burst length: 2
+	tmpmrd = (uint32_t) 0x00000231;
+
+	Command->CommandMode = FMC_SDRAM_CMD_LOAD_MODE;
+
+	Command->CommandTarget = FMC_SDRAM_CMD_TARGET_BANK2;
+
+	Command->AutoRefreshNumber = 2;
+
+	Command->ModeRegisterDefinition = tmpmrd;
+
+	/* Send the command */
+
+	HAL_SDRAM_SendCommand(hsdram, Command, 0x1000);
+	HAL_Delay(10);
+
+	/* Step 8: Set the refresh rate counter */
+
+	// refresh rate = refresh period / number of rows
+	// refresh rate = 64ms / 8192 = 15.62us
+	// refresh count = (refresh rate x SDRAM clock frequency) - 20
+	// refresh count = 7.18us x 180MHz - 20 = 1272
+	HAL_SDRAM_ProgramRefreshRate(hsdram, 1272);
+
+}
 
 /* USER CODE END 4 */
 
@@ -241,28 +440,13 @@ static void MX_GPIO_Init(void)
 void StartDefaultTask(void *argument)
 {
   /* init code for LWIP */
-
+  MX_LWIP_Init();
   /* USER CODE BEGIN 5 */
-  const char* message = "Hello UDP message!\n\r";
-
-  osDelay(1000);
-
-  ip_addr_t PC_IPADDR;
-  IP_ADDR4(&PC_IPADDR, 192, 168, 0, 1);
-
-  struct udp_pcb* my_udp = udp_new();
-  udp_connect(my_udp, &PC_IPADDR, 55151);
-  struct pbuf* udp_buffer = NULL;
 
   /* Infinite loop */
   for (;;) {
     osDelay(1000);
-    udp_buffer = pbuf_alloc(PBUF_TRANSPORT, strlen(message), PBUF_RAM);
-    if (udp_buffer != NULL) {
-      memcpy(udp_buffer->payload, message, strlen(message));
-      udp_send(my_udp, udp_buffer);
-      pbuf_free(udp_buffer);
-    }
+
   }
   /* USER CODE END 5 */
 }

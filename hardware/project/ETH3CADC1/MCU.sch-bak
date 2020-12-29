@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A2 23386 16535
 encoding utf-8
-Sheet 5 15
+Sheet 4 13
 Title "MCU"
 Date "2020-03-07"
 Rev "1.00"
@@ -712,18 +712,6 @@ Wire Wire Line
 	20000 4300 20050 4300
 Text HLabel 20950 10000 2    50   BiDi ~ 0
 NRST
-Text HLabel 8550 5300 0    50   Output ~ 0
-TRIG_EN
-Text HLabel 8550 5400 0    50   Output ~ 0
-TRIG_OUT
-Text HLabel 8550 5500 0    50   Input ~ 0
-TRIG_IN
-Wire Wire Line
-	8550 5500 8600 5500
-Wire Wire Line
-	8550 5400 8600 5400
-Wire Wire Line
-	8600 5300 8550 5300
 NoConn ~ 8600 5200
 NoConn ~ 8600 6900
 NoConn ~ 20000 4100
@@ -1668,27 +1656,20 @@ Wire Wire Line
 Text Label 20500 6600 2    50   ~ 0
 MCU_SR_LAT
 Text HLabel 8550 7600 0    50   Output ~ 0
-MCU_CLK
+FPGAx_SCLK
 Wire Wire Line
 	8600 7600 8550 7600
 Wire Wire Line
-	8600 7700 8550 7700
-Text HLabel 8550 7700 0    50   Input ~ 0
-MCU_MISO
+	8600 7700 8100 7700
 Text HLabel 8550 6400 0    50   Output ~ 0
-MCU_~CS
+FPGA1_nSS
 Wire Wire Line
 	8550 6400 8600 6400
-Text HLabel 8550 7800 0    50   Output ~ 0
-MCU_MOSI
 Wire Wire Line
-	8550 7800 8600 7800
-NoConn ~ 20000 4800
-NoConn ~ 20000 4900
+	8100 7800 8600 7800
 NoConn ~ 20000 5000
 NoConn ~ 8600 7200
 NoConn ~ 8600 7300
-NoConn ~ 8600 7400
 NoConn ~ 20000 9000
 NoConn ~ 20000 9100
 $Comp
@@ -1702,7 +1683,6 @@ F 3 "" H 20650 9200 50  0001 C CNN
 	1    20650 9200
 	0    1    1    0   
 $EndComp
-NoConn ~ 8600 7900
 $Comp
 L power:+3.3V #PWR0538
 U 1 1 5FF939B2
@@ -1714,8 +1694,6 @@ F 3 "" H 20850 3100 50  0001 C CNN
 	1    20850 3100
 	0    1    1    0   
 $EndComp
-NoConn ~ 8600 8000
-NoConn ~ 8600 8100
 Wire Wire Line
 	20250 3500 20000 3500
 $Comp
@@ -1729,30 +1707,14 @@ F 3 "" H 20850 3500 50  0001 C CNN
 	1    20850 3500
 	0    1    1    0   
 $EndComp
-Text HLabel 8550 3800 0    50   Output ~ 0
-DAC_~SYNC
-Text HLabel 8550 4100 0    50   Output ~ 0
-DAC_DIN
-Text HLabel 8550 3900 0    50   Output ~ 0
-DAC_SCLK
-Text HLabel 8550 4200 0    50   Output ~ 0
-DAC_LDAC
 NoConn ~ 8600 4000
-Wire Wire Line
-	8550 4200 8600 4200
-Wire Wire Line
-	8600 4100 8550 4100
-Wire Wire Line
-	8550 3900 8600 3900
-Wire Wire Line
-	8600 3800 8550 3800
 $Comp
 L ETH3CDAQ1:PCA9517 U504
 U 1 1 601578A4
 P 15300 13500
 F 0 "U504" H 15300 13915 50  0000 C CNN
 F 1 "PCA9517" H 15300 13824 50  0000 C CNN
-F 2 "Package_SO:TSSOP-8_3x3mm_P0.65mm" H 15300 13500 50  0001 C CNN
+F 2 "Package_SO:MSOP-8_3x3mm_P0.65mm" H 15300 13500 50  0001 C CNN
 F 3 "" H 15300 13500 50  0001 C CNN
 	1    15300 13500
 	1    0    0    -1  
@@ -2060,6 +2022,119 @@ F 3 "~" H 3800 15450 50  0001 C CNN
 	1    3800 15450
 	1    0    0    -1  
 $EndComp
+Text HLabel 6350 7950 0    50   Output ~ 0
+FPGA1_MOSI
+Text Label 8100 7800 0    50   ~ 0
+MCU_MOSI
+Wire Wire Line
+	7300 7950 6850 7950
+Text Label 7300 7950 2    50   ~ 0
+MCU_MOSI
+Wire Wire Line
+	6350 7950 6400 7950
+Wire Wire Line
+	6800 8150 6850 8150
+Wire Wire Line
+	6850 8150 6850 8050
+Connection ~ 6850 7950
+Wire Wire Line
+	6850 7950 6800 7950
+Text Label 8100 7700 0    50   ~ 0
+MCU_MISO
+Text HLabel 6350 8650 0    50   Input ~ 0
+FPGA1_MISO
+Wire Wire Line
+	7300 8650 6850 8650
+Wire Wire Line
+	6350 8650 6400 8650
+Wire Wire Line
+	6800 8850 6850 8850
+Wire Wire Line
+	6850 8850 6850 8750
+Connection ~ 6850 8650
+Wire Wire Line
+	6850 8650 6800 8650
+Text Label 7300 8650 2    50   ~ 0
+MCU_MISO
+Wire Wire Line
+	6800 8050 6850 8050
+Connection ~ 6850 8050
+Wire Wire Line
+	6850 8050 6850 7950
+Wire Wire Line
+	6800 8750 6850 8750
+Connection ~ 6850 8750
+Wire Wire Line
+	6850 8750 6850 8650
+$Comp
+L Device:R_Pack04 RN502
+U 1 1 60744EAD
+P 6600 8850
+F 0 "RN502" V 6183 8850 50  0000 C CNN
+F 1 "R_Pack04" V 6274 8850 50  0000 C CNN
+F 2 "Resistor_SMD:R_Array_Concave_4x0402" V 6875 8850 50  0001 C CNN
+F 3 "~" H 6600 8850 50  0001 C CNN
+	1    6600 8850
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6800 8950 6850 8950
+Wire Wire Line
+	6850 8950 6850 8850
+Connection ~ 6850 8850
+Text HLabel 20050 4800 2    50   Output ~ 0
+FPGA2_nSS
+Wire Wire Line
+	20050 4800 20000 4800
+Text HLabel 20050 4900 2    50   Output ~ 0
+FPGA3_nSS
+Wire Wire Line
+	20050 4900 20000 4900
+$Comp
+L Device:R_Pack04 RN501
+U 1 1 5FF05057
+P 6600 8150
+F 0 "RN501" V 6183 8150 50  0000 C CNN
+F 1 "R_Pack04" V 6274 8150 50  0000 C CNN
+F 2 "Resistor_SMD:R_Array_Concave_4x0402" V 6875 8150 50  0001 C CNN
+F 3 "~" H 6600 8150 50  0001 C CNN
+	1    6600 8150
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6800 8250 6850 8250
+Wire Wire Line
+	6850 8250 6850 8150
+Connection ~ 6850 8150
+NoConn ~ 6400 8250
+NoConn ~ 6400 8050
+NoConn ~ 6400 8150
+NoConn ~ 6400 8750
+NoConn ~ 6400 8850
+NoConn ~ 6400 8950
+Text HLabel 8550 7900 0    50   Output ~ 0
+TRIG_EN
+Text HLabel 8550 8000 0    50   Output ~ 0
+TRIG_OUT
+Text HLabel 8550 8100 0    50   Input ~ 0
+TRIG_IN
+Wire Wire Line
+	8550 8100 8600 8100
+Wire Wire Line
+	8600 8000 8550 8000
+Wire Wire Line
+	8550 7900 8600 7900
+Text HLabel 8550 7400 0    50   Output ~ 0
+MCU_AD_RFS
+Wire Wire Line
+	8600 7400 8550 7400
+NoConn ~ 8600 5300
+NoConn ~ 8600 5400
+NoConn ~ 8600 5500
+NoConn ~ 8600 4200
+NoConn ~ 8600 4100
+NoConn ~ 8600 3900
+NoConn ~ 8600 3800
 Wire Bus Line
 	6900 5700 6900 7100
 Wire Bus Line

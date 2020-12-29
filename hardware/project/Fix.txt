@@ -1,6 +1,6 @@
 1. Forgot to add +18VF and -18VF to the selftest circuit. Need to change TL072 to TL074 in Base PCB. Status : OPEN
 2. 74LVC1GU04DRL too small footprint. Need to change the component. Status: OPEN
 3. Make LT3032 pads larger. Status : OPEN
-4. Socket with header have distance 11 mm not 10 mm as intendent. Status: OPEN
+4. Socket with header have distance 11 mm not 10 mm as intendent. Status: DONE (distance of 11 mm will be used)
 5. DG419Lx has a lower supply voltage then DG419Dx. Status: DONE
 6. Wrong 1nF packaged ordered, was 0306 should be 0603. Status: OPEN 

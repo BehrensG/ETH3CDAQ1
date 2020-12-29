@@ -1,5 +1,9 @@
 EESchema-DOCLIB  Version 2.0
 #
+$CMP ASAAIG-xxx
+K Crystal Clock Oscillator ECS SMD
+$ENDCMP
+#
 $CMP MT48LC16M16A2P-6A
 D 256Mb Synchronous DRAM, 4 Mb x 16 b x 4 Banks, Cu leadframe plated with matte Sn, TSOP-II-54
 K DRAM MEMORY

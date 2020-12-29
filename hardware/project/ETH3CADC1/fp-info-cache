@@ -1,4 +1,4 @@
-18847009818584323
+18848725533611323
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -50724,6 +50724,13 @@ COUPLED INDUCTOR  WE-TDC 8038
 ETH3CDAQ1
 AQY212GS
 Load current greatly increased using next-generation MOSFET High Capacity 4-pin Type
+
+0
+4
+4
+ETH3CDAQ1
+ASAAIG
+Automotive & Industrial Grade Miniature SMD Crystal Oscillator
 
 0
 4
