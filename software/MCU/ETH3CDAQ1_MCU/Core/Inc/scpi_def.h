@@ -5,7 +5,7 @@
 
 #define SCPI_INPUT_BUFFER_LENGTH 512
 #define SCPI_ERROR_QUEUE_SIZE 17
-#define SCPI_IDN1 "Diehl"
+#define SCPI_IDN1 "Diehl Controls"
 #define SCPI_IDN2 "ETH3CDAQ1"
 #define SCPI_IDN3 "0.01"
 #define SCPI_IDN4 "SN000000000001"

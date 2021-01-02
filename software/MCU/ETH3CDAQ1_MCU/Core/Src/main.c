@@ -119,50 +119,6 @@ int main(void)
   MX_LWIP_Init();
   SDRAM_Initialization_Sequence(&hsdram2, &command);
 
-
-  uint32_t i = 1;
-  	uint32_t j = 0;
-  	uint32_t l = 0;
-
-  	uint32_t TxBuffer32[] = { 0x01234567, 0x1248ABCD, 0x23456789 };
-
-  	uint32_t RxBuffer32[3] ={0, 0, 0};
-
-  	// Assign SDRAM address to pointer
-
-  	uint32_t *test32;
-
-  	test32 = 0xD0000000;
-
-  	// 32bit write
-
-  	//GPIOG->BSRR = 0x00000200; // PG9 trigger
-
-  	for (uint32_t k = 0; k < 100000; k++) {
-
-  		for (i = 0; i < 3; i++) {
-  			*(test32 + i) = TxBuffer32[i];
-  		}
-  		// 32bit read
-  		for (i = 0; i < 3; i++) {
-  			RxBuffer32[i] = *(test32 + i);
-  		}
-
-  		if (TxBuffer32[0] != RxBuffer32[0]) {
-  			j = j + 1;
-  		}
-  		if (TxBuffer32[1] != RxBuffer32[1]) {
-  			j = j + 1;
-  		}
-  		if (TxBuffer32[2] != RxBuffer32[2]) {
-  			j = j + 1;
-  		}
-
-
-  	}
-
-  	j = j;
-
   /* USER CODE END 2 */
 
   /* Init scheduler */

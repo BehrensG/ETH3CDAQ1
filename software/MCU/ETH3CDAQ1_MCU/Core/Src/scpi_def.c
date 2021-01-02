@@ -44,8 +44,19 @@
 #include "cmsis_os.h"
 
 
+char string[500] = {'\0'};
+
+
 static scpi_result_t TEST_TSQ(scpi_t * context)
 {
+
+	for(uint32_t x = 0; x < 60; x++)
+	{
+
+		sprintf(string,"Test data value test data value: %d",x+10000000);
+		SCPI_ResultCharacters(context, string, 41);
+	}
+
 	return SCPI_RES_OK;
 }
 

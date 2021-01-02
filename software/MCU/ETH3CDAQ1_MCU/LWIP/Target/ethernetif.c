@@ -433,7 +433,7 @@ static void low_level_init(struct netif *netif)
 
 static err_t low_level_output(struct netif *netif, struct pbuf *p)
 {
-  uint32_t i=0;
+  uint32_t i=0, framelen = 0;
   struct pbuf *q;
   err_t errval = ERR_OK;
   ETH_BufferTypeDef Txbuffer[ETH_TX_DESC_CNT];
@@ -447,6 +447,9 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 
     Txbuffer[i].buffer = q->payload;
     Txbuffer[i].len = q->len;
+    framelen += q->len;
+
+    SCB_CleanDCache_by_Addr((uint32_t *)q->payload, q->len);
 
     if(i>0)
     {
@@ -461,7 +464,7 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
     i++;
   }
 
-  TxConfig.Length =  p->tot_len;
+  TxConfig.Length =  framelen;
   TxConfig.TxBuffer = Txbuffer;
 
   HAL_ETH_Transmit(&heth, &TxConfig, ETH_DMA_TRANSMIT_TIMEOUT);
@@ -534,6 +537,7 @@ void ethernetif_input(void* argument)
     {
       do
       {
+    	LOCK_TCPIP_CORE();
         p = low_level_input( netif );
         if (p != NULL)
         {
@@ -542,6 +546,7 @@ void ethernetif_input(void* argument)
             pbuf_free(p);
           }
         }
+        UNLOCK_TCPIP_CORE();
       } while(p!=NULL);
     }
   }

@@ -1,8 +1,8 @@
 (export (version D)
   (design
     (source /home/grzegorz/git/ETH3CDAQ1/hardware/project/ETH3CDAQ1_CURRENT_ISO_T1/ETH3CDAQ1_CURRENT_ISO_T1.sch)
-    (date "Mon Dec 14 12:14:13 2020")
-    (tool "Eeschema 5.1.8")
+    (date "Sat Jan  2 01:13:24 2021")
+    (tool "Eeschema 5.1.9")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
         (title)
@@ -63,7 +63,7 @@
       (sheetpath (names /) (tstamps /))
       (tstamp 5FC25841))
     (comp (ref U6)
-      (value 24LC08B-E/MS)
+      (value 24LC024T-I/MS)
       (footprint Package_SO:MSOP-8_3x3mm_P0.65mm)
       (datasheet http://ww1.microchip.com/downloads/en/DeviceDoc/21710J.pdf)
       (libsource (lib Memory_EEPROM) (part 24LC08) (description "I2C Serial EEPROM, 8Kb, DIP-8/SOIC-8/TSSOP-8/DFN-8"))
@@ -105,7 +105,7 @@
       (sheetpath (names /) (tstamps /))
       (tstamp 5FCA6E01))
     (comp (ref U1)
-      (value DG419xY)
+      (value DG419DY)
       (footprint Package_SO:SOIC-8_3.9x4.9mm_P1.27mm)
       (datasheet https://datasheets.maximintegrated.com/en/ds/DG417-DG419.pdf)
       (libsource (lib Analog_Switch) (part DG419xY) (description "Single SPDT Monolithic CMOS Analog Switch, 20Ohm Ron, SOIC-8"))
