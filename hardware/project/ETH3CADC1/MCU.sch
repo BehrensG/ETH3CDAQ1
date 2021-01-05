@@ -716,8 +716,6 @@ NoConn ~ 8600 5200
 NoConn ~ 8600 6900
 NoConn ~ 20000 4100
 NoConn ~ 20000 8400
-NoConn ~ 20000 8700
-NoConn ~ 20000 8800
 $Comp
 L Device:C C413
 U 1 1 5DF2F119
@@ -1643,18 +1641,6 @@ Wire Wire Line
 Wire Wire Line
 	8550 2600 7700 2600
 Connection ~ 7700 2600
-Wire Wire Line
-	20500 6500 20000 6500
-Text Label 20500 6500 2    50   ~ 0
-MCU_SR_DAT
-Wire Wire Line
-	20000 6700 20500 6700
-Text Label 20500 6700 2    50   ~ 0
-MCU_SR_CLK
-Wire Wire Line
-	20000 6600 20500 6600
-Text Label 20500 6600 2    50   ~ 0
-MCU_SR_LAT
 Text HLabel 8550 7600 0    50   Output ~ 0
 FPGAx_SCLK
 Wire Wire Line
@@ -1776,9 +1762,9 @@ Wire Wire Line
 Wire Wire Line
 	15800 13350 15800 13300
 Text Label 16300 13450 2    50   ~ 0
-EEPROM_SDA
+MODULE_SDA
 Text Label 16300 13550 2    50   ~ 0
-EEPROM_SCL
+MODULE_SCL
 Wire Wire Line
 	16300 13450 15700 13450
 Wire Wire Line
@@ -2072,7 +2058,7 @@ U 1 1 60744EAD
 P 6600 8850
 F 0 "RN402" V 6183 8850 50  0000 C CNN
 F 1 "R_Pack04" V 6274 8850 50  0000 C CNN
-F 2 "Resistor_SMD:R_Array_Concave_4x0402" V 6875 8850 50  0001 C CNN
+F 2 "Resistor_SMD:R_Array_Concave_4x0603" V 6875 8850 50  0001 C CNN
 F 3 "~" H 6600 8850 50  0001 C CNN
 	1    6600 8850
 	0    1    1    0   
@@ -2082,21 +2068,13 @@ Wire Wire Line
 Wire Wire Line
 	6850 8950 6850 8850
 Connection ~ 6850 8850
-Text HLabel 20050 4800 2    50   Output ~ 0
-FPGA2_nSS
-Wire Wire Line
-	20050 4800 20000 4800
-Text HLabel 20050 4900 2    50   Output ~ 0
-FPGA3_nSS
-Wire Wire Line
-	20050 4900 20000 4900
 $Comp
 L Device:R_Pack04 RN401
 U 1 1 5FF05057
 P 6600 8150
 F 0 "RN401" V 6183 8150 50  0000 C CNN
 F 1 "R_Pack04" V 6274 8150 50  0000 C CNN
-F 2 "Resistor_SMD:R_Array_Concave_4x0402" V 6875 8150 50  0001 C CNN
+F 2 "Resistor_SMD:R_Array_Concave_4x0603" V 6875 8150 50  0001 C CNN
 F 3 "~" H 6600 8150 50  0001 C CNN
 	1    6600 8150
 	0    1    1    0   
@@ -2135,6 +2113,19 @@ NoConn ~ 8600 4200
 NoConn ~ 8600 4100
 NoConn ~ 8600 3900
 NoConn ~ 8600 3800
+Text Label 20500 8700 2    50   ~ 0
+MODULE_SDA
+Text Label 20500 8800 2    50   ~ 0
+MODULE_SCL
+Wire Wire Line
+	20500 8700 20000 8700
+Wire Wire Line
+	20500 8800 20000 8800
+NoConn ~ 20000 6500
+NoConn ~ 20000 6600
+NoConn ~ 20000 6700
+NoConn ~ 20000 4800
+NoConn ~ 20000 4900
 Wire Bus Line
 	6900 5700 6900 7100
 Wire Bus Line

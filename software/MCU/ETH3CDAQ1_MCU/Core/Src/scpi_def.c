@@ -42,21 +42,17 @@
 #include "scpi/scpi.h"
 #include "main.h"
 #include "cmsis_os.h"
+#include "scpi_system.h"
+#include "scpi_test.h"
+#include "bsp.h"
 
-
-char string[500] = {'\0'};
+extern float sdram_ch1[];
 
 
 static scpi_result_t TEST_TSQ(scpi_t * context)
 {
-
-	for(uint32_t x = 0; x < 60; x++)
-	{
-
-		sprintf(string,"Test data value test data value: %d",x+10000000);
-		SCPI_ResultCharacters(context, string, 41);
-	}
-
+	sdram_ch1[2621430]  = 2.112233;
+	SCPI_ResultFloat(context, sdram_ch1[2621430]);
 	return SCPI_RES_OK;
 }
 
@@ -115,6 +111,29 @@ const scpi_command_t scpi_commands[] = {
     {.pattern = "SYSTem:ERRor[:NEXT]?", .callback = SCPI_SystemErrorNextQ,},
     {.pattern = "SYSTem:ERRor:COUNt?", .callback = SCPI_SystemErrorCountQ,},
     {.pattern = "SYSTem:VERSion?", .callback = SCPI_SystemVersionQ,},
+
+	{.pattern = "SYSTem:COMMunicate:LAN:IPADdress", .callback = SCPI_SystemCommunicateLANIPAddress,},
+	{.pattern = "SYSTem:COMMunicate:LAN:IPADdress?", .callback = SCPI_SystemCommunicateLANIPAddressQ,},
+	{.pattern = "SYSTem:COMMunicate:LAN:SMASk", .callback = SCPI_SystemCommunicateLANIPSmask,},
+	{.pattern = "SYSTem:COMMunicate:LAN:SMASk?", .callback = SCPI_SystemCommunicateLANIPSmaskQ,},
+	{.pattern = "SYSTem:COMMunicate:LAN:GATEway", .callback = SCPI_SystemCommunicateLANGateway,},
+	{.pattern = "SYSTem:COMMunicate:LAN:GATEway?", .callback = SCPI_SystemCommunicateLANGatewayQ,},
+	{.pattern = "SYSTem:COMMunicate:LAN:MAC", .callback = SCPI_SystemCommunicateLANMAC,},
+	{.pattern = "SYSTem:COMMunicate:LAN:MAC?", .callback = SCPI_SystemCommunicateLANMACQ,},
+	{.pattern = "SYSTem:COMMunicate:LAN:PORT", .callback = SCPI_SystemCommunicateLANPort,},
+	{.pattern = "SYSTem:COMMunicate:LAN:PORT?", .callback = SCPI_SystemCommunicateLANPortQ,},
+	{.pattern = "SYSTem:COMMunication:LAN:UPDate", .callback = SCPI_SystemCommunicationLanUpdate,},
+	{.pattern = "SYSTem:SERVice:EEPROM", .callback = SCPI_SystemServiceEEPROM,},
+	{.pattern = "SYSTem:SERVice:ID", .callback = SCPI_SystemServiceID,},
+	{.pattern = "SYSTem:SECure:STATe", .callback = SCPI_SystemSecureState,},
+	{.pattern = "SYSTem:SECure:STATe?", .callback = SCPI_SystemSecureStateQ,},
+	{.pattern = "SYSTem:TEMPerature?", .callback = SCPI_SystemTemperatureQ,},
+	{.pattern = "SYSTem:TEMPerature:UNIT", .callback = SCPI_SystemTemperatureUnit,},
+	{.pattern = "SYSTem:TEMPerature:UNIT?", .callback = SCPI_SystemTemperatureUnitQ,},
+	{.pattern = "SYSTem:HUMIdity?", .callback = SCPI_SystemHumidityQ,},
+
+	{.pattern = "TEST:VOLtage?", .callback = SCPI_TestVoltageQ,},
+	{.pattern = "TEST:SDRAM?", .callback = SCPI_TestSDRAMQ,},
 
 	{.pattern = "TS?", .callback = TEST_TSQ,},
 

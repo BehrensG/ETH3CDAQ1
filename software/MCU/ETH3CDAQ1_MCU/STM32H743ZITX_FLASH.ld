@@ -45,7 +45,11 @@ MEMORY
     RAM_D1 (xrw)      : ORIGIN = 0x24000000, LENGTH = 512K
     RAM_D2 (xrw)      : ORIGIN = 0x30000000, LENGTH = 288K
     RAM_D3 (xrw)      : ORIGIN = 0x38000000, LENGTH = 64K
-    ITCMRAM (xrw)      : ORIGIN = 0x00000000, LENGTH = 64K
+    ITCMRAM (xrw)     : ORIGIN = 0x00000000, LENGTH = 64K
+    XRAM_D1 (xrw)     : ORIGIN = 0xD0000000, LENGTH = 10M
+    XRAM_D2 (xrw)     : ORIGIN = 0xD0A00000, LENGTH = 10M
+    XRAM_D3 (xrw)     : ORIGIN = 0xD1400000, LENGTH = 10M
+    XRAM_D4 (xrw)     : ORIGIN = 0xD1E00000, LENGTH = 2M
 }
 
 /* Sections */
@@ -184,6 +188,23 @@ SECTIONS
     . = ABSOLUTE(0x30040200);
     *(.RxArraySection) 
   } >RAM_D2
+  
+    .xram_d1 (NOLOAD) : {
+    *(.xram_d1*);
+    }>XRAM_D1
+  
+    .xram_d2 (NOLOAD) : {
+    *(.xram_d2*);
+    }>XRAM_D2
+    
+    .xram_d3 (NOLOAD) : {
+    *(.xram_d3*);
+    }>XRAM_D3
+    
+    .xram_d4 (NOLOAD) : {
+    *(.xram_d4*);
+    }>XRAM_D4
+    
   /* Modification end */
   
   /* Remove information from the compiler libraries */

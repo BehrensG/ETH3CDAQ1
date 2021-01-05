@@ -137,6 +137,8 @@
   * @param  None
   * @retval None
   */
+
+
 void SystemInit (void)
 {
 #if defined (DATA_IN_D2_SRAM)
@@ -405,7 +407,6 @@ void SystemCoreClockUpdate (void)
   SystemCoreClock = common_system_clock;
 #endif /* DUAL_CORE && CORE_CM4 */
 }
-
 
 /**
   * @}
