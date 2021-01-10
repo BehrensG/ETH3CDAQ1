@@ -46,10 +46,7 @@ MEMORY
     RAM_D2 (xrw)      : ORIGIN = 0x30000000, LENGTH = 288K
     RAM_D3 (xrw)      : ORIGIN = 0x38000000, LENGTH = 64K
     ITCMRAM (xrw)     : ORIGIN = 0x00000000, LENGTH = 64K
-    XRAM_D1 (xrw)     : ORIGIN = 0xD0000000, LENGTH = 10M
-    XRAM_D2 (xrw)     : ORIGIN = 0xD0A00000, LENGTH = 10M
-    XRAM_D3 (xrw)     : ORIGIN = 0xD1400000, LENGTH = 10M
-    XRAM_D4 (xrw)     : ORIGIN = 0xD1E00000, LENGTH = 2M
+    XRAM (xrw)     : ORIGIN = 0xD0000000, LENGTH = 16M
 }
 
 /* Sections */
@@ -189,21 +186,11 @@ SECTIONS
     *(.RxArraySection) 
   } >RAM_D2
   
-    .xram_d1 (NOLOAD) : {
-    *(.xram_d1*);
-    }>XRAM_D1
-  
-    .xram_d2 (NOLOAD) : {
-    *(.xram_d2*);
-    }>XRAM_D2
-    
-    .xram_d3 (NOLOAD) : {
-    *(.xram_d3*);
-    }>XRAM_D3
-    
-    .xram_d4 (NOLOAD) : {
-    *(.xram_d4*);
-    }>XRAM_D4
+    .xram (NOLOAD) : {
+    . = ALIGN(4);
+    *(.xram*);
+    . = ALIGN(4);
+    }>XRAM
     
   /* Modification end */
   

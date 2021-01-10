@@ -516,33 +516,29 @@ Wire Wire Line
 Text Label 4650 1400 2    50   ~ 0
 iCE_CDONE
 Wire Wire Line
-	3200 2400 2700 2400
-Text Label 2700 2400 0    50   ~ 0
+	1600 2300 1100 2300
+Text Label 1100 2300 0    50   ~ 0
 FPGA_CLK
 Wire Wire Line
-	1600 1700 1550 1700
-Text HLabel 1550 1700 0    50   Output ~ 0
+	1600 2700 1550 2700
+Text HLabel 1550 2700 0    50   Output ~ 0
 FPGA1_AD_IIN
-Text HLabel 1550 1800 0    50   Output ~ 0
+Text HLabel 1550 2500 0    50   Output ~ 0
 FGPA1_AD_IRN
-Text HLabel 1550 1500 0    50   Output ~ 0
+Text HLabel 4950 2500 0    50   Output ~ 0
 FGPA1_AD_ID
-Text HLabel 1550 1600 0    50   Output ~ 0
+Text HLabel 4950 2700 0    50   Output ~ 0
 FGPA1_AD_IRP
-Text HLabel 1550 1400 0    50   Output ~ 0
+Text HLabel 1550 2200 0    50   Output ~ 0
 FGPA1_AD_VRH
 Wire Wire Line
-	1550 1800 1600 1800
-Text HLabel 1550 1900 0    50   Input ~ 0
-ADC_COMP1
+	1550 2500 1600 2500
 Wire Wire Line
-	1550 1900 1600 1900
+	4950 2500 5000 2500
 Wire Wire Line
-	1550 1500 1600 1500
+	1550 2200 1600 2200
 Wire Wire Line
-	1550 1400 1600 1400
-Wire Wire Line
-	1550 1600 1600 1600
+	4950 2700 5000 2700
 $Comp
 L Device:C C1301
 U 1 1 6095E27E
@@ -654,17 +650,8 @@ F 3 "" H 7150 1750 50  0001 C CNN
 	1    7150 1750
 	1    0    0    -1  
 $EndComp
-NoConn ~ 1600 2400
-NoConn ~ 1600 2500
-NoConn ~ 1600 2600
-NoConn ~ 1600 2700
-NoConn ~ 1600 2800
-NoConn ~ 1600 2900
-NoConn ~ 1600 3000
 NoConn ~ 3200 2600
-NoConn ~ 3200 2500
 NoConn ~ 3200 2300
-NoConn ~ 3200 2200
 NoConn ~ 3200 2100
 NoConn ~ 3200 2000
 NoConn ~ 3200 1900
@@ -758,20 +745,20 @@ Connection ~ 3150 1400
 Wire Wire Line
 	2650 1400 3150 1400
 Wire Wire Line
-	5000 2300 4950 2300
+	3200 2400 3150 2400
 Wire Wire Line
-	5000 2400 4950 2400
+	3200 2500 3150 2500
 Wire Wire Line
-	5000 2500 4950 2500
+	1600 1500 1550 1500
 Wire Wire Line
-	5000 2600 4950 2600
-Text HLabel 4950 2300 0    50   BiDi ~ 0
+	3200 2200 3150 2200
+Text HLabel 3150 2400 0    50   BiDi ~ 0
 FGPA1_MISO
-Text HLabel 4950 2400 0    50   BiDi ~ 0
+Text HLabel 3150 2500 0    50   BiDi ~ 0
 FGPA1_MOSI
-Text HLabel 4950 2500 0    50   BiDi ~ 0
+Text HLabel 1550 1500 0    50   BiDi ~ 0
 FGPA1_nSS
-Text HLabel 4950 2600 0    50   BiDi ~ 0
+Text HLabel 3150 2200 0    50   BiDi ~ 0
 FGPA1_SCLK
 NoConn ~ 5000 3000
 $Comp
@@ -823,18 +810,18 @@ $EndComp
 Wire Wire Line
 	1950 4700 2350 4700
 NoConn ~ 850  4700
-Text HLabel 1550 2000 0    50   Output ~ 0
+Text HLabel 1550 2600 0    50   Output ~ 0
 FPGA1_MUX_ADIN
-Text HLabel 1550 2200 0    50   Output ~ 0
+Text HLabel 1550 3000 0    50   Output ~ 0
 FPGA1_MUX_GND
-Text HLabel 1550 2100 0    50   Output ~ 0
+Text HLabel 1550 2900 0    50   Output ~ 0
 FPGA1_MUX_P10V
 Wire Wire Line
-	1600 2200 1550 2200
+	1600 3000 1550 3000
 Wire Wire Line
-	1550 2100 1600 2100
+	1550 2900 1600 2900
 Wire Wire Line
-	1600 2000 1550 2000
+	1600 2600 1550 2600
 $Comp
 L Device:C C1305
 U 1 1 6002C46D
@@ -862,10 +849,10 @@ Wire Wire Line
 	1250 6950 1700 6950
 NoConn ~ 5000 2800
 NoConn ~ 5000 2900
-Text HLabel 1550 2300 0    50   Output ~ 0
+Text HLabel 1550 2800 0    50   Output ~ 0
 FPGA1_MUX_N7V
 Wire Wire Line
-	1600 2300 1550 2300
+	1600 2800 1550 2800
 Connection ~ 8550 1150
 Wire Wire Line
 	7150 1800 7400 1800
@@ -886,7 +873,6 @@ $EndComp
 Wire Wire Line
 	9500 2700 9450 2700
 Connection ~ 9450 2700
-NoConn ~ 5000 2700
 Connection ~ 9050 1150
 Wire Wire Line
 	9050 1150 9450 1150
@@ -897,4 +883,18 @@ Wire Wire Line
 	9050 1800 9500 1800
 Wire Wire Line
 	8150 1800 9050 1800
+NoConn ~ 5000 2300
+NoConn ~ 5000 2600
+NoConn ~ 1600 2100
+NoConn ~ 1600 2000
+NoConn ~ 1600 1700
+NoConn ~ 1600 1800
+NoConn ~ 1600 1400
+NoConn ~ 1600 1600
+NoConn ~ 1600 1900
+Text HLabel 4950 2400 0    50   Input ~ 0
+ADC_COMP1
+Wire Wire Line
+	4950 2400 5000 2400
+NoConn ~ 1600 2400
 $EndSCHEMATC

@@ -24,7 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "bsp.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,10 +93,8 @@ void StartTaskLEDStatus(void *argument);
 static void SDRAM_Initialization_Sequence(SDRAM_HandleTypeDef *hsdram, FMC_SDRAM_CommandTypeDef *Command);
 
 
-__attribute__((section(".xram_d1"))) float sdram_ch1[SDRAM_CHx_MEAS_MAX];
-__attribute__((section(".xram_d2"))) float sdram_ch2[SDRAM_CHx_MEAS_MAX];
-__attribute__((section(".xram_d3"))) float sdram_ch3[SDRAM_CHx_MEAS_MAX];
-__attribute__((section(".xram_d4"))) uint32_t sdram_ch3[2621440];
+
+__attribute__((section(".xram"))) float sdram_meas[CHANNELS][SDRAM_CHx_SAMPLES_MAX];
 
 /* USER CODE END 0 */
 
