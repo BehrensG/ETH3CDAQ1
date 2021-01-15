@@ -433,42 +433,43 @@ static void low_level_init(struct netif *netif)
 
 static err_t low_level_output(struct netif *netif, struct pbuf *p)
 {
-	  uint32_t i=0, framelen = 0;
-	  struct pbuf *q;
-	  err_t errval = ERR_OK;
-	  ETH_BufferTypeDef Txbuffer[ETH_TX_DESC_CNT];
+  uint32_t i=0, framelen = 0;
+  struct pbuf *q;
+  err_t errval = ERR_OK;
+  ETH_BufferTypeDef Txbuffer[ETH_TX_DESC_CNT];
 
-	  memset(Txbuffer, 0 , ETH_TX_DESC_CNT*sizeof(ETH_BufferTypeDef));
+  memset(Txbuffer, 0 , ETH_TX_DESC_CNT*sizeof(ETH_BufferTypeDef));
 
-	  for(q = p; q != NULL; q = q->next)
-	  {
-	    if(i >= ETH_TX_DESC_CNT)
-	      return ERR_IF;
+  for(q = p; q != NULL; q = q->next)
+  {
+    if(i >= ETH_TX_DESC_CNT)
+      return ERR_IF;
 
-	    Txbuffer[i].buffer = q->payload;
-	    Txbuffer[i].len = q->len;
-	    framelen += q->len;
+    Txbuffer[i].buffer = q->payload;
+    Txbuffer[i].len = q->len;
+    framelen += q->len;
 
-	    SCB_CleanDCache_by_Addr((uint32_t *)q->payload, q->len);
+    SCB_CleanDCache_by_Addr((uint32_t *)q->payload, q->len);
 
-	    if(i>0)
-	    {
-	      Txbuffer[i-1].next = &Txbuffer[i];
-	    }
+    if(i>0)
+    {
+      Txbuffer[i-1].next = &Txbuffer[i];
+    }
 
-	    if(q->next == NULL)
-	    {
-	      Txbuffer[i].next = NULL;
-	    }
+    if(q->next == NULL)
+    {
+      Txbuffer[i].next = NULL;
+    }
 
-	    i++;
-	  }
+    i++;
+  }
 
-	  TxConfig.Length =  framelen;
-	  TxConfig.TxBuffer = Txbuffer;
+  TxConfig.Length =  framelen;
+  TxConfig.TxBuffer = Txbuffer;
 
-	  HAL_ETH_Transmit(&heth, &TxConfig, ETH_DMA_TRANSMIT_TIMEOUT);
-	  return errval;
+  HAL_ETH_Transmit(&heth, &TxConfig, ETH_DMA_TRANSMIT_TIMEOUT);
+
+  return errval;
 }
 
 /**
@@ -527,28 +528,28 @@ static struct pbuf * low_level_input(struct netif *netif)
  */
 void ethernetif_input(void* argument)
 {
-	  struct pbuf *p;
-	  struct netif *netif = (struct netif *) argument;
+  struct pbuf *p;
+  struct netif *netif = (struct netif *) argument;
 
-	  for( ;; )
-	  {
-	    if (osSemaphoreAcquire(RxPktSemaphore, TIME_WAITING_FOR_INPUT) == osOK)
-	    {
-	      do
-	      {
-	    	LOCK_TCPIP_CORE();
-	        p = low_level_input( netif );
-	        if (p != NULL)
-	        {
-	          if (netif->input( p, netif) != ERR_OK )
-	          {
-	            pbuf_free(p);
-	          }
-	        }
-	        UNLOCK_TCPIP_CORE();
-	      } while(p!=NULL);
-	    }
-	  }
+  for( ;; )
+  {
+    if (osSemaphoreAcquire(RxPktSemaphore, TIME_WAITING_FOR_INPUT) == osOK)
+    {
+      do
+      {
+    	LOCK_TCPIP_CORE();
+        p = low_level_input( netif );
+        if (p != NULL)
+        {
+          if (netif->input( p, netif) != ERR_OK )
+          {
+            pbuf_free(p);
+          }
+        }
+        UNLOCK_TCPIP_CORE();
+      } while(p!=NULL);
+    }
+  }
 
 }
 

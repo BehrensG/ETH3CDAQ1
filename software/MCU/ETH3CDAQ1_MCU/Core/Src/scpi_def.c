@@ -47,20 +47,18 @@
 #include "bsp.h"
 
 extern I2C_HandleTypeDef hi2c4;
+extern SPI_HandleTypeDef hspi5;
 
 static scpi_result_t TEST_TSQ(scpi_t * context)
 {
-	HAL_StatusTypeDef status;
-	uint8_t tx_data[3] = {0x08,0x11,0x00};
-	uint8_t rx_data[2] = {0x00,0x00};
-	uint16_t test;
-	for(uint8_t x = 0; x < 8; x++)
-	{
-		tx_data[2] = x;
-		status = HAL_I2C_Master_Transmit(&hi2c4, TLA2528_ADDRESS, tx_data, 3, 1000);
-		status = HAL_I2C_Master_Receive(&hi2c4, TLA2528_ADDRESS | TLA2528_READ, rx_data, 2, 1000);
-		test = (rx_data[0] <<8)+ rx_data[1];
-	}
+	HAL_StatusTypeDef spi_status;
+	uint8_t tx_data[3] = {0x10, 0x15, 0xFF};
+	HAL_GPIO_WritePin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin, 0);
+	//HAL_GPIO_WritePin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin, 0);
+	spi_status = HAL_SPI_Transmit(&hspi5, tx_data, 3, 1000);
+	HAL_GPIO_WritePin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin, 1);
+	//HAL_GPIO_WritePin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin, 1);
+	//HAL_GPIO_WritePin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin, 0);
 
 	return SCPI_RES_OK;
 }

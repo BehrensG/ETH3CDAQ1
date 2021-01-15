@@ -92,8 +92,6 @@ void StartTaskLEDStatus(void *argument);
 
 static void SDRAM_Initialization_Sequence(SDRAM_HandleTypeDef *hsdram, FMC_SDRAM_CommandTypeDef *Command);
 
-
-
 __attribute__((section(".xram"))) float sdram_meas[CHANNELS][SDRAM_CHx_SAMPLES_MAX];
 
 /* USER CODE END 0 */
@@ -442,8 +440,8 @@ static void MX_SPI5_Init(void)
   hspi5.Instance = SPI5;
   hspi5.Init.Mode = SPI_MODE_MASTER;
   hspi5.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi5.Init.DataSize = SPI_DATASIZE_4BIT;
-  hspi5.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi5.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi5.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi5.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi5.Init.NSS = SPI_NSS_SOFT;
   hspi5.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
@@ -541,16 +539,22 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOE, SR_DAT_Pin|SR_LAT_Pin|SR_CLK_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOF, DAC_nSYNC_Pin|DAC_LDAC_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, IN_DEFAULT_Pin|LED_RED_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(IN_DEFAULT_GPIO_Port, IN_DEFAULT_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(EEPROM_WP_GPIO_Port, EEPROM_WP_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, LED_GREEN_Pin|LED_BLUE_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOG, LED_GREEN_Pin|LED_BLUE_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, GPIO_PIN_RESET);
@@ -562,12 +566,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DAC_nSYNC_Pin DAC_LDAC_Pin */
-  GPIO_InitStruct.Pin = DAC_nSYNC_Pin|DAC_LDAC_Pin;
+  /*Configure GPIO pin : DAC_nSYNC_Pin */
+  GPIO_InitStruct.Pin = DAC_nSYNC_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(DAC_nSYNC_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : DAC_LDAC_Pin */
+  GPIO_InitStruct.Pin = DAC_LDAC_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(DAC_LDAC_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : IN_DEFAULT_Pin LED_RED_Pin */
   GPIO_InitStruct.Pin = IN_DEFAULT_Pin|LED_RED_Pin;
