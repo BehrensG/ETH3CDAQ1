@@ -69,33 +69,33 @@ static HAL_StatusTypeDef HDC1080_write_reg(I2C_HandleTypeDef *hi2c, uint8_t reg,
 	  return HAL_OK;  /* Success */
 }
 
-HAL_StatusTypeDef HDC1080_measure_temperature(I2C_HandleTypeDef *hi2c, double *temperature)
+HAL_StatusTypeDef HDC1080_measure_temperature(I2C_HandleTypeDef *hi2c, float *temperature)
 {
 	HAL_StatusTypeDef error;
-	double tmp = 0.0;
+	float tmp = 0.0;
 	uint16_t readout = 0x00;
 
 	error = HDC1080_read_reg(hi2c, 150, HDC1080_TEMPERATURE, &readout);
 	if (error != HAL_OK) return error;
 
-	tmp = (double)readout;
+	tmp = (float)readout;
 	tmp = (tmp / 65536.0) * 165.0 - 40.0;
 	*temperature = tmp;  // °C
 
 	return HAL_OK;
 }
 
-HAL_StatusTypeDef HDC1080_measure_humidity(I2C_HandleTypeDef *hi2c, double *humidity)
+HAL_StatusTypeDef HDC1080_measure_humidity(I2C_HandleTypeDef *hi2c, float *humidity)
 {
 	HAL_StatusTypeDef error;
-	double tmp = 0.0;
+	float tmp = 0.0;
 	uint16_t readout = 0x00;
 
 
 	error = HDC1080_read_reg(hi2c, 150, HDC1080_HUMIDITY, &readout);
 	if (error != HAL_OK) return error;
 
-	tmp = (double)readout;
+	tmp = (float)readout;
 	tmp = (tmp / 65536.0) * 100.0;
 	if (tmp>100.0) tmp = 100.0;
 	if (tmp<0) tmp = 0.0;

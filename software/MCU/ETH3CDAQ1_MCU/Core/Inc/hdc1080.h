@@ -28,7 +28,7 @@
 #define HDC1080_T_RES_11 		0x01
 
 
-HAL_StatusTypeDef HDC1080_measure_temperature(I2C_HandleTypeDef *hi2c, double *temperature);
-HAL_StatusTypeDef HDC1080_measure_humidity(I2C_HandleTypeDef *hi2c, double *humidity);
+HAL_StatusTypeDef HDC1080_measure_temperature(I2C_HandleTypeDef *hi2c, float *temperature);
+HAL_StatusTypeDef HDC1080_measure_humidity(I2C_HandleTypeDef *hi2c, float *humidity);
 
 #endif /* INC_HDC1080_H_ */

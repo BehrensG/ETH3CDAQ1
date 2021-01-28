@@ -32,7 +32,7 @@ static HAL_StatusTypeDef Test_Voltage(float results[])
 		status = HAL_I2C_Master_Transmit(&hi2c4, TLA2528_ADDRESS, tx_data, 3, 1000);
 		HAL_Delay(2);
 		status = HAL_I2C_Master_Receive(&hi2c4, TLA2528_ADDRESS | TLA2528_READ, rx_data, 2, 1000);
-		results[x] = div_factor[x]*TLA2528_LSB*(float)((rx_data[0] <<8)+ rx_data[1]);
+		results[x] = div_factor[x]*TLA2528_VOLT_LSB*(float)((rx_data[0] <<8)+ rx_data[1]);
 	}
 
 	return status;

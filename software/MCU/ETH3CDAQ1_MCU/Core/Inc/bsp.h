@@ -11,6 +11,8 @@
 #include "stm32h7xx_hal.h"
 #include "scpi/scpi.h"
 
+/*************************************** SCPI ***************************************/
+
 #define SCPI_MANUFACTURER_STRING_LENGTH 16
 #define SCPI_DEVICE_STRING_LENGTH 16
 #define SCPI_SERIALNUMBER_STRING_LENGTH 16
@@ -18,6 +20,8 @@
 #define HOSTNAME_LENGTH 20
 #define PASSWORD_LENGTH 16
 #define PASSWORD "ETH3CDAQ1"
+
+/*************************************** ETHERNET ***************************************/
 
 #define IP_ADDRESS_0 192
 #define IP_ADDRESS_1 168
@@ -43,8 +47,12 @@
 
 #define TCPIP_DEFAULT_PORT 2000
 
+/*************************************** MCU ***************************************/
+
 #define MCU_DEFAULT_OFF 0
 #define MCU_DEFAULT_ON 1
+
+#define	SR_INVERT_MASK	0xFF
 
 #define MCU_SERVICE_SECURITY_OFF 0
 #define MCU_SERVICE_SECURITY_ON 1
@@ -54,6 +62,8 @@
 
 #define SDRAM_CHx_SAMPLES_MAX 1000000
 #define CHANNELS 3
+
+/*************************************** TLA2528 ***************************************/
 
 #define TLA2528_ADDRESS 			(0x17<<1)
 #define TLA2528_SINGLE_REG_READ 	0x10
@@ -67,13 +77,32 @@
 #define TLA2528_OSR_CHANNEL_SEL_REG	0x11
 #define TLA2528_OSR_16				0x04
 
-#define TLA2528_LSB					0.0000763
+#define TLA2528_VOLT_LSB			0.0000763
 
+/*************************************** I2C EEPROM ***************************************/
 
 #define EEPROM_BASE					0xA0
 #define EEPROM_CHANNEL1				0xA1
 #define EEPROM_CHANNEL2				0xA2
 #define EEPROM_CHANNEL3				0xA3
+
+/*************************************** MCU ***************************************/
+
+#define MCU_DEFAULT_OFF 0
+#define MCU_DEFAULT_ON 1
+
+#define	SR_INVERT_MASK	0xFF
+
+#define MCU_SERVICE_SECURITY_OFF 0
+#define MCU_SERVICE_SECURITY_ON 1
+
+#define MODULE_MAX_NUMBER 24
+#define EEPROM_CFG_SIZE 247
+
+#define SDRAM_CHx_SAMPLES_MAX 1000000
+#define CHANNELS 3
+
+
 
 #pragma pack(push, 1)
 

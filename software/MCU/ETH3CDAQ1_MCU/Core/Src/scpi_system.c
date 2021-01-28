@@ -637,7 +637,7 @@ scpi_result_t SCPI_SystemSecureStateQ(scpi_t * context)
 
 scpi_result_t SCPI_SystemTemperatureQ(scpi_t * context)
 {
-	double temperature = 0.0;
+	float temperature = 0.0;
 
 	HDC1080_measure_temperature(&hi2c3, &temperature);
 

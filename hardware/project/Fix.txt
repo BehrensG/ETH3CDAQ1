@@ -1,4 +1,4 @@
-1. Forgot to add +18VF and -18VF to the selftest circuit. Need to change TL072 to TL074 in Base PCB. Status : OPEN
+1. Forgot to add +18VF and -18VF to the selftest circuit. Need to change TL072 to TL074 in Base PCB. Status : DONE
 2. 74LVC1GU04DRL too small footprint. Need to change the component. Status: OPEN
 3. Make LT3032 pads larger. Status : OPEN
 4. Socket with header have distance 11 mm not 10 mm as intendent. Status: DONE (distance of 11 mm will be used)
