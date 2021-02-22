@@ -56,8 +56,10 @@
 #include "lwip/inet.h"
 #include "lwip/api.h"
 #include "queue.h"
+#include "led.h"
+#include "bsp.h"
 
-
+extern osThreadId_t LEDStatusHandle;
 
 #define DEVICE_PORT 2000
 #define CONTROL_PORT 2001
@@ -103,7 +105,7 @@ size_t SCPI_Write(scpi_t * context, const char * data, size_t len) {
     if (context->user_context != NULL) {
         user_data_t * u = (user_data_t *) (context->user_context);
         if (u->io) {
-        	vTaskDelay(1);
+        	osDelay(1);
         	return (netconn_write(u->io, data, len, NETCONN_NOFLAG) == ERR_OK) ? len : 0;
         }
     }
@@ -310,7 +312,10 @@ static int processIo(user_data_t * user_data) {
     netbuf_data(inbuf, (void**) &buf, &buflen);
 
     if (buflen > 0) {
+    	LED_Switch(LED_BUSY);
         SCPI_Input(&scpi_context, buf, buflen);
+        LED_Switch(LED_IDLE);
+
     } else {
         //goto fail2;
     }

@@ -5,7 +5,7 @@ $Descr A2 23386 16535
 encoding utf-8
 Sheet 4 17
 Title "MCU"
-Date "2020-03-07"
+Date "2021-01-31"
 Rev "1.00"
 Comp ""
 Comment1 ""
@@ -1353,7 +1353,6 @@ NoConn ~ 20000 3900
 NoConn ~ 20000 3800
 NoConn ~ 20000 3600
 NoConn ~ 20000 5300
-NoConn ~ 20000 6800
 NoConn ~ 20000 6900
 NoConn ~ 20000 9500
 NoConn ~ 8600 5900
@@ -1741,14 +1740,14 @@ Wire Wire Line
 	15700 13350 15800 13350
 Wire Wire Line
 	15800 13350 15800 13300
-Text Label 16300 13450 2    50   ~ 0
-MODULE_SDA
 Text Label 16300 13550 2    50   ~ 0
+MODULE_SDA
+Text Label 16300 13450 2    50   ~ 0
 MODULE_SCL
 Wire Wire Line
-	16300 13450 15700 13450
-Wire Wire Line
 	16300 13550 15700 13550
+Wire Wire Line
+	16300 13450 15700 13450
 Text HLabel 13700 13450 0    50   BiDi ~ 0
 I2C_SCL
 Text HLabel 13700 13550 0    50   BiDi ~ 0
@@ -2012,8 +2011,6 @@ NoConn ~ 8600 4200
 NoConn ~ 8600 4100
 NoConn ~ 8600 3900
 NoConn ~ 8600 3800
-NoConn ~ 20000 6600
-NoConn ~ 20000 6700
 NoConn ~ 20000 4800
 NoConn ~ 20000 4900
 NoConn ~ 8600 7900
@@ -2074,6 +2071,18 @@ Wire Wire Line
 	20050 8400 20000 8400
 Wire Wire Line
 	20350 8000 20900 8000
+Text HLabel 20050 6600 2    50   BiDi ~ 0
+FPGA1_CONV_STR
+Text HLabel 20050 6700 2    50   BiDi ~ 0
+FPGA2_CONV_STR
+Text HLabel 20050 6800 2    50   BiDi ~ 0
+FPGA3_CONV_STR
+Wire Wire Line
+	20050 6800 20000 6800
+Wire Wire Line
+	20000 6700 20050 6700
+Wire Wire Line
+	20050 6600 20000 6600
 Wire Bus Line
 	5550 5750 5550 7150
 Wire Bus Line

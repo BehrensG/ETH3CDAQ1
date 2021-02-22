@@ -34,6 +34,7 @@
  *
  */
 
+#include <DAC8564.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,20 +46,49 @@
 #include "scpi_system.h"
 #include "scpi_test.h"
 #include "bsp.h"
+#include "dwt_delay.h"
+#include "ADS8681.h"
 
 extern I2C_HandleTypeDef hi2c4;
 extern SPI_HandleTypeDef hspi5;
+extern SPI_HandleTypeDef hspi3;
+
+
 
 static scpi_result_t TEST_TSQ(scpi_t * context)
 {
-	HAL_StatusTypeDef spi_status;
-	uint8_t tx_data[3] = {0x10, 0x15, 0xFF};
-	HAL_GPIO_WritePin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin, 0);
-	//HAL_GPIO_WritePin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin, 0);
-	spi_status = HAL_SPI_Transmit(&hspi5, tx_data, 3, 1000);
-	HAL_GPIO_WritePin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin, 1);
-	//HAL_GPIO_WritePin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin, 1);
-	//HAL_GPIO_WritePin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin, 0);
+	/*HAL_StatusTypeDef status;
+
+	uint8_t tx_data[12] = {0xD4,0x02,0x00,0x01,0xD4,0x02,0x00,0x02,0xD4,0x02,0x00,0x03};
+	uint8_t rx_data[12];
+
+
+	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 0);
+	status = HAL_SPI_Transmit(&hspi3, tx_data, 12, 1000);
+	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 1);
+
+	tx_data[0] = 0x48;
+	tx_data[1] = 0x02;
+	tx_data[2] = 0x00;
+	tx_data[3] = 0x00;
+
+	tx_data[4] = 0x48;
+	tx_data[5] = 0x02;
+	tx_data[6] = 0x00;
+	tx_data[7] = 0x00;
+
+	tx_data[8] = 0x48;
+	tx_data[9] = 0x02;
+	tx_data[10] = 0x00;
+	tx_data[11] = 0x00;
+
+	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 0);
+	status = HAL_SPI_Transmit(&hspi3, tx_data, 12, 1000);
+	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 1);
+
+	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 0);
+	status = HAL_SPI_Receive(&hspi3, rx_data, 12, 1000);
+	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 1);*/
 
 	return SCPI_RES_OK;
 }

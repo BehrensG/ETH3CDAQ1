@@ -8,6 +8,8 @@
 #ifndef INC_DAC8564_H_
 #define INC_DAC8564_H_
 
+#include "main.h"
+
 #define DAC8564_LOAD		0x10
 #define DAC8564_DAC_A		0x00
 #define DAC8564_DAC_B		0x02

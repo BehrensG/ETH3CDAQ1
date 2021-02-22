@@ -4,8 +4,8 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 16 17
-Title ""
-Date ""
+Title "FPGA 3"
+Date "2021-01-31"
 Rev ""
 Comp ""
 Comment1 ""
@@ -648,7 +648,6 @@ F 3 "" H 7150 1750 50  0001 C CNN
 $EndComp
 NoConn ~ 3200 2600
 NoConn ~ 3200 2300
-NoConn ~ 3200 2100
 NoConn ~ 3200 1800
 NoConn ~ 3200 1700
 $Comp
@@ -989,4 +988,8 @@ F 3 "" H 4700 850 50  0001 C CNN
 $EndComp
 NoConn ~ 3200 1900
 NoConn ~ 3200 2000
+Text HLabel 3150 2100 0    50   BiDi ~ 0
+FPGA3_CONV_STR
+Wire Wire Line
+	3150 2100 3200 2100
 $EndSCHEMATC

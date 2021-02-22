@@ -11,6 +11,19 @@
 #include "stm32h7xx_hal.h"
 #include "scpi/scpi.h"
 
+
+/*************************************** MISC ***************************************/
+
+enum e_led
+{
+	LED_IDLE,
+	LED_BUSY,
+	LED_ERROR,
+};
+
+#define RED 1
+#define GREEN 0
+
 /*************************************** SCPI ***************************************/
 
 #define SCPI_MANUFACTURER_STRING_LENGTH 16
@@ -82,9 +95,9 @@
 /*************************************** I2C EEPROM ***************************************/
 
 #define EEPROM_BASE					0xA0
-#define EEPROM_CHANNEL1				0xA1
-#define EEPROM_CHANNEL2				0xA2
-#define EEPROM_CHANNEL3				0xA3
+#define EEPROM_CHANNEL1				0xA2
+#define EEPROM_CHANNEL2				0xA4
+#define EEPROM_CHANNEL3				0xA6
 
 /*************************************** MCU ***************************************/
 
@@ -146,7 +159,7 @@ typedef struct bsp_scpi_info bsp_scpi_info_t;
 typedef struct bsp_adc_calib bsp_adc_calib_t;
 typedef struct module_eeporm_list module_eeporm_list_t;
 
-union bsp_eeprom_union
+typedef union bsp_eeprom_union
 {
 	struct data
 	{
@@ -163,33 +176,40 @@ union bsp_eeprom_union
 		module_eeporm_list_t modules[MODULE_MAX_NUMBER];
 	}structure;
 	uint8_t bytes[EEPROM_CFG_SIZE];
-};
+
+}bsp_eeprom_union_t;
 
 #pragma pack(pop)
 
 // size 17
-struct bsp_security
+typedef struct bsp_security
 {
 	scpi_bool_t status;
-};
 
-struct bsp_trigger
+}bsp_security_t;
+
+typedef struct bsp_trigger
 {
 
 	uint8_t slope;
 	double delay;
 	uint8_t source;
-};
 
-struct bsp_temperature
+}bsp_trigger_t;
+
+typedef struct bsp_temperature
 {
 	uint8_t unit;
-};
 
-typedef union bsp_eeprom_union bsp_eeprom_union_t;
-typedef struct bsp_trigger bsp_trigger_t;
-typedef struct bsp_security bsp_security_t;
-typedef struct bsp_temperature bsp_temperature_t;
+}bsp_temperature_t;
+
+
+typedef struct bsp_module
+{
+	uint8_t mounted;
+	uint8_t valid;
+
+}bsp_module_t;
 
 struct _bsp
 {
@@ -198,6 +218,7 @@ struct _bsp
 	bsp_security_t security;
 	bsp_temperature_t temperature;
 	bsp_ip4_lan_t ip4;
+	bsp_module_t module[3];
 	uint8_t default_cfg;
 
 }bsp;

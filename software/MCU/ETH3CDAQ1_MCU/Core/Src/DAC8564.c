@@ -5,9 +5,8 @@
  *      Author: grzegorz
  */
 
-#include "main.h"
+#include "DAC8564.h"
 #include "bsp.h"
-#include "dac8564.h"
 
 extern SPI_HandleTypeDef hspi5;
 
@@ -30,9 +29,10 @@ HAL_StatusTypeDef DAC8564_Set_Voltage(uint8_t channel, double voltage)
 	tx_data[1] = (uint8_t)((data >> 8) & 0xFF);
 	tx_data[2] = (uint8_t)(data & 0xFF);
 
-	HAL_GPIO_WritePin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin, 0);
+
+	LL_GPIO_ResetOutputPin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin);
 	status = HAL_SPI_Transmit(&hspi5, tx_data, 3, 1000);
-	HAL_GPIO_WritePin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin, 1);
+	LL_GPIO_SetOutputPin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin);
 
 	return status;
 }

@@ -29,6 +29,16 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h7xx_hal.h"
+#include "stm32h7xx_hal.h"
+#include "stm32h7xx_ll_system.h"
+#include "stm32h7xx_ll_gpio.h"
+#include "stm32h7xx_ll_exti.h"
+#include "stm32h7xx_ll_bus.h"
+#include "stm32h7xx_ll_cortex.h"
+#include "stm32h7xx_ll_rcc.h"
+#include "stm32h7xx_ll_utils.h"
+#include "stm32h7xx_ll_pwr.h"
+#include "stm32h7xx_ll_dma.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -58,47 +68,47 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define SR_DAT_Pin GPIO_PIN_2
+#define SR_DAT_Pin LL_GPIO_PIN_2
 #define SR_DAT_GPIO_Port GPIOE
-#define SR_LAT_Pin GPIO_PIN_3
+#define SR_LAT_Pin LL_GPIO_PIN_3
 #define SR_LAT_GPIO_Port GPIOE
-#define SR_CLK_Pin GPIO_PIN_4
+#define SR_CLK_Pin LL_GPIO_PIN_4
 #define SR_CLK_GPIO_Port GPIOE
-#define DAC_nSYNC_Pin GPIO_PIN_6
+#define DAC_nSYNC_Pin LL_GPIO_PIN_6
 #define DAC_nSYNC_GPIO_Port GPIOF
-#define DAC_SCLK_Pin GPIO_PIN_7
+#define DAC_SCLK_Pin LL_GPIO_PIN_7
 #define DAC_SCLK_GPIO_Port GPIOF
-#define SPI5_NOT_USED_Pin GPIO_PIN_8
+#define SPI5_NOT_USED_Pin LL_GPIO_PIN_8
 #define SPI5_NOT_USED_GPIO_Port GPIOF
-#define DAC_DIN_Pin GPIO_PIN_9
+#define DAC_DIN_Pin LL_GPIO_PIN_9
 #define DAC_DIN_GPIO_Port GPIOF
-#define DAC_LDAC_Pin GPIO_PIN_10
+#define DAC_LDAC_Pin LL_GPIO_PIN_10
 #define DAC_LDAC_GPIO_Port GPIOF
-#define IN_DEFAULT_Pin GPIO_PIN_0
+#define IN_DEFAULT_Pin LL_GPIO_PIN_0
 #define IN_DEFAULT_GPIO_Port GPIOB
-#define LED_RED_Pin GPIO_PIN_12
+#define LED_RED_Pin LL_GPIO_PIN_12
 #define LED_RED_GPIO_Port GPIOB
-#define EEPROM_WP_Pin GPIO_PIN_11
+#define EEPROM_WP_Pin LL_GPIO_PIN_11
 #define EEPROM_WP_GPIO_Port GPIOD
-#define EEPROM_SCL_Pin GPIO_PIN_12
+#define EEPROM_SCL_Pin LL_GPIO_PIN_12
 #define EEPROM_SCL_GPIO_Port GPIOD
-#define EEPROM_SDA_Pin GPIO_PIN_13
+#define EEPROM_SDA_Pin LL_GPIO_PIN_13
 #define EEPROM_SDA_GPIO_Port GPIOD
-#define LED_GREEN_Pin GPIO_PIN_3
+#define LED_GREEN_Pin LL_GPIO_PIN_3
 #define LED_GREEN_GPIO_Port GPIOG
-#define LED_BLUE_Pin GPIO_PIN_6
+#define LED_BLUE_Pin LL_GPIO_PIN_6
 #define LED_BLUE_GPIO_Port GPIOG
-#define SENS_SDA_Pin GPIO_PIN_9
+#define SENS_SDA_Pin LL_GPIO_PIN_9
 #define SENS_SDA_GPIO_Port GPIOC
-#define SENS_SCL_Pin GPIO_PIN_8
+#define SENS_SCL_Pin LL_GPIO_PIN_8
 #define SENS_SCL_GPIO_Port GPIOA
-#define MCU_nCS_Pin GPIO_PIN_15
+#define MCU_nCS_Pin LL_GPIO_PIN_15
 #define MCU_nCS_GPIO_Port GPIOA
-#define MCU_CLK_Pin GPIO_PIN_10
+#define MCU_CLK_Pin LL_GPIO_PIN_10
 #define MCU_CLK_GPIO_Port GPIOC
-#define MCU_MISO_Pin GPIO_PIN_11
+#define MCU_MISO_Pin LL_GPIO_PIN_11
 #define MCU_MISO_GPIO_Port GPIOC
-#define MCU_MOSI_Pin GPIO_PIN_12
+#define MCU_MOSI_Pin LL_GPIO_PIN_12
 #define MCU_MOSI_GPIO_Port GPIOC
 /* USER CODE BEGIN Private defines */
 

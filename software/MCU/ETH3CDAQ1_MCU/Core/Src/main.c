@@ -25,6 +25,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "bsp.h"
+#include "led.h"
+#include "dwt_delay.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,6 +70,7 @@ const osThreadAttr_t LEDStatus_attributes = {
 /* USER CODE BEGIN PV */
 
 FMC_SDRAM_CommandTypeDef command;
+osMessageQueueId_t LEDMessageQueue;
 
 /* USER CODE END PV */
 
@@ -142,7 +145,7 @@ int main(void)
   HAL_Delay(100);
   MX_LWIP_Init();
   SDRAM_Initialization_Sequence(&hsdram2, &command);
-
+  DWT_Init();
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -392,7 +395,7 @@ static void MX_SPI3_Init(void)
   hspi3.Instance = SPI3;
   hspi3.Init.Mode = SPI_MODE_MASTER;
   hspi3.Init.Direction = SPI_DIRECTION_2LINES;
-  hspi3.Init.DataSize = SPI_DATASIZE_4BIT;
+  hspi3.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi3.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi3.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi3.Init.NSS = SPI_NSS_SOFT;
@@ -523,90 +526,105 @@ static void MX_FMC_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
+  LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOF_CLK_ENABLE();
-  __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOG_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
+  LL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOE);
+  LL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOF);
+  LL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOH);
+  LL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOC);
+  LL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOA);
+  LL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOB);
+  LL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOG);
+  LL_AHB4_GRP1_EnableClock(LL_AHB4_GRP1_PERIPH_GPIOD);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, SR_DAT_Pin|SR_LAT_Pin|SR_CLK_Pin, GPIO_PIN_RESET);
+  /**/
+  LL_GPIO_ResetOutputPin(GPIOE, SR_DAT_Pin|SR_LAT_Pin|SR_CLK_Pin);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin, GPIO_PIN_SET);
+  /**/
+  LL_GPIO_ResetOutputPin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin, GPIO_PIN_RESET);
+  /**/
+  LL_GPIO_ResetOutputPin(IN_DEFAULT_GPIO_Port, IN_DEFAULT_Pin);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(IN_DEFAULT_GPIO_Port, IN_DEFAULT_Pin, GPIO_PIN_RESET);
+  /**/
+  LL_GPIO_ResetOutputPin(EEPROM_WP_GPIO_Port, EEPROM_WP_Pin);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
+  /**/
+  LL_GPIO_SetOutputPin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(EEPROM_WP_GPIO_Port, EEPROM_WP_Pin, GPIO_PIN_RESET);
+  /**/
+  LL_GPIO_SetOutputPin(LED_RED_GPIO_Port, LED_RED_Pin);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, LED_GREEN_Pin|LED_BLUE_Pin, GPIO_PIN_SET);
+  /**/
+  LL_GPIO_SetOutputPin(GPIOG, LED_GREEN_Pin|LED_BLUE_Pin);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, GPIO_PIN_RESET);
+  /**/
+  LL_GPIO_SetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 
-  /*Configure GPIO pins : SR_DAT_Pin SR_LAT_Pin SR_CLK_Pin */
+  /**/
   GPIO_InitStruct.Pin = SR_DAT_Pin|SR_LAT_Pin|SR_CLK_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : DAC_nSYNC_Pin */
+  /**/
   GPIO_InitStruct.Pin = DAC_nSYNC_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(DAC_nSYNC_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
+  LL_GPIO_Init(DAC_nSYNC_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : DAC_LDAC_Pin */
+  /**/
   GPIO_InitStruct.Pin = DAC_LDAC_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(DAC_LDAC_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(DAC_LDAC_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : IN_DEFAULT_Pin LED_RED_Pin */
-  GPIO_InitStruct.Pin = IN_DEFAULT_Pin|LED_RED_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  /**/
+  GPIO_InitStruct.Pin = IN_DEFAULT_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(IN_DEFAULT_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : EEPROM_WP_Pin */
+  /**/
+  GPIO_InitStruct.Pin = LED_RED_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(LED_RED_GPIO_Port, &GPIO_InitStruct);
+
+  /**/
   GPIO_InitStruct.Pin = EEPROM_WP_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(EEPROM_WP_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(EEPROM_WP_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LED_GREEN_Pin LED_BLUE_Pin */
+  /**/
   GPIO_InitStruct.Pin = LED_GREEN_Pin|LED_BLUE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : MCU_nCS_Pin */
+  /**/
   GPIO_InitStruct.Pin = MCU_nCS_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(MCU_nCS_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
+  LL_GPIO_Init(MCU_nCS_GPIO_Port, &GPIO_InitStruct);
 
 }
 
@@ -731,10 +749,37 @@ void StartDefaultTask(void *argument)
 void StartTaskLEDStatus(void *argument)
 {
   /* USER CODE BEGIN StartTaskLEDStatus */
+
+	uint8_t led_color, tmp;
+	osStatus_t status;
+
+	led_color = 0;
+	tmp = 0;
+
   /* Infinite loop */
   for(;;)
   {
-    osDelay(100);
+	  status = osMessageQueueGet(LEDMessageQueue, &led_color, NULL, 0U);
+
+	  if(osOK == status)
+	  {
+		  tmp = led_color;
+	  }
+	  else
+	  {
+		  led_color = tmp;
+	  }
+
+	  if(RED == led_color)
+	  {
+		  LL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+	  }
+	  else
+	  {
+		  LL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+	  }
+
+	  osDelay(pdMS_TO_TICKS(500));
   }
   /* USER CODE END StartTaskLEDStatus */
 }

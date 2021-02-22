@@ -3,9 +3,9 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 12 17
-Title ""
-Date ""
+Sheet 15 17
+Title "CH2 Connector"
+Date "2021-01-31"
 Rev ""
 Comp ""
 Comment1 ""

@@ -5,6 +5,7 @@
  *      Author: grzegorz
  */
 
+#include <HDC1080.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +14,6 @@
 #include "scpi_def.h"
 #include "scpi_system.h"
 #include "scpi/scpi.h"
-#include "hdc1080.h"
 #include "bsp.h"
 
 extern I2C_HandleTypeDef hi2c3;

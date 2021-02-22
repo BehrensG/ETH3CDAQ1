@@ -1,4 +1,4 @@
-#include "74hc595.h"
+#include "74HC595.h"
 #include "bsp.h"
 
 unsigned char  shiftRegisters[2] = {0x00}; //2 means 2 74HC595 IC
@@ -75,17 +75,17 @@ void ShiftRegister74HC595_clear(void){
 
 void LatchPinSet(PinState595 state)
 {
-    HAL_GPIO_WritePin(SR_LAT_GPIO_Port, SR_LAT_Pin, (GPIO_PinState)state);
+	state ? LL_GPIO_SetOutputPin(SR_LAT_GPIO_Port, SR_LAT_Pin) : LL_GPIO_ResetOutputPin(SR_LAT_GPIO_Port, SR_LAT_Pin);
 }
 
 void ClockPinSet(PinState595 state)
 {
-    HAL_GPIO_WritePin(SR_CLK_GPIO_Port, SR_CLK_Pin, (GPIO_PinState)state);
+	state ? LL_GPIO_SetOutputPin(SR_CLK_GPIO_Port, SR_CLK_Pin) : LL_GPIO_ResetOutputPin(SR_CLK_GPIO_Port, SR_CLK_Pin);
 }
 
 void SerialDataPinSet(PinState595 state)
 {
-    HAL_GPIO_WritePin(SR_DAT_GPIO_Port, SR_DAT_Pin, (GPIO_PinState)state);
+	state ? LL_GPIO_SetOutputPin(SR_DAT_GPIO_Port, SR_DAT_Pin) : LL_GPIO_ResetOutputPin(SR_DAT_GPIO_Port, SR_DAT_Pin);
 }
 
 

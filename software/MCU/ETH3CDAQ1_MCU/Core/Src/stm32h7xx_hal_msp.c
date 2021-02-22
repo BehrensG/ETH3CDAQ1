@@ -99,19 +99,19 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
     PC9     ------> I2C3_SDA
     PA8     ------> I2C3_SCL
     */
-    GPIO_InitStruct.Pin = SENS_SDA_Pin;
+    GPIO_InitStruct.Pin = GPIO_PIN_9;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF4_I2C3;
-    HAL_GPIO_Init(SENS_SDA_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = SENS_SCL_Pin;
+    GPIO_InitStruct.Pin = GPIO_PIN_8;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF4_I2C3;
-    HAL_GPIO_Init(SENS_SCL_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
     /* Peripheral clock enable */
     __HAL_RCC_I2C3_CLK_ENABLE();
@@ -130,7 +130,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
     PD12     ------> I2C4_SCL
     PD13     ------> I2C4_SDA
     */
-    GPIO_InitStruct.Pin = EEPROM_SCL_Pin|EEPROM_SDA_Pin;
+    GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -166,9 +166,9 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
     PC9     ------> I2C3_SDA
     PA8     ------> I2C3_SCL
     */
-    HAL_GPIO_DeInit(SENS_SDA_GPIO_Port, SENS_SDA_Pin);
+    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_9);
 
-    HAL_GPIO_DeInit(SENS_SCL_GPIO_Port, SENS_SCL_Pin);
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_8);
 
   /* USER CODE BEGIN I2C3_MspDeInit 1 */
 
@@ -186,9 +186,9 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
     PD12     ------> I2C4_SCL
     PD13     ------> I2C4_SDA
     */
-    HAL_GPIO_DeInit(EEPROM_SCL_GPIO_Port, EEPROM_SCL_Pin);
+    HAL_GPIO_DeInit(GPIOD, GPIO_PIN_12);
 
-    HAL_GPIO_DeInit(EEPROM_SDA_GPIO_Port, EEPROM_SDA_Pin);
+    HAL_GPIO_DeInit(GPIOD, GPIO_PIN_13);
 
   /* USER CODE BEGIN I2C4_MspDeInit 1 */
 
@@ -220,10 +220,10 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     PC11     ------> SPI3_MISO
     PC12     ------> SPI3_MOSI
     */
-    GPIO_InitStruct.Pin = MCU_CLK_Pin|MCU_MISO_Pin|MCU_MOSI_Pin;
+    GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
@@ -245,19 +245,19 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     PF8     ------> SPI5_MISO
     PF9     ------> SPI5_MOSI
     */
-    GPIO_InitStruct.Pin = DAC_SCLK_Pin|DAC_DIN_Pin;
+    GPIO_InitStruct.Pin = GPIO_PIN_7|GPIO_PIN_9;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI5;
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = SPI5_NOT_USED_Pin;
+    GPIO_InitStruct.Pin = GPIO_PIN_8;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI5;
-    HAL_GPIO_Init(SPI5_NOT_USED_GPIO_Port, &GPIO_InitStruct);
+    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /* USER CODE BEGIN SPI5_MspInit 1 */
 
@@ -287,7 +287,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
     PC11     ------> SPI3_MISO
     PC12     ------> SPI3_MOSI
     */
-    HAL_GPIO_DeInit(GPIOC, MCU_CLK_Pin|MCU_MISO_Pin|MCU_MOSI_Pin);
+    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_10|GPIO_PIN_11|GPIO_PIN_12);
 
   /* USER CODE BEGIN SPI3_MspDeInit 1 */
 
@@ -306,7 +306,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
     PF8     ------> SPI5_MISO
     PF9     ------> SPI5_MOSI
     */
-    HAL_GPIO_DeInit(GPIOF, DAC_SCLK_Pin|SPI5_NOT_USED_Pin|DAC_DIN_Pin);
+    HAL_GPIO_DeInit(GPIOF, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9);
 
   /* USER CODE BEGIN SPI5_MspDeInit 1 */
 

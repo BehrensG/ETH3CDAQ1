@@ -5,7 +5,7 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 6 17
 Title "Trigger"
-Date "2020-03-07"
+Date "2021-01-31"
 Rev "1.00"
 Comp ""
 Comment1 ""

@@ -4,8 +4,8 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 3 17
-Title ""
-Date ""
+Title "VREF"
+Date "2021-01-31"
 Rev ""
 Comp ""
 Comment1 ""
