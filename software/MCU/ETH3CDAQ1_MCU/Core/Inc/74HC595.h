@@ -27,4 +27,5 @@ void ShiftRegister74HC595_setAll(bool_t val);
 void ShiftRegister74HC595_setPin(int index, bool_t val);
 void ShiftRegister74HC595_update(void);
 void ShiftRegister74HC595_init(void);
+
 #endif

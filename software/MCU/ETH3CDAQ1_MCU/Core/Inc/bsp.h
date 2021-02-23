@@ -101,6 +101,16 @@ enum e_led
 
 /*************************************** MCU ***************************************/
 
+
+typedef enum
+{
+  BSP_OK       			= 0x00,
+  BSP_ERROR    			= 0x01,
+  BSP_BUSY     			= 0x02,
+  BSP_TIMEOUT  			= 0x03,
+  BSP_ADC_CONFIG_ERROR 	= 0x04
+} BSP_StatusTypeDef;
+
 #define MCU_DEFAULT_OFF 0
 #define MCU_DEFAULT_ON 1
 

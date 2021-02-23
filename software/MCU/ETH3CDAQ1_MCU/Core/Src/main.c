@@ -146,6 +146,7 @@ int main(void)
   MX_LWIP_Init();
   SDRAM_Initialization_Sequence(&hsdram2, &command);
   DWT_Init();
+  ADS868x_Init();
   /* USER CODE END 2 */
 
   /* Init scheduler */

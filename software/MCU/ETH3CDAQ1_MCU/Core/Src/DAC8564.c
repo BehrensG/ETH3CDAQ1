@@ -6,7 +6,6 @@
  */
 
 #include "DAC8564.h"
-#include "bsp.h"
 
 extern SPI_HandleTypeDef hspi5;
 
@@ -19,9 +18,9 @@ static uint16_t DAC8564_Calculate_Data(double voltage)
 	return (uint16_t)data;
 }
 
-HAL_StatusTypeDef DAC8564_Set_Voltage(uint8_t channel, double voltage)
+BSP_StatusTypeDef DAC8564_Set_Voltage(uint8_t channel, double voltage)
 {
-	HAL_SPI_StateTypeDef status;
+	BSP_StatusTypeDef status;
 	uint8_t tx_data[3];
 	uint16_t data = DAC8564_Calculate_Data(voltage);
 

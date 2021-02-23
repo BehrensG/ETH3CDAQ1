@@ -57,38 +57,37 @@ extern SPI_HandleTypeDef hspi3;
 
 static scpi_result_t TEST_TSQ(scpi_t * context)
 {
-	/*HAL_StatusTypeDef status;
+	HAL_StatusTypeDef status;
+
 
 	uint8_t tx_data[12] = {0xD4,0x02,0x00,0x01,0xD4,0x02,0x00,0x02,0xD4,0x02,0x00,0x03};
 	uint8_t rx_data[12];
 
-
-	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 0);
+	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 	status = HAL_SPI_Transmit(&hspi3, tx_data, 12, 1000);
-	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 1);
+	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
+	DWT_Delay_us(1);
 
 	tx_data[0] = 0x48;
 	tx_data[1] = 0x02;
 	tx_data[2] = 0x00;
 	tx_data[3] = 0x00;
-
 	tx_data[4] = 0x48;
 	tx_data[5] = 0x02;
 	tx_data[6] = 0x00;
 	tx_data[7] = 0x00;
-
 	tx_data[8] = 0x48;
 	tx_data[9] = 0x02;
 	tx_data[10] = 0x00;
 	tx_data[11] = 0x00;
 
-	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 0);
+	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 	status = HAL_SPI_Transmit(&hspi3, tx_data, 12, 1000);
-	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 1);
-
-	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 0);
+	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
+	DWT_Delay_us(1);
+	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 	status = HAL_SPI_Receive(&hspi3, rx_data, 12, 1000);
-	HAL_GPIO_WritePin(MCU_nCS_GPIO_Port, MCU_nCS_Pin, 1);*/
+	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 
 	return SCPI_RES_OK;
 }

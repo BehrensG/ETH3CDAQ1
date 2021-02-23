@@ -9,6 +9,7 @@
 #define INC_HDC1080_H_
 
 #include "stm32h7xx_hal.h"
+#include "bsp.h"
 
 #define HDC1080_ADDR 			0x40
 #define HDC1080_TEMPERATURE 	0x00
@@ -28,7 +29,7 @@
 #define HDC1080_T_RES_11 		0x01
 
 
-HAL_StatusTypeDef HDC1080_measure_temperature(I2C_HandleTypeDef *hi2c, float *temperature);
-HAL_StatusTypeDef HDC1080_measure_humidity(I2C_HandleTypeDef *hi2c, float *humidity);
+BSP_StatusTypeDef HDC1080_measure_temperature(I2C_HandleTypeDef *hi2c, float *temperature);
+BSP_StatusTypeDef HDC1080_measure_humidity(I2C_HandleTypeDef *hi2c, float *humidity);
 
 #endif /* INC_HDC1080_H_ */

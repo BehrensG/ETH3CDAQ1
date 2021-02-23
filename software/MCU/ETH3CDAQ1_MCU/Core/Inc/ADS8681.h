@@ -9,7 +9,7 @@
 #define INC_ADS8681_H_
 
 #include "main.h"
-
+#include "bsp.h"
 
 #define DEVICE_ID_REG 	0x00
 #define RST_PWRCTL_REG	0x04
@@ -29,7 +29,12 @@
 #define WRITE_LSB		0xD4
 #define SET_HWORD		0xD8
 
-HAL_StatusTypeDef ADS868x_Init(void);
+#define ADS8681_ID1		0x01
+#define ADS8681_ID2		0x02
+#define ADS8681_ID3		0x03
+
+
+BSP_StatusTypeDef ADS868x_Init(void);
 void ADS8681_CONV_TIME();
 
 #endif /* INC_ADS8681_H_ */
