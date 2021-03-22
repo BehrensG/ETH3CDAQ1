@@ -19,6 +19,12 @@ typedef enum
 }bool_t;
 
 
+#define CHx_M_IN 	0x02
+#define CHx_M_GND	0x04
+#define CHx_M_DAC	0x08
+#define CHx_LPF		0x10
+
+
 void SerialDataPinSet(PinState595 state);
 void ClockPinSet(PinState595 state);
 void LatchPinSet(PinState595 state);

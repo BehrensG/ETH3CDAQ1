@@ -107,7 +107,7 @@ static uint8_t SCPI_StringToIP4Array(const int8_t* ip_string, uint8_t* ip_array)
 
 static uint8_t SCPI_StringToMACArray(const uint8_t* MAC_string, uint8_t* MAC_array)
 {
-    int32_t values[6];
+    uint32_t values[6];
 
     if(6 == sscanf(MAC_string, "%x:%x:%x:%x:%x:%x%*c",
     &values[0], &values[1], &values[2],

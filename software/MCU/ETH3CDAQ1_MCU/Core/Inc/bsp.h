@@ -76,6 +76,10 @@ enum e_led
 #define SDRAM_CHx_SAMPLES_MAX 1000000
 #define CHANNELS 3
 
+#define CHANNEL1	0
+#define CHANNEL2	1
+#define CHANNEL3	2
+
 /*************************************** TLA2528 ***************************************/
 
 #define TLA2528_ADDRESS 			(0x17<<1)

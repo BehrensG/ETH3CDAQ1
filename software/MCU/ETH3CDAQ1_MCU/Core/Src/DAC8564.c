@@ -18,6 +18,17 @@ static uint16_t DAC8564_Calculate_Data(double voltage)
 	return (uint16_t)data;
 }
 
+BSP_StatusTypeDef DAC8564_Init(void)
+{
+	BSP_StatusTypeDef status;
+
+	status = DAC8564_Set_Voltage(DAC8564_DAC_A, 1.0);
+	status = DAC8564_Set_Voltage(DAC8564_DAC_B, 1.0);
+	status = DAC8564_Set_Voltage(DAC8564_DAC_C, 1.0);
+
+	return status;
+}
+
 BSP_StatusTypeDef DAC8564_Set_Voltage(uint8_t channel, double voltage)
 {
 	BSP_StatusTypeDef status;

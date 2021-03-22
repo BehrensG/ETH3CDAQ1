@@ -57,9 +57,12 @@ extern SPI_HandleTypeDef hspi3;
 
 static scpi_result_t TEST_TSQ(scpi_t * context)
 {
-	HAL_StatusTypeDef status;
+	BSP_StatusTypeDef status;
+	uint16_t raw_data[3];
 
+	status = ADS8681_Raw_Data(raw_data);
 
+/*
 	uint8_t tx_data[12] = {0xD4,0x02,0x00,0x01,0xD4,0x02,0x00,0x02,0xD4,0x02,0x00,0x03};
 	uint8_t rx_data[12];
 
@@ -88,7 +91,7 @@ static scpi_result_t TEST_TSQ(scpi_t * context)
 	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 	status = HAL_SPI_Receive(&hspi3, rx_data, 12, 1000);
 	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-
+*/
 	return SCPI_RES_OK;
 }
 

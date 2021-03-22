@@ -1,13 +1,13 @@
 #include "74HC595.h"
 #include "bsp.h"
 
-unsigned char  shiftRegisters[2] = {0x00}; //2 means 2 74HC595 IC
+unsigned char  shiftRegisters[3] = {0x00}; //3 means 3x 74HC595 IC
 
 void ShiftRegister74HC595_dalay(void)
 {
-    unsigned int i;    
-    for(i = 0; i < 10000; i ++);
+	HAL_Delay(1);
 }
+
 //IO init
 void ShiftRegister74HC595_init(void)
 {
@@ -22,27 +22,28 @@ void ShiftRegister74HC595_update(void)
     LatchPinSet(LOW595);
     shiftRegisters[0] ^=SR_INVERT_MASK;
     shiftRegisters[1] ^=SR_INVERT_MASK;
+    shiftRegisters[2] ^=SR_INVERT_MASK;
+
 
     //iterate through the registers
     for(i = Number_of_Registers - 1; i >=  0; i--){
-        
+
         //iterate through the bits in each registers
         for(j = 8 - 1; j >=  0; j--){
-            
+        	ShiftRegister74HC595_dalay();
             ClockPinSet(LOW595);
             
             int val = shiftRegisters[i] & (1 << j);
             
             SerialDataPinSet((PinState595)val);
-			//ShiftRegister74HC595_dalay();
-					HAL_Delay(1);
+			ShiftRegister74HC595_dalay();
+			//		HAL_Delay(1);
             ClockPinSet(HIGH595);
             
         }
         
     }
-		//ShiftRegister74HC595_dalay();
-		HAL_Delay(1);
+		ShiftRegister74HC595_dalay();
 		LatchPinSet(HIGH595);
 
 }

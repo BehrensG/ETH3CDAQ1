@@ -23,5 +23,6 @@
 
 
 BSP_StatusTypeDef DAC8564_Set_Voltage(uint8_t channel, double voltage);
+BSP_StatusTypeDef DAC8564_Init(void);
 
 #endif /* INC_DAC8564_H_ */

@@ -27,6 +27,7 @@
 #include "bsp.h"
 #include "led.h"
 #include "dwt_delay.h"
+#include "DG211.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -146,7 +147,10 @@ int main(void)
   MX_LWIP_Init();
   SDRAM_Initialization_Sequence(&hsdram2, &command);
   DWT_Init();
-  ADS868x_Init();
+  DG211_Init();
+  DAC8564_Init();
+  ADS8681_Init();
+  //DG211_ResetAll();
   /* USER CODE END 2 */
 
   /* Init scheduler */
