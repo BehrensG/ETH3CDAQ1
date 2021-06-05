@@ -8,12 +8,6 @@ void ShiftRegister74HC595_dalay(void)
 	HAL_Delay(1);
 }
 
-//IO init
-void ShiftRegister74HC595_init(void)
-{
-    //set your IO
-}
-
 void ShiftRegister74HC595_update(void)
 {
     //Set and display registers

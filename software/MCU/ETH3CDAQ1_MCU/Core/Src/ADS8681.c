@@ -6,7 +6,8 @@
  */
 
 #include "ADS8681.h"
-#include "dwt_delay.h"
+
+double ADS8681_LSB[5] = {0.000375000, 0.000312500, 0.000187500, 0.000156250, 0.000078125};
 
 extern SPI_HandleTypeDef hspi3;
 
@@ -18,11 +19,12 @@ static BSP_StatusTypeDef ADS8681_Write_HWORD(uint8_t* cmd, uint8_t* reg, uint16_
 static BSP_StatusTypeDef ADS8681_Read_LSB(uint8_t* data);
 static void ADS8681_Convertion_Time(void);
 
+
 BSP_StatusTypeDef ADS8681_Raw_Data(uint16_t* raw_data)
 {
 	BSP_StatusTypeDef status;
 
-	uint8_t rx_data[12];
+	volatile uint8_t rx_data[12];
 
 	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 	ADS8681_Convertion_Time();
@@ -59,6 +61,10 @@ BSP_StatusTypeDef ADS8681_Init(void)
 		return status;
 	}
 
+	bsp.adc[0].range = ADS8681_RANGE_3VREF;
+	bsp.adc[1].range = ADS8681_RANGE_3VREF;
+	bsp.adc[2].range = ADS8681_RANGE_3VREF;
+
 	status = ADS8681_Set_Data_Output();
 
 	return status;
@@ -91,12 +97,47 @@ static BSP_StatusTypeDef ADS8681_Set_Data_Output(void)
 
 }
 
+
+BSP_StatusTypeDef ADS8681_Set_Range(uint8_t range[])
+{
+	uint8_t cmd[3]={0,0,0};
+	uint8_t reg[3]={0,0,0};
+	uint8_t tx_data[3]={0,0,0};
+	uint8_t rx_data[3]={0,0,0};
+
+	BSP_StatusTypeDef status;
+
+	cmd[0] = WRITE_LSB;
+	cmd[1] = WRITE_LSB;
+	cmd[2] = WRITE_LSB;
+
+	reg[0] = RANGE_SEL_REG;
+	reg[1] = RANGE_SEL_REG;
+	reg[2] = RANGE_SEL_REG;
+
+	tx_data[2] = range[2];
+	tx_data[1] = range[1];
+	tx_data[0] = range[0];
+
+	status = ADS8681_Write_LSB(cmd, reg, tx_data);
+
+	if(BSP_OK != status)
+	{
+		return status;
+	}
+
+	DWT_Delay_us(10);
+
+
+	return BSP_OK;
+}
+
 static BSP_StatusTypeDef ADS8681_Set_ID(void)
 {
-	uint8_t cmd[3];
-	uint8_t reg[3];
-	uint8_t tx_data[3];
-	uint8_t rx_data[3];
+	uint8_t cmd[3]={0,0,0};
+	uint8_t reg[3]={0,0,0};
+	uint8_t tx_data[3]={0,0,0};
+	uint8_t rx_data[3]={0,0,0};
 
 	BSP_StatusTypeDef status;
 
@@ -272,7 +313,7 @@ static BSP_StatusTypeDef ADS8681_Write_LSB(uint8_t* cmd, uint8_t* reg, uint8_t* 
 static void ADS8681_Convertion_Time(void)
 {
     uint32_t startTick = DWT->CYCCNT,
-             delayTicks = 9 * (SystemCoreClock/15000000);
+             delayTicks = 2 * (SystemCoreClock/15000000);
 
     while (DWT->CYCCNT - startTick < delayTicks);
 }

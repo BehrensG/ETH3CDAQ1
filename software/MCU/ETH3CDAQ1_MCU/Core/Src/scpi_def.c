@@ -48,50 +48,51 @@
 #include "bsp.h"
 #include "dwt_delay.h"
 #include "ADS8681.h"
+#include "DAC8564.h"
+#include "74HC595.h"
+#include "measure.h"
 
 extern I2C_HandleTypeDef hi2c4;
 extern SPI_HandleTypeDef hspi5;
 extern SPI_HandleTypeDef hspi3;
 
-
-
 static scpi_result_t TEST_TSQ(scpi_t * context)
 {
 	BSP_StatusTypeDef status;
-	uint16_t raw_data[3];
+	uint8_t matrix[3] = {CHx_M_DAC, CHx_M_DAC, CHx_M_DAC};
+	float tmp[3]={0,0,0};
+	uint8_t range[3] = {0,0,0};
+	float values[600];
 
-	status = ADS8681_Raw_Data(raw_data);
+	DAC8564_Set_Voltage(DAC8564_DAC_A,1.0);
+	DAC8564_Set_Voltage(DAC8564_DAC_B,2.0);
+	DAC8564_Set_Voltage(DAC8564_DAC_C,3.0);
 
-/*
-	uint8_t tx_data[12] = {0xD4,0x02,0x00,0x01,0xD4,0x02,0x00,0x02,0xD4,0x02,0x00,0x03};
-	uint8_t rx_data[12];
+	DG211_Switch(matrix);
+	osDelay(pdMS_TO_TICKS(5));
 
-	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-	status = HAL_SPI_Transmit(&hspi3, tx_data, 12, 1000);
-	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-	DWT_Delay_us(1);
+	status=ADS8681_Set_Range(range);
 
-	tx_data[0] = 0x48;
-	tx_data[1] = 0x02;
-	tx_data[2] = 0x00;
-	tx_data[3] = 0x00;
-	tx_data[4] = 0x48;
-	tx_data[5] = 0x02;
-	tx_data[6] = 0x00;
-	tx_data[7] = 0x00;
-	tx_data[8] = 0x48;
-	tx_data[9] = 0x02;
-	tx_data[10] = 0x00;
-	tx_data[11] = 0x00;
+	for (uint8_t x = 0; x < 200; x++)
+	{
 
-	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-	status = HAL_SPI_Transmit(&hspi3, tx_data, 12, 1000);
-	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-	DWT_Delay_us(1);
-	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-	status = HAL_SPI_Receive(&hspi3, rx_data, 12, 1000);
-	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-*/
+		status = MEAS_GetValues(tmp);
+		//osDelay(pdMS_TO_TICKS(1));
+		if(BSP_OK == status)
+		{
+			values[3*x]=tmp[0];
+			values[3*x+1]=tmp[1];
+			values[3*x+2]=tmp[2];
+		}
+		else
+		{
+			break;
+		}
+
+	}
+
+	SCPI_ResultArrayFloat(context, values, 600, SCPI_FORMAT_ASCII);
+
 	return SCPI_RES_OK;
 }
 

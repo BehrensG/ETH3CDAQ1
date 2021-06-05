@@ -225,6 +225,12 @@ typedef struct bsp_module
 
 }bsp_module_t;
 
+typedef struct bsp_adc
+{
+	float zero_offset;
+	uint8_t range;
+}bsp_adc_t;
+
 struct _bsp
 {
 	bsp_eeprom_union_t eeprom;
@@ -233,6 +239,7 @@ struct _bsp
 	bsp_temperature_t temperature;
 	bsp_ip4_lan_t ip4;
 	bsp_module_t module[3];
+	bsp_adc_t adc[3];
 	uint8_t default_cfg;
 
 }bsp;
