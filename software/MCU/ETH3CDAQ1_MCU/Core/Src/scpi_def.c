@@ -35,6 +35,7 @@
  */
 
 #include <DAC8564.h>
+#include <samples.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,6 +46,8 @@
 #include "cmsis_os.h"
 #include "scpi_system.h"
 #include "scpi_test.h"
+#include "scpi_fetch.h"
+
 #include "bsp.h"
 #include "dwt_delay.h"
 #include "ADS8681.h"
@@ -56,20 +59,25 @@ extern I2C_HandleTypeDef hi2c4;
 extern SPI_HandleTypeDef hspi5;
 extern SPI_HandleTypeDef hspi3;
 
+extern float global_sdram_meas[CHANNELS][SDRAM_CHx_SAMPLES_MAX];
+
+
 static scpi_result_t TEST_TSQ(scpi_t * context)
 {
 	BSP_StatusTypeDef status;
 	uint8_t matrix[3] = {CHx_M_DAC, CHx_M_DAC, CHx_M_DAC};
 	float tmp[3]={0,0,0};
 	uint8_t range[3] = {0,0,0};
-	float values[600];
+	char* buffer;
+	buffer = (char*)malloc(TCP_PACKGE_SIZE);
 
-	DAC8564_Set_Voltage(DAC8564_DAC_A,1.0);
-	DAC8564_Set_Voltage(DAC8564_DAC_B,2.0);
-	DAC8564_Set_Voltage(DAC8564_DAC_C,3.0);
+
+	DAC8564_Set_Voltage(DAC8564_DAC_A,4.0);
+	DAC8564_Set_Voltage(DAC8564_DAC_B,5.0);
+	DAC8564_Set_Voltage(DAC8564_DAC_C,6.0);
 
 	DG211_Switch(matrix);
-	osDelay(pdMS_TO_TICKS(5));
+	HAL_Delay(5);
 
 	status=ADS8681_Set_Range(range);
 
@@ -77,12 +85,12 @@ static scpi_result_t TEST_TSQ(scpi_t * context)
 	{
 
 		status = MEAS_GetValues(tmp);
-		//osDelay(pdMS_TO_TICKS(1));
 		if(BSP_OK == status)
 		{
-			values[3*x]=tmp[0];
-			values[3*x+1]=tmp[1];
-			values[3*x+2]=tmp[2];
+			global_sdram_meas[0][x] = tmp[0];
+			global_sdram_meas[1][x] = tmp[1];
+			global_sdram_meas[2][x] = tmp[2];
+
 		}
 		else
 		{
@@ -91,7 +99,16 @@ static scpi_result_t TEST_TSQ(scpi_t * context)
 
 	}
 
-	SCPI_ResultArrayFloat(context, values, 600, SCPI_FORMAT_ASCII);
+	buffer = SAMPLES_TCP_Package(&global_sdram_meas[0], 0, 160);
+	SCPI_ResultCharacters(context, buffer, TCP_PACKGE_SIZE);
+	memset(buffer,'\0',TCP_PACKGE_SIZE);
+	buffer = SAMPLES_TCP_Package(&global_sdram_meas[1], 0, 160);
+	SCPI_ResultCharacters(context, buffer, TCP_PACKGE_SIZE);
+	memset(buffer,'\0',TCP_PACKGE_SIZE);
+	buffer = SAMPLES_TCP_Package(&global_sdram_meas[2], 0, 160);
+	SCPI_ResultCharacters(context, buffer, TCP_PACKGE_SIZE);
+	memset(buffer,'\0',TCP_PACKGE_SIZE);
+
 
 	return SCPI_RES_OK;
 }
@@ -171,6 +188,12 @@ const scpi_command_t scpi_commands[] = {
 	{.pattern = "SYSTem:TEMPerature:UNIT", .callback = SCPI_SystemTemperatureUnit,},
 	{.pattern = "SYSTem:TEMPerature:UNIT?", .callback = SCPI_SystemTemperatureUnitQ,},
 	{.pattern = "SYSTem:HUMIdity?", .callback = SCPI_SystemHumidityQ,},
+
+	{.pattern = "FETCh?", .callback = SCPI_FetchQ,},
+
+	{.pattern = "SAMPle:COUNt", .callback = SCPI_SampleCount,},
+	{.pattern = "SAMPle:COUNt?", .callback = SCPI_SampleCountQ,},
+
 
 	{.pattern = "TEST:VOLTage?", .callback = SCPI_TestVoltageQ,},
 	{.pattern = "TEST:SDRAM?", .callback = SCPI_TestSDRAMQ,},

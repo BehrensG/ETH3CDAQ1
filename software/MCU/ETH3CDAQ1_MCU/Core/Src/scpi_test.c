@@ -10,7 +10,7 @@
 #include "scpi/scpi.h"
 #include "bsp.h"
 
-extern float sdram_meas[CHANNELS][SDRAM_CHx_SAMPLES_MAX];
+extern float global_sdram_meas[CHANNELS][SDRAM_CHx_SAMPLES_MAX];
 extern I2C_HandleTypeDef hi2c4;
 
 static HAL_StatusTypeDef Test_Voltage(float results[])
@@ -45,8 +45,8 @@ static uint8_t Test_SDRAM(void)
 	{
 		for(uint32_t j = 0; j < SDRAM_CHx_SAMPLES_MAX; j++)
 		{
-			sdram_meas[i][j] = 0xFFFFFFFF;
-			if(0xFFFFFFFF!=sdram_meas[i][j])
+			global_sdram_meas[i][j] = 0xFFFFFFFF;
+			if(0xFFFFFFFF!=global_sdram_meas[i][j])
 			{
 				return 1;
 			}
@@ -57,8 +57,8 @@ static uint8_t Test_SDRAM(void)
 	{
 		for(uint32_t j = 0; j < SDRAM_CHx_SAMPLES_MAX; j++)
 		{
-			sdram_meas[i][j] = 0x00000000;
-			if(sdram_meas[i][j])
+			global_sdram_meas[i][j] = 0x00000000;
+			if(global_sdram_meas[i][j])
 			{
 				return 2;
 			}

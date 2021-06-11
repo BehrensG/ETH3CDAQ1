@@ -17,19 +17,21 @@ BSP_StatusTypeDef MEAS_ZeroOffset()
 {
 	BSP_StatusTypeDef status;
 	uint8_t matrix[3] = {CHx_M_GND, CHx_M_GND, CHx_M_GND};
-	uint8_t loop_size = 20;
+	uint8_t loop_size = 10;
 	float values[3] = {0,0,0};
 	float tmp[3] = {0,0,0};
+	uint8_t range[3] = {0,0,0};
 
 	DG211_ResetAll();
-	osDelay(pdMS_TO_TICKS(5));
+	HAL_Delay(5);
 	DG211_Switch(matrix);
-	osDelay(pdMS_TO_TICKS(5));
+	HAL_Delay(5);
+	status=ADS8681_Set_Range(range);
+	HAL_Delay(2);
 
 	for (uint8_t x = 0; x < loop_size; x++)
 	{
 		status = MEAS_GetValues(tmp);
-		osDelay(pdMS_TO_TICKS(1));
 		if(BSP_OK == status)
 		{
 			values[0] += tmp[0];
@@ -68,10 +70,11 @@ BSP_StatusTypeDef MEAS_GetValues(float values[])
 		tmp[1] = raw_data[1] - ADS8681_FSR_CENTER;
 		tmp[2] = raw_data[2] - ADS8681_FSR_CENTER;
 
-		values[0] = (float)(tmp[0]*ADS8681_LSB[bsp.adc[0].range]);
-		values[1] = (float)(tmp[1]*ADS8681_LSB[bsp.adc[1].range]);
-		values[2] = (float)(tmp[2]*ADS8681_LSB[bsp.adc[2].range]);
+		values[0] = (float)(tmp[0]*ADS8681_LSB[bsp.adc[0].range] - bsp.adc[0].zero_offset);
+		values[1] = (float)(tmp[1]*ADS8681_LSB[bsp.adc[1].range] - bsp.adc[1].zero_offset);
+		values[2] = (float)(tmp[2]*ADS8681_LSB[bsp.adc[2].range] - bsp.adc[2].zero_offset);
 	}
 
 	return status;
 }
+

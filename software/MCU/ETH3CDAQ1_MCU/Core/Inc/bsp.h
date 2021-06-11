@@ -73,9 +73,6 @@ enum e_led
 #define MODULE_MAX_NUMBER 24
 #define EEPROM_CFG_SIZE 247
 
-#define SDRAM_CHx_SAMPLES_MAX 1000000
-#define CHANNELS 3
-
 #define CHANNEL1	0
 #define CHANNEL2	1
 #define CHANNEL3	2
@@ -231,6 +228,12 @@ typedef struct bsp_adc
 	uint8_t range;
 }bsp_adc_t;
 
+typedef struct bsp_sdram
+{
+	uint32_t index;
+	uint32_t size;
+}bsp_sdram_t;
+
 struct _bsp
 {
 	bsp_eeprom_union_t eeprom;
@@ -240,7 +243,9 @@ struct _bsp
 	bsp_ip4_lan_t ip4;
 	bsp_module_t module[3];
 	bsp_adc_t adc[3];
+	bsp_sdram_t sdram[3];
 	uint8_t default_cfg;
+	uint32_t sample_count;
 
 }bsp;
 

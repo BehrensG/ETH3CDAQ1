@@ -24,7 +24,7 @@ BSP_StatusTypeDef ADS8681_Raw_Data(uint16_t* raw_data)
 {
 	BSP_StatusTypeDef status;
 
-	volatile uint8_t rx_data[12];
+	uint8_t rx_data[12];
 
 	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 	ADS8681_Convertion_Time();
@@ -165,9 +165,11 @@ static BSP_StatusTypeDef ADS8681_Set_ID(void)
 	cmd[0] = READ_BYTE;
 	cmd[1] = READ_BYTE;
 	cmd[2] = READ_BYTE;
+
 	reg[0] = DEVICE_ID_REG + 0x02;
 	reg[1] = DEVICE_ID_REG + 0x02;
 	reg[2] = DEVICE_ID_REG + 0x02;
+
 	tx_data[0] = 0x00;
 	tx_data[1] = 0x00;
 	tx_data[2] = 0x00;
