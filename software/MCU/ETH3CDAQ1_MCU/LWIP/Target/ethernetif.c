@@ -815,4 +815,3 @@ void ethernet_link_thread(void* argument)
 
 /* USER CODE END 8 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-

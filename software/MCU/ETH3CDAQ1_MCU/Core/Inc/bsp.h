@@ -202,8 +202,9 @@ typedef struct bsp_security
 typedef struct bsp_trigger
 {
 
-	uint8_t slope;
-	double delay;
+	uint8_t in_slope;
+	uint8_t out_slope;
+	uint32_t delay;
 	uint8_t source;
 
 }bsp_trigger_t;
@@ -234,6 +235,12 @@ typedef struct bsp_sdram
 	uint32_t size;
 }bsp_sdram_t;
 
+typedef struct bsp_samples
+{
+	uint32_t count;
+	uint32_t timer;
+}bsp_samples_t;
+
 struct _bsp
 {
 	bsp_eeprom_union_t eeprom;
@@ -244,9 +251,27 @@ struct _bsp
 	bsp_module_t module[3];
 	bsp_adc_t adc[3];
 	bsp_sdram_t sdram[3];
+	bsp_samples_t samples;
+
 	uint8_t default_cfg;
-	uint32_t sample_count;
 
 }bsp;
+
+enum trigger_enum
+{
+	IMM = 1,
+	EXT = 2,
+	BUS = 3,
+	OUT = 4
+};
+
+enum trigger_slope_enum
+{
+	POS = 1,
+	NEG = 2
+};
+
+
+void BSP_Init();
 
 #endif /* INC_BSP_H_ */

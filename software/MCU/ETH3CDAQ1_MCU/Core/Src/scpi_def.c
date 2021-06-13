@@ -44,9 +44,13 @@
 #include "scpi/scpi.h"
 #include "main.h"
 #include "cmsis_os.h"
+
 #include "scpi_system.h"
 #include "scpi_test.h"
 #include "scpi_fetch.h"
+#include "scpi_sample.h"
+#include "scpi_read.h"
+#include "scpi_trigger.h"
 
 #include "bsp.h"
 #include "dwt_delay.h"
@@ -61,6 +65,15 @@ extern SPI_HandleTypeDef hspi3;
 
 extern float global_sdram_meas[CHANNELS][SDRAM_CHx_SAMPLES_MAX];
 
+
+scpi_choice_def_t boolean_select[] =
+{
+    {"OFF", 0},
+    {"ON", 1},
+	{"0", 0},
+	{"1", 1},
+    SCPI_CHOICE_LIST_END
+};
 
 static scpi_result_t TEST_TSQ(scpi_t * context)
 {
@@ -194,6 +207,23 @@ const scpi_command_t scpi_commands[] = {
 	{.pattern = "SAMPle:COUNt", .callback = SCPI_SampleCount,},
 	{.pattern = "SAMPle:COUNt?", .callback = SCPI_SampleCountQ,},
 
+	{.pattern = "SAMPle:TIMer", .callback = SCPI_SampleTimer,},
+	{.pattern = "SAMPle:TIMer?", .callback = SCPI_SampleTimerQ,},
+
+	{.pattern = "READ?", .callback = SCPI_ReadQ,},
+
+	{.pattern = "TRIGger:DELay", .callback = SCPI_TriggerDelay,},
+	{.pattern = "TRIGger:DELay?", .callback = SCPI_TriggerDelayQ,},
+	{.pattern = "TRIGger[:IMMediate]", .callback = SCPI_TriggerImmediate,},
+	{.pattern = "TRIGger:SOURce", .callback = SCPI_TriggerSource,},
+	{.pattern = "TRIGger:SOURce?", .callback = SCPI_TriggerSourceQ,},
+	{.pattern = "TRIGger:SLOPe", .callback = SCPI_TriggerSlope,},
+	{.pattern = "TRIGger:SLOPe?", .callback = SCPI_TriggerSlopeQ,},
+
+	{.pattern = "OUTput:TRIGger", .callback = SCPI_TriggerOutput,},
+	{.pattern = "OUTput:TRIGger:SLOPe", .callback = SCPI_TriggerOutputSlope,},
+	{.pattern = "OUTput:TRIGger:SLOPe?", .callback = SCPI_TriggerOutputSlopeQ,},
+	{.pattern = "*TRG", .callback = SCPI_TRG,},
 
 	{.pattern = "TEST:VOLTage?", .callback = SCPI_TestVoltageQ,},
 	{.pattern = "TEST:SDRAM?", .callback = SCPI_TestSDRAMQ,},

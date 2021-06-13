@@ -36,6 +36,7 @@
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
+typedef StaticQueue_t osStaticMessageQDef_t;
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
@@ -57,21 +58,39 @@ I2C_HandleTypeDef hi2c4;
 SPI_HandleTypeDef hspi3;
 SPI_HandleTypeDef hspi5;
 
-extern SDRAM_HandleTypeDef hsdram2;
+SDRAM_HandleTypeDef hsdram2;
 
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 256 * 4,
+  .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
-/* Definitions for LEDStatus */
-osThreadId_t LEDStatusHandle;
-const osThreadAttr_t LEDStatus_attributes = {
-  .name = "LEDStatus",
-  .stack_size = 256 * 4,
+/* Definitions for LEDTask */
+osThreadId_t LEDTaskHandle;
+const osThreadAttr_t LEDTask_attributes = {
+  .name = "LEDTask",
+  .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityLow,
+};
+/* Definitions for TriggerTask */
+osThreadId_t TriggerTaskHandle;
+const osThreadAttr_t TriggerTask_attributes = {
+  .name = "TriggerTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityHigh,
+};
+/* Definitions for QueueTrigger */
+osMessageQueueId_t QueueTriggerHandle;
+uint8_t QueueTriggerBuffer[ 1 * sizeof( uint8_t ) ];
+osStaticMessageQDef_t QueueTriggerControlBlock;
+const osMessageQueueAttr_t QueueTrigger_attributes = {
+  .name = "QueueTrigger",
+  .cb_mem = &QueueTriggerControlBlock,
+  .cb_size = sizeof(QueueTriggerControlBlock),
+  .mq_mem = &QueueTriggerBuffer,
+  .mq_size = sizeof(QueueTriggerBuffer)
 };
 /* USER CODE BEGIN PV */
 
@@ -91,6 +110,7 @@ static void MX_SPI3_Init(void);
 static void MX_SPI5_Init(void);
 void StartDefaultTask(void *argument);
 void StartTaskLEDStatus(void *argument);
+void StartTriggerTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -150,6 +170,7 @@ int main(void)
   MX_LWIP_Init();
   SDRAM_Init(&hsdram2, &command);
   DWT_Init();
+  BSP_Init();
   DG211_Init();
   DAC8564_Init();
   ADS8681_Init();
@@ -171,6 +192,10 @@ int main(void)
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
+  /* Create the queue(s) */
+  /* creation of QueueTrigger */
+  QueueTriggerHandle = osMessageQueueNew (1, sizeof(uint8_t), &QueueTrigger_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -179,8 +204,11 @@ int main(void)
   /* creation of defaultTask */
   //defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
-  /* creation of LEDStatus */
-  LEDStatusHandle = osThreadNew(StartTaskLEDStatus, NULL, &LEDStatus_attributes);
+  /* creation of LEDTask */
+  LEDTaskHandle = osThreadNew(StartTaskLEDStatus, NULL, &LEDTask_attributes);
+
+  /* creation of TriggerTask */
+  TriggerTaskHandle = osThreadNew(StartTriggerTask, NULL, &TriggerTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   scpi_server_init();
@@ -505,6 +533,7 @@ static void MX_FMC_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  LL_EXTI_InitTypeDef EXTI_InitStruct = {0};
   LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
@@ -522,6 +551,9 @@ static void MX_GPIO_Init(void)
 
   /**/
   LL_GPIO_ResetOutputPin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin);
+
+  /**/
+  LL_GPIO_ResetOutputPin(GPIOA, TRIG_EN_Pin|TRIG_OUT_Pin);
 
   /**/
   LL_GPIO_ResetOutputPin(IN_DEFAULT_GPIO_Port, IN_DEFAULT_Pin);
@@ -566,6 +598,14 @@ static void MX_GPIO_Init(void)
   LL_GPIO_Init(DAC_LDAC_GPIO_Port, &GPIO_InitStruct);
 
   /**/
+  GPIO_InitStruct.Pin = TRIG_EN_Pin|TRIG_OUT_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_MEDIUM;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /**/
   GPIO_InitStruct.Pin = IN_DEFAULT_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
@@ -604,6 +644,25 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
   LL_GPIO_Init(MCU_nCS_GPIO_Port, &GPIO_InitStruct);
+
+  /**/
+  LL_SYSCFG_SetEXTISource(LL_SYSCFG_EXTI_PORTA, LL_SYSCFG_EXTI_LINE6);
+
+  /**/
+  EXTI_InitStruct.Line_0_31 = LL_EXTI_LINE_6;
+  EXTI_InitStruct.Line_32_63 = LL_EXTI_LINE_NONE;
+  EXTI_InitStruct.Line_64_95 = LL_EXTI_LINE_NONE;
+  EXTI_InitStruct.LineCommand = ENABLE;
+  EXTI_InitStruct.Mode = LL_EXTI_MODE_IT;
+  EXTI_InitStruct.Trigger = LL_EXTI_TRIGGER_RISING;
+  LL_EXTI_Init(&EXTI_InitStruct);
+
+  /**/
+  LL_GPIO_SetPinPull(TRIG_IN_GPIO_Port, TRIG_IN_Pin, LL_GPIO_PULL_NO);
+
+  /* EXTI interrupt init*/
+  NVIC_SetPriority(EXTI9_5_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),9, 0));
+  NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
 
@@ -676,6 +735,31 @@ void StartTaskLEDStatus(void *argument)
 	  osDelay(pdMS_TO_TICKS(500));
   }
   /* USER CODE END StartTaskLEDStatus */
+}
+
+/* USER CODE BEGIN Header_StartTriggerTask */
+/**
+* @brief Function implementing the TriggerTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTriggerTask */
+void StartTriggerTask(void *argument)
+{
+	  /* USER CODE BEGIN StartTriggerTask */
+		uint8_t trigger_status = 0;
+	  /* Infinite loop */
+
+
+	  for(;;)
+	  {
+		  if(osOK == osMessageQueueGet(QueueTriggerHandle, &trigger_status, NULL, 10U))
+		  {
+				HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+		  }
+		  osDelay(pdMS_TO_TICKS(2));
+	  }
+  /* USER CODE END StartTriggerTask */
 }
 
 /* MPU Configuration */

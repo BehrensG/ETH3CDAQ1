@@ -84,6 +84,13 @@ void Error_Handler(void);
 #define DAC_DIN_GPIO_Port GPIOF
 #define DAC_LDAC_Pin LL_GPIO_PIN_10
 #define DAC_LDAC_GPIO_Port GPIOF
+#define TRIG_EN_Pin LL_GPIO_PIN_4
+#define TRIG_EN_GPIO_Port GPIOA
+#define TRIG_OUT_Pin LL_GPIO_PIN_5
+#define TRIG_OUT_GPIO_Port GPIOA
+#define TRIG_IN_Pin LL_GPIO_PIN_6
+#define TRIG_IN_GPIO_Port GPIOA
+#define TRIG_IN_EXTI_IRQn EXTI9_5_IRQn
 #define IN_DEFAULT_Pin LL_GPIO_PIN_0
 #define IN_DEFAULT_GPIO_Port GPIOB
 #define LED_RED_Pin LL_GPIO_PIN_12

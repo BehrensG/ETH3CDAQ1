@@ -315,7 +315,7 @@ static BSP_StatusTypeDef ADS8681_Write_LSB(uint8_t* cmd, uint8_t* reg, uint8_t* 
 static void ADS8681_Convertion_Time(void)
 {
     uint32_t startTick = DWT->CYCCNT,
-             delayTicks = 2 * (SystemCoreClock/15000000);
+             delayTicks = 1 * (SystemCoreClock/15000000);
 
     while (DWT->CYCCNT - startTick < delayTicks);
 }
