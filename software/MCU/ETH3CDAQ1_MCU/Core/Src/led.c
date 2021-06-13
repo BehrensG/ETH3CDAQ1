@@ -10,7 +10,7 @@
 #include "bsp.h"
 #include "main.h"
 
-extern osThreadId_t LEDStatusHandle;
+extern osThreadId_t LEDTaskHandle;
 extern osMessageQueueId_t LEDMessageQueue;
 
 uint8_t led_color;
@@ -26,7 +26,7 @@ void LED_Switch(uint8_t LED_state)
 	{
 		case LED_IDLE:
 		{
-			osThreadResume(LEDStatusHandle);
+			osThreadResume(LEDTaskHandle);
 
 			led_color = GREEN;
 			osMessageQueuePut(LEDMessageQueue, &led_color, 0U, 0U);
@@ -35,7 +35,7 @@ void LED_Switch(uint8_t LED_state)
 
 		case LED_ERROR:
 		{
-			osThreadResume(LEDStatusHandle);
+			osThreadResume(LEDTaskHandle);
 
 			led_color = RED;
 			osMessageQueuePut(LEDMessageQueue, &led_color, 0U, 0U);
@@ -44,8 +44,8 @@ void LED_Switch(uint8_t LED_state)
 
 		case LED_BUSY:
 		{
-						osThreadSuspend(LEDStatusHandle);
-						LL_GPIO_ResetOutputPin(LED_BLUE_GPIO_Port, LED_BLUE_Pin);
+			osThreadSuspend(LEDTaskHandle);
+			LL_GPIO_ResetOutputPin(LED_BLUE_GPIO_Port, LED_BLUE_Pin);
 
 					}; break;
 		}

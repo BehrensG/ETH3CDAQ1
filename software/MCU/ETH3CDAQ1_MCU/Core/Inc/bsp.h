@@ -105,11 +105,16 @@ enum e_led
 
 typedef enum
 {
-  BSP_OK       			= 0x00,
-  BSP_ERROR    			= 0x01,
-  BSP_BUSY     			= 0x02,
-  BSP_TIMEOUT  			= 0x03,
-  BSP_ADC_CONFIG_ERROR 	= 0x04
+  BSP_OK       				= 0x00U,
+  BSP_ERROR    				= 0x01U,
+  BSP_BUSY     				= 0x02U,
+  BSP_TIMEOUT  				= 0x03U,
+  BSP_ADC_CONFIG_ERROR 		= 0x04U,
+  BSP_EEPROM_EMPTY 			= 0x05U,
+  BSP_EEPROM_MAX_SIZE 		= 0x06U,
+  BSP_EEPROM_NO_CONNECTION 	= 0x07U,
+  BSP_EEPROM_WRITE_ERROR 	= 0x08U,
+  BSP_EEPROM_READ_ERROR 	= 0x09U
 } BSP_StatusTypeDef;
 
 #define MCU_DEFAULT_OFF 0

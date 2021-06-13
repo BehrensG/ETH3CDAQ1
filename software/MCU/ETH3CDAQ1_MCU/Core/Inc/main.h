@@ -91,8 +91,8 @@ void Error_Handler(void);
 #define TRIG_IN_Pin LL_GPIO_PIN_6
 #define TRIG_IN_GPIO_Port GPIOA
 #define TRIG_IN_EXTI_IRQn EXTI9_5_IRQn
-#define IN_DEFAULT_Pin LL_GPIO_PIN_0
-#define IN_DEFAULT_GPIO_Port GPIOB
+#define MCU_DEFAULT_Pin LL_GPIO_PIN_0
+#define MCU_DEFAULT_GPIO_Port GPIOB
 #define LED_RED_Pin LL_GPIO_PIN_12
 #define LED_RED_GPIO_Port GPIOB
 #define EEPROM_WP_Pin LL_GPIO_PIN_11

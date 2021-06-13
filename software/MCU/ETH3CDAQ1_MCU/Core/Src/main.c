@@ -167,10 +167,10 @@ int main(void)
   MX_SPI5_Init();
   /* USER CODE BEGIN 2 */
   HAL_Delay(100);
+  BSP_Init();
   MX_LWIP_Init();
   SDRAM_Init(&hsdram2, &command);
   DWT_Init();
-  BSP_Init();
   DG211_Init();
   DAC8564_Init();
   ADS8681_Init();
@@ -553,10 +553,10 @@ static void MX_GPIO_Init(void)
   LL_GPIO_ResetOutputPin(DAC_LDAC_GPIO_Port, DAC_LDAC_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(GPIOA, TRIG_EN_Pin|TRIG_OUT_Pin);
+  LL_GPIO_ResetOutputPin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(IN_DEFAULT_GPIO_Port, IN_DEFAULT_Pin);
+  LL_GPIO_ResetOutputPin(MCU_DEFAULT_GPIO_Port, MCU_DEFAULT_Pin);
 
   /**/
   LL_GPIO_ResetOutputPin(EEPROM_WP_GPIO_Port, EEPROM_WP_Pin);
@@ -565,13 +565,13 @@ static void MX_GPIO_Init(void)
   LL_GPIO_SetOutputPin(DAC_nSYNC_GPIO_Port, DAC_nSYNC_Pin);
 
   /**/
+  LL_GPIO_SetOutputPin(GPIOA, TRIG_EN_Pin|MCU_nCS_Pin);
+
+  /**/
   LL_GPIO_SetOutputPin(LED_RED_GPIO_Port, LED_RED_Pin);
 
   /**/
   LL_GPIO_SetOutputPin(GPIOG, LED_GREEN_Pin|LED_BLUE_Pin);
-
-  /**/
-  LL_GPIO_SetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 
   /**/
   GPIO_InitStruct.Pin = SR_DAT_Pin|SR_LAT_Pin|SR_CLK_Pin;
@@ -606,12 +606,12 @@ static void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = IN_DEFAULT_Pin;
+  GPIO_InitStruct.Pin = MCU_DEFAULT_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
   GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(IN_DEFAULT_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(MCU_DEFAULT_GPIO_Port, &GPIO_InitStruct);
 
   /**/
   GPIO_InitStruct.Pin = LED_RED_Pin;
@@ -746,7 +746,7 @@ void StartTaskLEDStatus(void *argument)
 /* USER CODE END Header_StartTriggerTask */
 void StartTriggerTask(void *argument)
 {
-	  /* USER CODE BEGIN StartTriggerTask */
+  /* USER CODE BEGIN StartTriggerTask */
 		uint8_t trigger_status = 0;
 	  /* Infinite loop */
 
@@ -755,7 +755,7 @@ void StartTriggerTask(void *argument)
 	  {
 		  if(osOK == osMessageQueueGet(QueueTriggerHandle, &trigger_status, NULL, 10U))
 		  {
-				HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+				LL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
 		  }
 		  osDelay(pdMS_TO_TICKS(2));
 	  }

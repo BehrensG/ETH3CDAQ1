@@ -8,7 +8,7 @@
 #include "bsp.h"
 #include "ADS8681.h"
 
-void BSP_Init()
+static void BSP_Init_Common()
 {
 
 	bsp.samples.count = 1;
@@ -28,4 +28,38 @@ void BSP_Init()
 	bsp.adc[2].zero_offset = 0.0;
 	bsp.adc[2].range = ADS8681_RANGE_3VREF;
 
+	bsp.trigger.delay = 0;
+	bsp.trigger.in_slope = POS;
+	bsp.trigger.out_slope = POS;
+	bsp.trigger.source = IMM;
+
+}
+
+BSP_StatusTypeDef BSP_Init()
+{
+	BSP_StatusTypeDef eeprom_status;
+
+	BSP_Init_Common();
+
+	if(MCU_DEFAULT_ON == ((LL_GPIO_ReadInputPort(MCU_DEFAULT_GPIO_Port))& (1 << MCU_DEFAULT_Pin)))
+	{
+		BSP_InitStaticData(&default_board_static, &board_static);
+		bsp.default_cfg = 1;
+	}
+	else
+	{
+
+		eeprom_status = EEPROM_Status();
+
+		switch (eeprom_status)
+		{
+			case BSP_EEPROM_EMPTY: eeprom_status = EEPROM_Write(&default_board_static, STRUCT_SIZE);
+			case BSP_OK: eeprom_status = EEPROM_Read(&board_static, STRUCT_SIZE); board_current.default_cfg = 0; break;
+			default: BSP_InitStaticData(&default_board_static, &board_static); break;
+		}
+
+	}
+
+	BSP_InitCurrentData(&board_current);
+	return eeprom_status;
 }

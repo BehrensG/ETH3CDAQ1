@@ -9,6 +9,7 @@
 #include <stdio.h>
 
 #include "scpi_trigger.h"
+#include "dwt_delay.h"
 
 extern scpi_choice_def_t boolean_select[];
 
@@ -118,12 +119,10 @@ scpi_result_t SCPI_TriggerImmediate(scpi_t* context)
 
 	if(TRIG_OUT != bsp.trigger.source)
 	{
-		HAL_GPIO_TogglePin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin);
-		HAL_Delay(board_current.trigger.delay);
-		HAL_GPIO_TogglePin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin);
-		LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-		ADS8681_Convertion_Time();
-		LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
+		LL_GPIO_TogglePin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin);
+		DWT_Delay_us(bsp.trigger.delay);
+		LL_GPIO_TogglePin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin);
+
 
 	}
 	else
@@ -167,7 +166,7 @@ scpi_result_t SCPI_TriggerSource(scpi_t* context)
 	}
 	else
 	{
-		HAL_GPIO_WritePin(TRIG_EN_GPIO_Port, TRIG_EN_Pin, 1);
+		LL_GPIO_WriteOutputPort(TRIG_EN_GPIO_Port, TRIG_EN_Pin);
 		osThreadResume(TriggerTaskHandle);
 	}
 
@@ -213,9 +212,9 @@ scpi_result_t SCPI_TriggerOutput(scpi_t* context)
 		return SCPI_RES_ERR;
 	}
 
-	HAL_GPIO_TogglePin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin);
-	HAL_Delay(board_current.trigger.delay);
-	HAL_GPIO_TogglePin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin);
+	LL_GPIO_TogglePin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin);
+	DWT_Delay_us(bsp.trigger.delay);
+	LL_GPIO_TogglePin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin);
 
 	return SCPI_RES_OK;
 }
@@ -241,6 +240,7 @@ scpi_result_t SCPI_TriggerSlope(scpi_t* context)
 	{
 		return SCPI_RES_ERR;
 	}
+
 
 
 	HAL_GPIO_DeInit(TRIG_IN_GPIO_Port, TRIG_IN_Pin);
@@ -303,8 +303,8 @@ scpi_result_t SCPI_TriggerOutputSlope(scpi_t* context)
 
 	switch(paramSLOPE)
 	{
-		case SLOPE_POS: HAL_GPIO_WritePin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin, 0); break;
-		case SLOPE_NEG: HAL_GPIO_WritePin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin, 1); break;
+		case SLOPE_POS: LL_GPIO_ResetOutputPin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin); break;
+		case SLOPE_NEG: LL_GPIO_WriteOutputPort(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin); break;
 	}
 
 	bsp.trigger.out_slope = paramSLOPE;
