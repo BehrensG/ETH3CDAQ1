@@ -15,8 +15,6 @@
 
 #define EEPROM_ADDRESS 0xA0U
 #define EEPROM_SIZE 0xFFU
-#define EEPROM_WRITE_DONE 0x44U
-#define EEPROM_END 256U
 
 
 BSP_StatusTypeDef EEPROM_Erase(void);

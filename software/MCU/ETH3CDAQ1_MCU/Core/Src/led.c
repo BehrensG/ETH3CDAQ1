@@ -48,7 +48,6 @@ void LED_Switch(uint8_t LED_state)
 			LL_GPIO_ResetOutputPin(LED_BLUE_GPIO_Port, LED_BLUE_Pin);
 
 					}; break;
-		}
 
 		case LED_DEFUALT:
 		{
@@ -59,5 +58,5 @@ void LED_Switch(uint8_t LED_state)
 
 					}; break;
 
-
+	}
 }

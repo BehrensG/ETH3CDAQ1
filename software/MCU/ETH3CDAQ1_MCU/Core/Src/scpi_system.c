@@ -53,15 +53,15 @@ scpi_choice_def_t EEPROM_state_select[] =
 
 /*
  * @INFO:
- * Private function to convert a IP string (format xxx.xxx.xxx.xxx) to a array of uint8_t. The conversion is need for the lwIP Ethernet function.
+ * Private function to convert a IP string (format nnnn.nnnn.nnnn.nnnn) to a array of uint8_t. The conversion is need for the lwIP Ethernet function.
  *
  */
 
-static uint8_t SCPI_StringToIP4Array(const int8_t* ip_string, uint8_t* ip_array)
+static uint8_t SCPI_StringToIP4Array(const char* ip_string, uint8_t* ip_array)
 {
 
     /* A pointer to the next digit to process. */
-    const int8_t* start;
+    const char* start;
 
     start = ip_string;
     for (uint8_t i = 0; i < 4; i++)
@@ -107,7 +107,7 @@ static uint8_t SCPI_StringToIP4Array(const int8_t* ip_string, uint8_t* ip_array)
  *
  */
 
-static uint8_t SCPI_StringToMACArray(const uint8_t* MAC_string, uint8_t* MAC_array)
+static uint8_t SCPI_StringToMACArray(const char* MAC_string, uint8_t* MAC_array)
 {
     uint32_t values[6];
 
@@ -148,7 +148,7 @@ static uint8_t SCPI_StringToMACArray(const uint8_t* MAC_string, uint8_t* MAC_arr
 
 scpi_result_t SCPI_SystemCommunicateLANIPAddress(scpi_t * context)
 {
-	uint8_t str[16] = {0};
+	char str[16] = {0};
 	uint8_t numb[4] = {0};
 	size_t len = 0;
 	uint8_t conv_result = 0;
@@ -195,11 +195,11 @@ scpi_result_t SCPI_SystemCommunicateLANIPAddress(scpi_t * context)
 scpi_result_t SCPI_SystemCommunicateLANIPAddressQ(scpi_t * context)
 {
 	int32_t value = 0;
-	uint8_t str[16] = {0};
+	char str[16] = {0};
 
 	if(!SCPI_ParamChoice(context, LAN_state_select, &value, FALSE))
 	{
-		return return SCPI_RES_ERR;
+		return SCPI_RES_ERR;
 	}
 
 	if(CURRENT == value)
@@ -239,7 +239,7 @@ scpi_result_t SCPI_SystemCommunicateLANIPAddressQ(scpi_t * context)
 
 scpi_result_t SCPI_SystemCommunicateLANIPSmask(scpi_t * context)
 {
-	uint8_t str[16] = {0};
+	char str[16] = {0};
 	uint8_t numb[4] = {0};
 	size_t len = 0;
 	uint8_t conv_result = 0;
@@ -286,7 +286,7 @@ scpi_result_t SCPI_SystemCommunicateLANIPSmask(scpi_t * context)
 scpi_result_t SCPI_SystemCommunicateLANIPSmaskQ(scpi_t * context)
 {
 	int32_t value = 0;
-	uint8_t str[16] = {0};
+	char str[16] = {0};
 
 	if(!SCPI_ParamChoice(context, LAN_state_select, &value, FALSE))
 	{
@@ -327,7 +327,7 @@ scpi_result_t SCPI_SystemCommunicateLANIPSmaskQ(scpi_t * context)
 
 scpi_result_t SCPI_SystemCommunicateLANGateway(scpi_t * context)
 {
-	uint8_t gateway_str[16] = {0};
+	char gateway_str[16] = {0};
 	uint8_t gateway_numb[4] = {0};
 	size_t len = 0;
 	uint8_t conv_result = 0;
@@ -367,7 +367,7 @@ scpi_result_t SCPI_SystemCommunicateLANGateway(scpi_t * context)
 scpi_result_t SCPI_SystemCommunicateLANGatewayQ(scpi_t * context)
 {
 	int32_t value = 0;
-	uint8_t str[16] = {0};
+	char str[16] = {0};
 
 	if(!SCPI_ParamChoice(context, LAN_state_select, &value, FALSE))
 	{
@@ -457,7 +457,7 @@ scpi_result_t SCPI_SystemCommunicateLANMAC(scpi_t * context)
 
 scpi_result_t SCPI_SystemCommunicateLANMACQ(scpi_t * context)
 {
-	uint8_t str[18] = {0};
+	char str[18] = {0};
 
 	if(!bsp.default_cfg)
 	{
@@ -529,7 +529,6 @@ scpi_result_t SCPI_SystemCommunicateLANPort(scpi_t * context)
 scpi_result_t SCPI_SystemCommunicateLANPortQ(scpi_t * context)
 {
 	int32_t value = 0;
-	uint8_t str[16] = {0};
 
 	if(!SCPI_ParamChoice(context, LAN_state_select, &value, TRUE))
 	{
@@ -564,7 +563,8 @@ scpi_result_t SCPI_SystemCommunicationLanUpdate(scpi_t * context)
 
 	if(bsp.security.status)
 	{
-		return SCPI_ERROR_SERVICE_MODE_SECURE;
+		SCPI_ErrorPush(context, SCPI_ERROR_SERVICE_MODE_SECURE);
+		return SCPI_RES_ERR;
 	}
 
 	bsp.eeprom.structure.ip4.MAC[0] = bsp.ip4.MAC[0];
@@ -591,7 +591,6 @@ scpi_result_t SCPI_SystemCommunicationLanUpdate(scpi_t * context)
 
 	if(BSP_OK == EEPROM_Write(&bsp.eeprom,EEPROM_CFG_SIZE))
 	{
-		LED_Switch(LED_IDLE);
 		return SCPI_RES_OK;
 	}
 	else
@@ -770,7 +769,6 @@ scpi_result_t SCPI_SystemHumidityQ(scpi_t * context)
 scpi_result_t SCPI_SystemServiceEEPROM(scpi_t * context)
 {
 	int32_t value = 0;
-	uint8_t str[16] = {0};
 
 	if(!SCPI_ParamChoice(context, LAN_state_select, &value, TRUE))
 	{
@@ -832,25 +830,25 @@ scpi_result_t SCPI_SystemServiceID(scpi_t * context)
 		return SCPI_RES_ERR;
 	}
 
-	if(!SCPI_ParamCopyText(context, buffer, SCPI_MANUFACTURER_STRING_LENGTH, len, TRUE))
+	if(!SCPI_ParamCopyText(context, buffer, SCPI_MANUFACTURER_STRING_LENGTH, &len, TRUE))
 	{
 		buffer[0]='\0';
 		return SCPI_RES_ERR;
 	}
 
-	if(!SCPI_ParamCopyText(context, buffer, SCPI_DEVICE_STRING_LENGTH, len, TRUE))
+	if(!SCPI_ParamCopyText(context, buffer, SCPI_DEVICE_STRING_LENGTH, &len, TRUE))
 	{
 		buffer[0]='\0';
 		return SCPI_RES_ERR;
 	}
 
-	if(!SCPI_ParamCopyText(context, buffer, SCPI_SOFTWAREVERSION_STRING_LENGTH, len, TRUE))
+	if(!SCPI_ParamCopyText(context, buffer, SCPI_SOFTWAREVERSION_STRING_LENGTH, &len, TRUE))
 	{
 		buffer[0]='\0';
 		return SCPI_RES_ERR;
 	}
 
-	if(!SCPI_ParamCopyText(context, buffer, SCPI_SERIALNUMBER_STRING_LENGTH, len, TRUE))
+	if(!SCPI_ParamCopyText(context, buffer, SCPI_SERIALNUMBER_STRING_LENGTH, &len, TRUE))
 	{
 		buffer[0]='\0';
 		return SCPI_RES_ERR;
@@ -866,4 +864,6 @@ scpi_result_t SCPI_SystemServiceID(scpi_t * context)
 		SCPI_ErrorPush(context, SCPI_ERROR_SYSTEM_ERROR);
 		return SCPI_RES_ERR;
 	}
+
+	return SCPI_RES_OK;
 }

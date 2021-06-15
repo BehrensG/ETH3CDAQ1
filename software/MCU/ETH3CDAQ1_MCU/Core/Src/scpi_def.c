@@ -39,7 +39,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "core_cm7.h"
+
 
 #include "scpi_def.h"
 #include "scpi/scpi.h"
@@ -237,6 +237,7 @@ const scpi_command_t scpi_commands[] = {
 
 	{.pattern = "TEST:VOLTage?", .callback = SCPI_TestVoltageQ,},
 	{.pattern = "TEST:SDRAM?", .callback = SCPI_TestSDRAMQ,},
+	{.pattern = "TEST:ADC?", .callback = SCPI_TestADCQ,},
 
 	{.pattern = "TS?", .callback = TEST_TSQ,},
 

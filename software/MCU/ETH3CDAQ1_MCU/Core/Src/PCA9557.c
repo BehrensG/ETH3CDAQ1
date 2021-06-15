@@ -91,4 +91,5 @@ HAL_StatusTypeDef PCA9557_Init()
 			return status;
 		}
 	}
+	return HAL_OK;
 }

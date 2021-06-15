@@ -88,3 +88,8 @@ scpi_result_t SCPI_TestSDRAMQ(scpi_t * context)
 
 	return SCPI_RES_OK;
 }
+
+scpi_result_t SCPI_TestADCQ(scpi_t * context)
+{
+	return SCPI_RES_OK;
+}

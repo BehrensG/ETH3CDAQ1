@@ -12,6 +12,6 @@
 
 #define TCP_PACKGE_SIZE	1500
 
-char* DATA_TCP_Package(float* meas, uint32_t start, uint32_t size);
+char* SAMPLES_TCP_Package(float* meas, uint32_t start, uint32_t size);
 
 #endif /* INC_SAMPLES_H_ */

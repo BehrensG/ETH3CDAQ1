@@ -5,7 +5,8 @@
  *      Author: grzegorz
  */
 
-#include <samples.h>
+#include <stdio.h>
+#include "samples.h"
 
 char* SAMPLES_TCP_Package(float* meas, uint32_t start, uint32_t size)
 {

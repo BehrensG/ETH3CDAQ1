@@ -9,6 +9,7 @@
 #include "bsp.h"
 #include "ADS8681.h"
 #include "scpi_def.h"
+#include "eeprom.h"
 
 static void BSP_Init_Common()
 {
@@ -64,7 +65,7 @@ static void BSP_Init_DefualtEEPROM()
 
 	for (uint8_t x = 0; x < MODULE_MAX_NUMBER; x++)
 	{
-		bsp.eeprom.structure.modules[x] = NO_MODULE;
+		bsp.eeprom.structure.modules[x].serial = 0;
 	}
 
 
@@ -117,7 +118,7 @@ BSP_StatusTypeDef BSP_Init()
 
 	BSP_Init_Common();
 
-	if(MCU_DEFAULT_ON == ((LL_GPIO_ReadInputPort(MCU_DEFAULT_GPIO_Port))& (1 << MCU_DEFAULT_Pin)))
+	if(!((LL_GPIO_ReadInputPort(MCU_DEFAULT_GPIO_Port))& MCU_DEFAULT_Pin))
 	{
 		BSP_Init_DefualtEEPROM();
 		BSP_Init_IP4Current();

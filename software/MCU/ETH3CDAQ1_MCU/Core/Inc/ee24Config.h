@@ -11,7 +11,7 @@ extern I2C_HandleTypeDef hi2c4;
 #define		_EEPROM_USE_WP_PIN          1
 
 #define EEPROM_WRITE_DONE 0x44U
-#define EEPROM_END 1023U
+#define EEPROM_END 256U
 
 #if (_EEPROM_USE_WP_PIN==1)
 #define		_EEPROM_WP_GPIO				EEPROM_WP_GPIO_Port

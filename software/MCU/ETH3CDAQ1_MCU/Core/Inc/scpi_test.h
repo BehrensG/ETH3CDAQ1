@@ -10,5 +10,6 @@
 
 scpi_result_t SCPI_TestVoltageQ(scpi_t * context);
 scpi_result_t SCPI_TestSDRAMQ(scpi_t * context);
+scpi_result_t SCPI_TestADCQ(scpi_t * context);
 
 #endif /* INC_SCPI_TEST_H_ */

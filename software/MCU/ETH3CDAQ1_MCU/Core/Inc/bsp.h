@@ -28,7 +28,7 @@ enum e_led
 
 /*************************************** MODULES ***************************************/
 
-#define NO_MODULE 0
+//#define NO_MODULE 0
 
 /*************************************** SCPI ***************************************/
 
@@ -68,8 +68,7 @@ enum e_led
 
 /*************************************** MCU ***************************************/
 
-#define MCU_DEFAULT_OFF 0
-#define MCU_DEFAULT_ON 1
+
 
 #define	SR_INVERT_MASK	0xFF
 
@@ -77,7 +76,6 @@ enum e_led
 #define MCU_SERVICE_SECURITY_ON 1
 
 #define MODULE_MAX_NUMBER 24
-#define EEPROM_CFG_SIZE 247
 
 #define CHANNEL1	0
 #define CHANNEL2	1
@@ -123,8 +121,7 @@ typedef enum
   BSP_EEPROM_READ_ERROR 	= 0x09U
 } BSP_StatusTypeDef;
 
-#define MCU_DEFAULT_OFF 0
-#define MCU_DEFAULT_ON 1
+
 
 #define	SR_INVERT_MASK	0xFF
 
@@ -144,10 +141,10 @@ typedef enum
 // size 64
 typedef struct bsp_scpi_info
 {
-	int8_t manufacturer[SCPI_MANUFACTURER_STRING_LENGTH];
-	int8_t device[SCPI_DEVICE_STRING_LENGTH];
-	int8_t serial_number[SCPI_SERIALNUMBER_STRING_LENGTH];
-	int8_t software_version[SCPI_SOFTWAREVERSION_STRING_LENGTH];
+	char manufacturer[SCPI_MANUFACTURER_STRING_LENGTH];
+	char device[SCPI_DEVICE_STRING_LENGTH];
+	char serial_number[SCPI_SERIALNUMBER_STRING_LENGTH];
+	char software_version[SCPI_SOFTWAREVERSION_STRING_LENGTH];
 
 }bsp_scpi_info_t;
 
@@ -296,7 +293,7 @@ enum trigger_slope_enum
 };
 
 
-void BSP_Init();
+BSP_StatusTypeDef BSP_Init();
 
 
 
