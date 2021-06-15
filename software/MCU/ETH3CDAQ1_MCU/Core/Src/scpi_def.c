@@ -34,11 +34,12 @@
  *
  */
 
-#include <DAC8564.h>
-#include <samples.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "core_cm7.h"
 
 #include "scpi_def.h"
 #include "scpi/scpi.h"
@@ -58,6 +59,7 @@
 #include "DAC8564.h"
 #include "74HC595.h"
 #include "measure.h"
+#include "samples.h"
 
 extern I2C_HandleTypeDef hi2c4;
 extern SPI_HandleTypeDef hspi5;
@@ -147,10 +149,18 @@ static scpi_result_t TEST_TSQ(scpi_t * context)
  *
  * Return SCPI_RES_OK
  */
-static scpi_result_t My_CoreTstQ(scpi_t * context) {
+static scpi_result_t My_CoreTstQ(scpi_t * context)
+{
 
     SCPI_ResultInt32(context, 0);
 
+    return SCPI_RES_OK;
+}
+
+static scpi_result_t SCPI_Rst(scpi_t * context)
+{
+
+	NVIC_SystemReset();
     return SCPI_RES_OK;
 }
 
@@ -163,7 +173,7 @@ const scpi_command_t scpi_commands[] = {
     { .pattern = "*IDN?", .callback = SCPI_CoreIdnQ,},
     { .pattern = "*OPC", .callback = SCPI_CoreOpc,},
     { .pattern = "*OPC?", .callback = SCPI_CoreOpcQ,},
-    { .pattern = "*RST", .callback = SCPI_CoreRst,},
+    { .pattern = "*RST", .callback = SCPI_Rst,},
     { .pattern = "*SRE", .callback = SCPI_CoreSre,},
     { .pattern = "*SRE?", .callback = SCPI_CoreSreQ,},
     { .pattern = "*STB?", .callback = SCPI_CoreStbQ,},

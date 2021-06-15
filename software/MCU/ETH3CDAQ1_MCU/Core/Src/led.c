@@ -49,4 +49,15 @@ void LED_Switch(uint8_t LED_state)
 
 					}; break;
 		}
+
+		case LED_DEFUALT:
+		{
+			osThreadResume(LEDTaskHandle);
+
+			led_color = BLUE;
+			osMessageQueuePut(LEDMessageQueue, &led_color, 0U, 0U);
+
+					}; break;
+
+
 }

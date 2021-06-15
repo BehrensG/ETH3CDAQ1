@@ -12,11 +12,12 @@
 
 #include "eeprom.h"
 
+
 extern I2C_HandleTypeDef hi2c4;
 
 
 
-BSP_StatusTypeDef EEPROM_Reset()
+BSP_StatusTypeDef EEPROM_Erase()
 {
 
 	if(ee24_isConnected(EEPROM_ADDRESS))

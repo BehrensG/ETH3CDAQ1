@@ -14,6 +14,8 @@
 #define SECURITY_OFF 0
 #define CURRENT 0
 #define STATIC 1
+#define RESET 1
+#define DEFAULT 2
 #define NET_STR_WRONG_FORMAT 1
 #define NET_STR_WRONG_NUMBER 2
 #define NET_STR_OK 0

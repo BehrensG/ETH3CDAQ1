@@ -19,10 +19,16 @@ enum e_led
 	LED_IDLE,
 	LED_BUSY,
 	LED_ERROR,
+	LED_DEFUALT,
 };
 
+#define BLUE 2
 #define RED 1
 #define GREEN 0
+
+/*************************************** MODULES ***************************************/
+
+#define NO_MODULE 0
 
 /*************************************** SCPI ***************************************/
 
@@ -126,7 +132,7 @@ typedef enum
 #define MCU_SERVICE_SECURITY_ON 1
 
 #define MODULE_MAX_NUMBER 24
-#define EEPROM_CFG_SIZE 247
+#define EEPROM_CFG_SIZE 254
 
 #define SDRAM_CHx_SAMPLES_MAX 1000000
 #define CHANNELS 3
@@ -136,44 +142,53 @@ typedef enum
 #pragma pack(push, 1)
 
 // size 64
-struct bsp_scpi_info
+typedef struct bsp_scpi_info
 {
 	int8_t manufacturer[SCPI_MANUFACTURER_STRING_LENGTH];
 	int8_t device[SCPI_DEVICE_STRING_LENGTH];
 	int8_t serial_number[SCPI_SERIALNUMBER_STRING_LENGTH];
 	int8_t software_version[SCPI_SOFTWAREVERSION_STRING_LENGTH];
 
-};
+}bsp_scpi_info_t;
 
 
 // size 20
-struct bsp_ip4_lan
+typedef struct bsp_ip4_lan
 {
 	uint8_t ip[4];
 	uint8_t netmask[4];
 	uint8_t gateway[4];
 	uint8_t MAC[6];
 	uint16_t port;
-};
+
+}bsp_ip4_lan_t;
 
 
-struct bsp_adc_calib
+typedef struct bsp_adc_calib
 {
 	float gain;
 	float offset;
 	uint8_t valid;
-};
 
-struct module_eeporm_list
+}bsp_adc_calib_t;
+
+typedef struct bsp_module_eeporm_list
 {
 	uint32_t serial;
 	uint8_t channel;
-};
 
-typedef struct bsp_ip4_lan bsp_ip4_lan_t;
-typedef struct bsp_scpi_info bsp_scpi_info_t;
-typedef struct bsp_adc_calib bsp_adc_calib_t;
-typedef struct module_eeporm_list module_eeporm_list_t;
+}bsp_module_eeporm_list_t;
+
+typedef struct bsp_calibration_date
+{
+	uint8_t day;
+	uint8_t month;
+	uint16_t year;
+	uint8_t hour;
+	uint8_t minute;
+	uint8_t second;
+
+}bsp_calibration_date_t;
 
 typedef union bsp_eeprom_union
 {
@@ -189,7 +204,11 @@ typedef union bsp_eeprom_union
 		int8_t password[PASSWORD_LENGTH];
 		// Known module serial numbers. Will be updated when the calibration of the modules was done.
 		// Size 120
-		module_eeporm_list_t modules[MODULE_MAX_NUMBER];
+		bsp_module_eeporm_list_t modules[MODULE_MAX_NUMBER];
+
+		// Size 7
+		bsp_calibration_date_t date;
+
 	}structure;
 	uint8_t bytes[EEPROM_CFG_SIZE];
 
@@ -278,5 +297,7 @@ enum trigger_slope_enum
 
 
 void BSP_Init();
+
+
 
 #endif /* INC_BSP_H_ */

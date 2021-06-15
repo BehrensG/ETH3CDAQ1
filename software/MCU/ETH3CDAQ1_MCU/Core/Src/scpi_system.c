@@ -15,6 +15,8 @@
 #include "scpi_system.h"
 #include "scpi/scpi.h"
 #include "bsp.h"
+#include "eeprom.h"
+
 
 extern I2C_HandleTypeDef hi2c3;
 
@@ -197,8 +199,9 @@ scpi_result_t SCPI_SystemCommunicateLANIPAddressQ(scpi_t * context)
 
 	if(!SCPI_ParamChoice(context, LAN_state_select, &value, FALSE))
 	{
-		value = CURRENT;
+		return return SCPI_RES_ERR;
 	}
+
 	if(CURRENT == value)
 	{
 		sprintf(str, "%d.%d.%d.%d", bsp.ip4.ip[0],
@@ -213,6 +216,7 @@ scpi_result_t SCPI_SystemCommunicateLANIPAddressQ(scpi_t * context)
 									bsp.eeprom.structure.ip4.ip[2],
 									bsp.eeprom.structure.ip4.ip[3]);
 	}
+
 	SCPI_ResultMnemonic(context, (char*)str);
 	return SCPI_RES_OK;
 }
@@ -505,7 +509,7 @@ scpi_result_t SCPI_SystemCommunicateLANPort(scpi_t * context)
     if(port > ETH_PORT_MAX_VAL)
     {
         SCPI_ErrorPush(context, SCPI_ERROR_TOO_MANY_DIGITS);
-        return SCPI_RES_OK;
+        return SCPI_RES_ERR;
     }
 
 
@@ -563,9 +567,39 @@ scpi_result_t SCPI_SystemCommunicationLanUpdate(scpi_t * context)
 		return SCPI_ERROR_SERVICE_MODE_SECURE;
 	}
 
-	// TBD eeprom write
+	bsp.eeprom.structure.ip4.MAC[0] = bsp.ip4.MAC[0];
+	bsp.eeprom.structure.ip4.MAC[1] = bsp.ip4.MAC[1];
+	bsp.eeprom.structure.ip4.MAC[2] = bsp.ip4.MAC[2];
+	bsp.eeprom.structure.ip4.MAC[3] = bsp.ip4.MAC[3];
+	bsp.eeprom.structure.ip4.MAC[4] = bsp.ip4.MAC[4];
+	bsp.eeprom.structure.ip4.MAC[5] = bsp.ip4.MAC[5];
 
-	return SCPI_RES_OK;
+	bsp.eeprom.structure.ip4.gateway[0] = bsp.ip4.gateway[0];
+	bsp.eeprom.structure.ip4.gateway[1] = bsp.ip4.gateway[1];
+	bsp.eeprom.structure.ip4.gateway[2] = bsp.ip4.gateway[2];
+	bsp.eeprom.structure.ip4.gateway[3] = bsp.ip4.gateway[3];
+
+	bsp.eeprom.structure.ip4.ip[0] = bsp.ip4.ip[0];
+	bsp.eeprom.structure.ip4.ip[1] = bsp.ip4.ip[1];
+	bsp.eeprom.structure.ip4.ip[2] = bsp.ip4.ip[2];
+	bsp.eeprom.structure.ip4.ip[3] = bsp.ip4.ip[3];
+
+	bsp.eeprom.structure.ip4.netmask[0] = bsp.ip4.netmask[0];
+	bsp.eeprom.structure.ip4.netmask[1] = bsp.ip4.netmask[1];
+	bsp.eeprom.structure.ip4.netmask[2] = bsp.ip4.netmask[2];
+	bsp.eeprom.structure.ip4.netmask[3] = bsp.ip4.netmask[3];
+
+	if(BSP_OK == EEPROM_Write(&bsp.eeprom,EEPROM_CFG_SIZE))
+	{
+		LED_Switch(LED_IDLE);
+		return SCPI_RES_OK;
+	}
+	else
+	{
+		SCPI_ErrorPush(context, SCPI_ERROR_SYSTEM_ERROR);
+		return SCPI_RES_ERR;
+	}
+
 }
 
 /*
@@ -710,7 +744,7 @@ scpi_result_t SCPI_SystemTemperatureUnitQ(scpi_t * context)
 
 scpi_result_t SCPI_SystemHumidityQ(scpi_t * context)
 {
-	double humidity = 0.0;
+	float humidity = 0.0;
 
 	HDC1080_measure_humidity(&hi2c3, &humidity);
 	SCPI_ResultUInt8(context,(uint8_t)humidity);
@@ -735,6 +769,37 @@ scpi_result_t SCPI_SystemHumidityQ(scpi_t * context)
 
 scpi_result_t SCPI_SystemServiceEEPROM(scpi_t * context)
 {
+	int32_t value = 0;
+	uint8_t str[16] = {0};
+
+	if(!SCPI_ParamChoice(context, LAN_state_select, &value, TRUE))
+	{
+		return SCPI_RES_ERR;
+	}
+
+	if(!bsp.security.status)
+	{
+		SCPI_ErrorPush(context, SCPI_ERROR_SERVICE_MODE_SECURE);
+		return SCPI_RES_ERR;
+	}
+
+	if(RESET == value)
+	{
+		if(BSP_OK != EEPROM_Erase())
+		{
+			SCPI_ErrorPush(context, SCPI_ERROR_SYSTEM_ERROR);
+			return SCPI_RES_ERR;
+		}
+	}
+	else if(DEFAULT == value)
+	{
+		if(BSP_OK != EEPROM_Write(&bsp.eeprom, EEPROM_CFG_SIZE))
+		{
+			SCPI_ErrorPush(context, SCPI_ERROR_SYSTEM_ERROR);
+			return SCPI_RES_ERR;
+		}
+	}
+
 
 	return SCPI_RES_OK;
 }
@@ -758,8 +823,14 @@ scpi_result_t SCPI_SystemServiceEEPROM(scpi_t * context)
 
 scpi_result_t SCPI_SystemServiceID(scpi_t * context)
 {
-	uint8_t buffer[256];
+	char buffer[256];
 	size_t len;
+
+	if(!bsp.security.status)
+	{
+		SCPI_ErrorPush(context, SCPI_ERROR_SERVICE_MODE_SECURE);
+		return SCPI_RES_ERR;
+	}
 
 	if(!SCPI_ParamCopyText(context, buffer, SCPI_MANUFACTURER_STRING_LENGTH, len, TRUE))
 	{
@@ -790,5 +861,9 @@ scpi_result_t SCPI_SystemServiceID(scpi_t * context)
 	strncpy(bsp.eeprom.structure.info.software_version,buffer,SCPI_SOFTWAREVERSION_STRING_LENGTH);
 	strncpy(bsp.eeprom.structure.info.serial_number,buffer,SCPI_SERIALNUMBER_STRING_LENGTH);
 
-	// TBD eeprom write
+	if(BSP_OK != EEPROM_Write(&bsp.eeprom, EEPROM_CFG_SIZE))
+	{
+		SCPI_ErrorPush(context, SCPI_ERROR_SYSTEM_ERROR);
+		return SCPI_RES_ERR;
+	}
 }

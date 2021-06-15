@@ -722,14 +722,12 @@ void StartTaskLEDStatus(void *argument)
 	  {
 		  led_color = tmp;
 	  }
-
-	  if(RED == led_color)
+	  switch(led_color)
 	  {
-		  LL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-	  }
-	  else
-	  {
-		  LL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+	  	  case RED: LL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin); break;
+	  	  case GREEN: LL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin); break;
+	  	  case BLUE: LL_GPIO_TogglePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin); break;
+	  	  default: LL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin); break;
 	  }
 
 	  osDelay(pdMS_TO_TICKS(500));
