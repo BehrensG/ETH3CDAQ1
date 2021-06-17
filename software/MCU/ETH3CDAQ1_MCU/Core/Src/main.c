@@ -174,6 +174,7 @@ int main(void)
   DG211_Init();
   DAC8564_Init();
   ADS8681_Init();
+  MODULE_Init();
   MEAS_ZeroOffset();
   /* USER CODE END 2 */
 
@@ -202,7 +203,7 @@ int main(void)
 
   /* Create the thread(s) */
   /* creation of defaultTask */
-  //defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+ // defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* creation of LEDTask */
   LEDTaskHandle = osThreadNew(StartTaskLEDStatus, NULL, &LEDTask_attributes);
@@ -556,9 +557,6 @@ static void MX_GPIO_Init(void)
   LL_GPIO_ResetOutputPin(TRIG_OUT_GPIO_Port, TRIG_OUT_Pin);
 
   /**/
-  LL_GPIO_ResetOutputPin(MCU_DEFAULT_GPIO_Port, MCU_DEFAULT_Pin);
-
-  /**/
   LL_GPIO_ResetOutputPin(EEPROM_WP_GPIO_Port, EEPROM_WP_Pin);
 
   /**/
@@ -607,9 +605,7 @@ static void MX_GPIO_Init(void)
 
   /**/
   GPIO_InitStruct.Pin = MCU_DEFAULT_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
   LL_GPIO_Init(MCU_DEFAULT_GPIO_Port, &GPIO_InitStruct);
 

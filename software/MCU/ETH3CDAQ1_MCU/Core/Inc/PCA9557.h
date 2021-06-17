@@ -5,6 +5,9 @@
  *      Author: grzegorz
  */
 
+#include "ee24.h"
+#include "bsp.h"
+
 #ifndef INC_PCA9557_H_
 #define INC_PCA9557_H_
 
@@ -16,5 +19,8 @@
 #define PCA9557_REG_OUTPUT_PORT             0x01
 #define PCA9557_REG_POLARITY_INVERSION      0x02
 #define PCA9557_REG_CONFIGURATION           0x03
+
+
+BSP_StatusTypeDef PCA9557_Init();
 
 #endif /* INC_PCA9557_H_ */

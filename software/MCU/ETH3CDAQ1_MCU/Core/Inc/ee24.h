@@ -30,9 +30,9 @@
 #include <stdint.h>
 #include "ee24Config.h"
 
-bool ee24_isConnected(uint8_t eeprom_address);
-bool ee24_write(uint8_t eeprom_address, uint16_t address, uint8_t *data, size_t lenInBytes, uint32_t timeout);
-bool ee24_read(uint8_t eeprom_address, uint16_t address, uint8_t *data, size_t lenInBytes, uint32_t timeout);
-bool ee24_eraseChip(uint8_t eeprom_address);
+bool ee24_isConnected(I2C_HandleTypeDef *hi2c, uint8_t eeprom_address);
+bool ee24_write(I2C_HandleTypeDef *hi2c, uint8_t eeprom_address, uint16_t address, uint8_t *data, size_t lenInBytes, uint32_t timeout);
+bool ee24_read(I2C_HandleTypeDef *hi2c, uint8_t eeprom_address, uint16_t address, uint8_t *data, size_t lenInBytes, uint32_t timeout);
+bool ee24_eraseChip(I2C_HandleTypeDef *hi2c, uint8_t eeprom_address);
 
 #endif

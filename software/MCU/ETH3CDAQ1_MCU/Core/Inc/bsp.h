@@ -99,10 +99,7 @@ enum e_led
 
 /*************************************** I2C EEPROM ***************************************/
 
-#define EEPROM_BASE					0xA0
-#define EEPROM_CHANNEL1				0xA2
-#define EEPROM_CHANNEL2				0xA4
-#define EEPROM_CHANNEL3				0xA6
+
 
 /*************************************** MCU ***************************************/
 
