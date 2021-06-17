@@ -11,16 +11,18 @@
 #include "main.h"
 #include "PCA9557.h"
 
-#define EEPROM_BASE					0xA0
-#define EEPROM_CHANNEL1				0xA1
-#define EEPROM_CHANNEL2				0xA2
-#define EEPROM_CHANNEL3				0xA3
+#define MODULE_EEPROM_CHANNEL1		0xA1
+#define MODULE_EEPROM_CHANNEL2		0xA2
+#define MODULE_EEPROM_CHANNEL3		0xA3
+
+#define MODULE_VALID				0x55
 
 
+#define VOLTAGE_ISO_TYPE1           0x5601U
+#define CURRENT_ISO_TYPE1           0x4301U
+#define CURRENT_ISO_TYPE2           0x4302U
 
-#define VOLTAGE_ISO_TYPE1           0x5601
-#define CURRENT_ISO_TYPE1           0x4301
-#define CURRENT_ISO_TYPE2           0x4302
+#define MODULE_MAX_CHANNELS			3
 
 #define MODULE_EEPROM_CFG_SIZE		41
 
@@ -67,8 +69,9 @@ typedef union module_eeprom_union
 
 #pragma pack(pop)
 
-HAL_StatusTypeDef MODULE_Init();
-
+BSP_StatusTypeDef MODULE_Init();
+BSP_StatusTypeDef MODULE_Init_EEPROM(uint8_t channel, uint32_t model);
+BSP_StatusTypeDef MODULE_Erase_EEPROM(uint8_t channel);
 
 
 #endif /* INC_MODULE_H_ */

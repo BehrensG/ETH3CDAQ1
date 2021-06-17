@@ -16,7 +16,7 @@
 #include "scpi/scpi.h"
 #include "bsp.h"
 #include "eeprom.h"
-
+#include "module.h"
 
 extern I2C_HandleTypeDef hi2c3;
 
@@ -768,9 +768,9 @@ scpi_result_t SCPI_SystemHumidityQ(scpi_t * context)
 
 scpi_result_t SCPI_SystemServiceEEPROM(scpi_t * context)
 {
-	int32_t value = 0;
+	int32_t select = 0;
 
-	if(!SCPI_ParamChoice(context, LAN_state_select, &value, TRUE))
+	if(!SCPI_ParamChoice(context, EEPROM_state_select, &select, TRUE))
 	{
 		return SCPI_RES_ERR;
 	}
@@ -781,7 +781,7 @@ scpi_result_t SCPI_SystemServiceEEPROM(scpi_t * context)
 		return SCPI_RES_ERR;
 	}
 
-	if(RESET == value)
+	if(RESET == select)
 	{
 		if(BSP_OK != EEPROM_Erase())
 		{
@@ -789,7 +789,7 @@ scpi_result_t SCPI_SystemServiceEEPROM(scpi_t * context)
 			return SCPI_RES_ERR;
 		}
 	}
-	else if(DEFAULT == value)
+	else if(DEFAULT == select)
 	{
 		if(BSP_OK != EEPROM_Write(&bsp.eeprom, EEPROM_CFG_SIZE))
 		{
@@ -866,4 +866,88 @@ scpi_result_t SCPI_SystemServiceID(scpi_t * context)
 	}
 
 	return SCPI_RES_OK;
+}
+
+scpi_choice_def_t model_select[] =
+{
+    {"VOLTAGE_ISO_TYPE1", VOLTAGE_ISO_TYPE1},
+    {"CURRENT_ISO_TYPE1", CURRENT_ISO_TYPE1},
+    {"CURRENT_ISO_TYPE2", CURRENT_ISO_TYPE2},
+    SCPI_CHOICE_LIST_END
+};
+
+scpi_result_t SCPI_SystemServiceModuleInit(scpi_t * context)
+{
+	    int32_t model = 0;
+	    uint32_t channel = 0;
+
+	    if(!bsp.security.status)
+	    {
+	        SCPI_ErrorPush(context, SCPI_ERROR_SERVICE_MODE_SECURE);
+	        return SCPI_RES_ERR;
+	    }
+
+	    if(!SCPI_ParamUInt32(context, &channel, TRUE))
+   	    {
+	        return SCPI_RES_ERR;
+	    }
+
+
+	    if(!SCPI_ParamChoice(context, model_select, &model, TRUE))
+	    {
+	        return SCPI_RES_ERR;
+	    }
+
+
+	    if(channel > MODULE_MAX_CHANNELS)
+	    {
+	    	SCPI_ErrorPush(context, SCPI_ERROR_INVALID_RANGE);
+	        return SCPI_RES_ERR;
+	    }
+
+	    if(bsp.module[channel].mounted)
+	    {
+	    	MODULE_Init_EEPROM(channel,model);
+	    }
+	    else
+	    {
+	    	//TBD
+	    }
+
+	    return SCPI_RES_OK;
+}
+
+scpi_result_t SCPI_SystemServiceModuleReset(scpi_t * context)
+{
+    int32_t model = 0;
+    uint32_t channel = 0;
+
+    if(!bsp.security.status)
+    {
+        SCPI_ErrorPush(context, SCPI_ERROR_SERVICE_MODE_SECURE);
+        return SCPI_RES_ERR;
+    }
+
+    if(!SCPI_ParamUInt32(context, &channel, TRUE))
+	    {
+        return SCPI_RES_ERR;
+    }
+
+
+    if(channel > MODULE_MAX_CHANNELS)
+    {
+    	SCPI_ErrorPush(context, SCPI_ERROR_INVALID_RANGE);
+        return SCPI_RES_ERR;
+    }
+
+    if(bsp.module[channel].mounted)
+    {
+    	MODULE_Erase_EEPROM(channel);
+    }
+    else
+    {
+    	//TBD
+    }
+
+    return SCPI_RES_OK;
 }

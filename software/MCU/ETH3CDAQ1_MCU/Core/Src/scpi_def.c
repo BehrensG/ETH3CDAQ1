@@ -53,6 +53,7 @@
 #include "scpi_read.h"
 #include "scpi_trigger.h"
 
+
 #include "bsp.h"
 #include "dwt_delay.h"
 #include "ADS8681.h"
@@ -211,6 +212,8 @@ const scpi_command_t scpi_commands[] = {
 	{.pattern = "SYSTem:TEMPerature:UNIT", .callback = SCPI_SystemTemperatureUnit,},
 	{.pattern = "SYSTem:TEMPerature:UNIT?", .callback = SCPI_SystemTemperatureUnitQ,},
 	{.pattern = "SYSTem:HUMIdity?", .callback = SCPI_SystemHumidityQ,},
+	{.pattern = "SYSTem:SERVice:MODule:INIt", .callback = SCPI_SystemServiceModuleInit,},
+	{.pattern = "SYSTem:SERVice:MODule:RESET", .callback = SCPI_SystemServiceModuleReset,},
 
 	{.pattern = "FETCh?", .callback = SCPI_FetchQ,},
 

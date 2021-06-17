@@ -36,7 +36,7 @@ static BSP_StatusTypeDef PCA9557_Read_Output(uint8_t channel, uint8_t* out_data)
 
 }
 
-static BSP_StatusTypeDef PCA9557_EEPROM_WP(uint8_t channel, GPIO_PinState state)
+BSP_StatusTypeDef PCA9557_EEPROM_WP(uint8_t channel, GPIO_PinState state)
 {
 	BSP_StatusTypeDef status = BSP_OK;
 	uint8_t out_data = 0;
@@ -66,6 +66,7 @@ static BSP_StatusTypeDef PCA9557_EEPROM_WP(uint8_t channel, GPIO_PinState state)
 
 			status = HAL_I2C_Master_Transmit(&hi2c4, PCA9557_ADDR_MODULE1 + channel, tx_data, 2, 500);
 
+
 			if(BSP_OK != status)
 			{
 				return status;
@@ -78,6 +79,7 @@ static BSP_StatusTypeDef PCA9557_EEPROM_WP(uint8_t channel, GPIO_PinState state)
 		return status;
 	}
 
+	HAL_Delay(10);
 	return BSP_OK;
 }
 

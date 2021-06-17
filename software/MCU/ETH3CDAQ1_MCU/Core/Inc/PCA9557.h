@@ -7,6 +7,7 @@
 
 #include "ee24.h"
 #include "bsp.h"
+#include "main.h"
 
 #ifndef INC_PCA9557_H_
 #define INC_PCA9557_H_
@@ -22,5 +23,6 @@
 
 
 BSP_StatusTypeDef PCA9557_Init();
+BSP_StatusTypeDef PCA9557_EEPROM_WP(uint8_t channel, GPIO_PinState state);
 
 #endif /* INC_PCA9557_H_ */

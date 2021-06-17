@@ -20,19 +20,24 @@ extern I2C_HandleTypeDef hi2c4;
 BSP_StatusTypeDef EEPROM_Erase()
 {
 
+	EEPROM_WriteProtect(GPIO_PIN_SET);
+
 	if(ee24_isConnected(&hi2c4, EEPROM_ADDRESS))
 	{
 		if(ee24_eraseChip(&hi2c4, EEPROM_ADDRESS))
 		{
+			EEPROM_WriteProtect(GPIO_PIN_RESET);
 			return BSP_OK;
 		}
 		else
 		{
+			EEPROM_WriteProtect(GPIO_PIN_RESET);
 			return BSP_EEPROM_WRITE_ERROR;
 		}
 	}
 	else
 	{
+		EEPROM_WriteProtect(GPIO_PIN_RESET);
 		return BSP_EEPROM_NO_CONNECTION;
 	}
 
