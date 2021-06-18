@@ -15,7 +15,7 @@ char* SAMPLES_TCP_Package(float* meas, uint32_t start, uint32_t size)
 
 	for (uint32_t x = 0; x < size; x++)
 	{
-		ptr += snprintf(tcp_package + ptr, sizeof(tcp_package) - ptr, "%f;", meas[start+x]);
+		ptr += snprintf(tcp_package + ptr, sizeof(tcp_package) - ptr, "%f,", meas[start+x]);
 	}
 
 	return tcp_package;

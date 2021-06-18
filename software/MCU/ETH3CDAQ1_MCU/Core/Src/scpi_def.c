@@ -97,7 +97,7 @@ static scpi_result_t TEST_TSQ(scpi_t * context)
 
 	status=ADS8681_Set_Range(range);
 
-	for (uint8_t x = 0; x < 200; x++)
+	for (uint32_t x = 0; x < 2000; x++)
 	{
 
 		status = MEAS_GetValues(tmp);
@@ -115,16 +115,15 @@ static scpi_result_t TEST_TSQ(scpi_t * context)
 
 	}
 
-	buffer = SAMPLES_TCP_Package(&global_sdram_meas[0], 0, 160);
+	buffer = SAMPLES_TCP_Package(&global_sdram_meas[0], 0, 2000);
 	SCPI_ResultCharacters(context, buffer, TCP_PACKGE_SIZE);
-	memset(buffer,'\0',TCP_PACKGE_SIZE);
-	buffer = SAMPLES_TCP_Package(&global_sdram_meas[1], 0, 160);
+	//memset(buffer,'\0',TCP_PACKGE_SIZE);
+	buffer = SAMPLES_TCP_Package(&global_sdram_meas[1], 0, 2000);
 	SCPI_ResultCharacters(context, buffer, TCP_PACKGE_SIZE);
-	memset(buffer,'\0',TCP_PACKGE_SIZE);
-	buffer = SAMPLES_TCP_Package(&global_sdram_meas[2], 0, 160);
+	//memset(buffer,'\0',TCP_PACKGE_SIZE);
+	buffer = SAMPLES_TCP_Package(&global_sdram_meas[2], 0, 2000);
 	SCPI_ResultCharacters(context, buffer, TCP_PACKGE_SIZE);
-	memset(buffer,'\0',TCP_PACKGE_SIZE);
-
+	//memset(buffer,'\0',TCP_PACKGE_SIZE);
 
 	return SCPI_RES_OK;
 }

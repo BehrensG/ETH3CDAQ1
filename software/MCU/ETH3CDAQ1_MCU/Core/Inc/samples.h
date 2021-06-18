@@ -10,7 +10,7 @@
 
 #include "main.h"
 
-#define TCP_PACKGE_SIZE	1500
+#define TCP_PACKGE_SIZE	20000
 
 char* SAMPLES_TCP_Package(float* meas, uint32_t start, uint32_t size);
 

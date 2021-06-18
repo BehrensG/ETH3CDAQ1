@@ -24,14 +24,15 @@ BSP_StatusTypeDef ADS8681_Raw_Data(uint16_t* raw_data)
 {
 	BSP_StatusTypeDef status;
 
-	uint8_t rx_data[12];
+	//uint8_t rx_data[12];
+	uint32_t rx_data[3];
 
 	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 	ADS8681_Convertion_Time();
 	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 
 	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-	status = HAL_SPI_Receive(&hspi3, rx_data, 12, 1000);
+	status = HAL_SPI_Receive(&hspi3, (uint8_t*)rx_data, 3, 1000);
 	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 
 	if(BSP_OK != status)
@@ -40,9 +41,12 @@ BSP_StatusTypeDef ADS8681_Raw_Data(uint16_t* raw_data)
 	}
 	else
 	{
-		raw_data[0] = (uint16_t)(rx_data[8] << 8) | (uint16_t)rx_data[9];
-		raw_data[1] = (uint16_t)(rx_data[4] << 8) | (uint16_t)rx_data[5];
-		raw_data[2] = (uint16_t)(rx_data[0] << 8) | (uint16_t)rx_data[1];
+		//raw_data[0] = (uint16_t)(rx_data[8] << 8) | (uint16_t)rx_data[9];
+		//raw_data[1] = (uint16_t)(rx_data[4] << 8) | (uint16_t)rx_data[5];
+		//raw_data[2] = (uint16_t)(rx_data[0] << 8) | (uint16_t)rx_data[1];
+		raw_data[0] = (uint16_t)(rx_data[2] >> 16);
+		raw_data[1] = (uint16_t)(rx_data[1] >> 16);
+		raw_data[2] = (uint16_t)(rx_data[0] >> 16);
 
 		return BSP_OK;
 	}
@@ -210,10 +214,10 @@ static BSP_StatusTypeDef ADS8681_Read_LSB(uint8_t* data)
 {
 
 	BSP_StatusTypeDef status;
-	uint8_t rx_data[12] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	uint32_t rx_data[3] = {0x00000000,0x00000000,0x00000000};
 
 	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-	status = HAL_SPI_Receive(&hspi3, rx_data, 12, 1000);
+	status = HAL_SPI_Receive(&hspi3, (uint8_t*)rx_data, 3, 1000);
 	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 
 	if(BSP_OK != status)
@@ -221,9 +225,9 @@ static BSP_StatusTypeDef ADS8681_Read_LSB(uint8_t* data)
 		return status;
 	}
 
-	data[0] = rx_data[0];
-	data[1] = rx_data[4];
-	data[2] = rx_data[8];
+	data[0] = rx_data[0] >> 24;
+	data[1] = rx_data[1] >> 24;
+	data[2] = rx_data[2] >> 24;
 
 	return status;
 }
@@ -232,25 +236,31 @@ static BSP_StatusTypeDef ADS8681_Write_HWORD(uint8_t* cmd, uint8_t* reg, uint16_
 {
 
 	BSP_StatusTypeDef status;
-	uint8_t tx_data[12] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	uint32_t tx_data[3] = {0x00000000,0x00000000,0x00000000};
 
-	tx_data[0] = cmd[0];
-	tx_data[1] = reg[0];
-	tx_data[2] = (uint8_t)(data[0] >> 8);
-	tx_data[3] = (uint8_t)(data[0]&0xFF);
+//	tx_data[0] = cmd[0];
+//	tx_data[1] = reg[0];
+//	tx_data[2] = (uint8_t)(data[0] >> 8);
+//	tx_data[3] = (uint8_t)(data[0]&0xFF);
 
-	tx_data[4] = cmd[1];
-	tx_data[5] = reg[1];
-	tx_data[6] = (uint8_t)(data[1] >> 8);
-	tx_data[7] = (uint8_t)(data[1]&0xFF);
+	tx_data[0] = cmd[0] << 24 | reg[0] << 16 | (data[0] & 0x0000FFFF);
 
-	tx_data[8] = cmd[2];
-	tx_data[9] = reg[2];
-	tx_data[10] = (uint8_t)(data[2] >> 8);
-	tx_data[11] = (uint8_t)(data[2]&0xFF);
+//	tx_data[4] = cmd[1];
+//	tx_data[5] = reg[1];
+//	tx_data[6] = (uint8_t)(data[1] >> 8);
+//	tx_data[7] = (uint8_t)(data[1]&0xFF);
+
+	tx_data[1] = cmd[1] << 24 | reg[1] << 16 | (data[1] & 0x0000FFFF);
+
+//	tx_data[8] = cmd[2];
+//	tx_data[9] = reg[2];
+//	tx_data[10] = (uint8_t)(data[2] >> 8);
+//	tx_data[11] = (uint8_t)(data[2]&0xFF);
+
+	tx_data[2] = cmd[2] << 24 | reg[2] << 16 | (data[2] & 0x0000FFFF);
 
 	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-	status = HAL_SPI_Transmit(&hspi3, tx_data, 12, 1000);
+	status = HAL_SPI_Transmit(&hspi3, (uint8_t*)tx_data, 3, 1000);
 	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 
 	return status;
@@ -260,25 +270,31 @@ static BSP_StatusTypeDef ADS8681_Write_MSB(uint8_t* cmd, uint8_t* reg, uint8_t* 
 {
 
 	BSP_StatusTypeDef status;
-	uint8_t tx_data[12] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	uint32_t tx_data[3] = {0x00000000,0x00000000,0x00000000};
 
 	tx_data[0] = cmd[0];
 	tx_data[1] = reg[0];
 	tx_data[2] = 0x00;
 	tx_data[3] = data[0];
 
-	tx_data[4] = cmd[1];
-	tx_data[5] = reg[1];
-	tx_data[6] = 0x00;
-	tx_data[7] = data[1];
+	tx_data[0] = cmd[0] << 24 | reg[0] << 16 | (data[0] & 0x000000FF);
 
-	tx_data[8] = cmd[2];
-	tx_data[9] = reg[2];
-	tx_data[10] = 0x00;
-	tx_data[11] = data[2];
+//	tx_data[4] = cmd[1];
+//	tx_data[5] = reg[1];
+//	tx_data[6] = 0x00;
+//	tx_data[7] = data[1];
+
+	tx_data[1] = cmd[1] << 24 | reg[1] << 16 | (data[1] & 0x000000FF);
+
+//	tx_data[8] = cmd[2];
+//	tx_data[9] = reg[2];
+//	tx_data[10] = 0x00;
+//	tx_data[11] = data[2];
+
+	tx_data[2] = cmd[2] << 24 | reg[2] << 16 | (data[2] & 0x000000FF);
 
 	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-	status = HAL_SPI_Transmit(&hspi3, tx_data, 12, 1000);
+	status = HAL_SPI_Transmit(&hspi3, (uint8_t*)tx_data, 3, 1000);
 	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 
 	return status;
@@ -288,25 +304,31 @@ static BSP_StatusTypeDef ADS8681_Write_LSB(uint8_t* cmd, uint8_t* reg, uint8_t* 
 {
 
 	BSP_StatusTypeDef status;
-	uint8_t tx_data[12] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	uint32_t tx_data[3] = {0x00000000,0x00000000,0x00000000};
 
-	tx_data[0] = cmd[0];
-	tx_data[1] = reg[0];
-	tx_data[2] = 0x00;
-	tx_data[3] = data[0];
+//	tx_data[0] = cmd[0];
+//	tx_data[1] = reg[0];
+//	tx_data[2] = 0x00;
+//	tx_data[3] = data[0];
 
-	tx_data[4] = cmd[1];
-	tx_data[5] = reg[1];
-	tx_data[6] = 0x00;
-	tx_data[7] = data[1];
+	tx_data[0] = cmd[0] << 24 | reg[0] << 16 | (data[0] & 0x000000FF);
 
-	tx_data[8] = cmd[2];
-	tx_data[9] = reg[2];
-	tx_data[10] = 0x00;
-	tx_data[11] = data[2];
+//	tx_data[4] = cmd[1];
+//	tx_data[5] = reg[1];
+//	tx_data[6] = 0x00;
+//	tx_data[7] = data[1];
+
+	tx_data[1] = cmd[1] << 24 | reg[1] << 16 | (data[1] & 0x000000FF);
+
+//	tx_data[8] = cmd[2];
+//	tx_data[9] = reg[2];
+//	tx_data[10] = 0x00;
+//	tx_data[11] = data[2];
+
+	tx_data[2] = cmd[2] << 24 | reg[2] << 16 | (data[2] & 0x000000FF);
 
 	LL_GPIO_ResetOutputPin(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
-	status = HAL_SPI_Transmit(&hspi3, tx_data, 12, 1000);
+	status = HAL_SPI_Transmit(&hspi3, (uint8_t*)tx_data, 3, 1000);
 	LL_GPIO_WriteOutputPort(MCU_nCS_GPIO_Port, MCU_nCS_Pin);
 
 	return status;
