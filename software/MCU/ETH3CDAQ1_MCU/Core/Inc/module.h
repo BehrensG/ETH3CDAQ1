@@ -11,9 +11,9 @@
 #include "main.h"
 #include "PCA9557.h"
 
-#define MODULE_EEPROM_CHANNEL1		0xA1
-#define MODULE_EEPROM_CHANNEL2		0xA2
-#define MODULE_EEPROM_CHANNEL3		0xA3
+#define MODULE_EEPROM_CHANNEL1		0xA2
+#define MODULE_EEPROM_CHANNEL2		0xA4
+#define MODULE_EEPROM_CHANNEL3		0xA6
 
 #define MODULE_VALID				0x55
 
@@ -25,6 +25,11 @@
 #define MODULE_MAX_CHANNELS			3
 
 #define MODULE_EEPROM_CFG_SIZE		41
+
+#define MODULE_GAIN_1		0x20
+#define MODULE_GAIN_10		0x10
+#define MODULE_GAIN_100		0x08
+#define MODULE_AUTOZER		0x04
 
 #pragma pack(push, 1)
 
@@ -72,6 +77,7 @@ typedef union module_eeprom_union
 BSP_StatusTypeDef MODULE_Init();
 BSP_StatusTypeDef MODULE_Init_EEPROM(uint8_t channel, uint32_t model);
 BSP_StatusTypeDef MODULE_Erase_EEPROM(uint8_t channel);
-
+BSP_StatusTypeDef MODULE_Write_EEPROM(uint8_t channel);
+BSP_StatusTypeDef MODULE_Read_EEPROM(uint8_t channel);
 
 #endif /* INC_MODULE_H_ */

@@ -14,8 +14,30 @@ extern I2C_HandleTypeDef hi2c4;
 
 module_eeprom_union_t module_eeprom[3];
 
-static HAL_StatusTypeDef MODULE_Read_EEPROM()
+BSP_StatusTypeDef MODULE_Write_EEPROM(uint8_t channel)
 {
+	BSP_StatusTypeDef status;
+
+
+	if(bsp.module[channel].mounted)
+	{
+		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_SET);
+		status = ee24_write(&hi2c4, (MODULE_EEPROM_CHANNEL1 + 2*channel), 0, &module_eeprom[channel].bytes, MODULE_EEPROM_CFG_SIZE, 500);
+		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_RESET);
+	}
+
+}
+
+BSP_StatusTypeDef MODULE_Read_EEPROM(uint8_t channel)
+{
+	BSP_StatusTypeDef status;
+
+
+	if(bsp.module[channel].mounted)
+	{
+		status = ee24_read(&hi2c4, (MODULE_EEPROM_CHANNEL1 + 2*channel), 0, &module_eeprom[channel].bytes, MODULE_EEPROM_CFG_SIZE, 500);
+
+	}
 
 }
 
@@ -57,6 +79,19 @@ BSP_StatusTypeDef MODULE_Init()
 	MODULE_Detect();
 	status = PCA9557_Init();
 
+
+	for (uint8_t channel = 0; channel < MODULE_MAX_CHANNELS; channel++ )
+	{
+		status = MODULE_Init_EEPROM(channel, CURRENT_ISO_TYPE1);
+	}
+
+
+	for (uint8_t channel = 0; channel < MODULE_MAX_CHANNELS; channel++ )
+	{
+		status = MODULE_Read_EEPROM(channel);
+	}
+
+
 	return status;
 
 }
@@ -72,7 +107,7 @@ BSP_StatusTypeDef MODULE_Init_EEPROM(uint8_t channel, uint32_t model)
 		module_eeprom[channel].structure.model = model;
 
 		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_SET);
-		status = ee24_write(&hi2c4, (MODULE_EEPROM_CHANNEL1 + channel), 0, module_eeprom[channel].bytes, MODULE_EEPROM_CFG_SIZE, 500);
+		status = ee24_write(&hi2c4, (MODULE_EEPROM_CHANNEL1 + 2*channel), 0, &module_eeprom[channel].bytes, MODULE_EEPROM_CFG_SIZE, 500);
 		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_RESET);
 	}
 
@@ -87,7 +122,7 @@ BSP_StatusTypeDef MODULE_Erase_EEPROM(uint8_t channel)
 	if(bsp.module[channel].mounted)
 	{
 		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_SET);
-		ee24_eraseChip(&hi2c4, (MODULE_EEPROM_CHANNEL1 + channel));
+		ee24_eraseChip(&hi2c4, (MODULE_EEPROM_CHANNEL1 + 2*channel));
 		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_RESET);
 	}
 

@@ -164,13 +164,31 @@ static scpi_result_t SCPI_Rst(scpi_t * context)
     return SCPI_RES_OK;
 }
 
+static scpi_result_t SCPI_IdnQ(scpi_t * context)
+{
+	int32_t ptr = 0;
+	static char info[46] = {'\0'};
+
+    for (uint8_t i = 0; i < 4; i++)
+    {
+        if (context->idn[i])
+        {
+        	ptr += snprintf(info + ptr, sizeof(info) - ptr, "%s,", context->idn[i] );
+        }
+        else{}
+    }
+
+    SCPI_ResultCharacters(context, info, 45);
+    return SCPI_RES_OK;
+}
+
 const scpi_command_t scpi_commands[] = {
     /* IEEE Mandated Commands (SCPI std V1999.0 4.1.1) */
     { .pattern = "*CLS", .callback = SCPI_CoreCls,},
     { .pattern = "*ESE", .callback = SCPI_CoreEse,},
     { .pattern = "*ESE?", .callback = SCPI_CoreEseQ,},
     { .pattern = "*ESR?", .callback = SCPI_CoreEsrQ,},
-    { .pattern = "*IDN?", .callback = SCPI_CoreIdnQ,},
+    { .pattern = "*IDN?", .callback = SCPI_IdnQ,},
     { .pattern = "*OPC", .callback = SCPI_CoreOpc,},
     { .pattern = "*OPC?", .callback = SCPI_CoreOpcQ,},
     { .pattern = "*RST", .callback = SCPI_Rst,},

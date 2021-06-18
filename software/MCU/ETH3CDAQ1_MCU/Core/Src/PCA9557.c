@@ -9,6 +9,7 @@
 #include "bsp.h"
 #include "PCA9557.h"
 #include "led.h"
+#include "module.h"
 
 extern I2C_HandleTypeDef hi2c4;
 
@@ -21,14 +22,14 @@ static BSP_StatusTypeDef PCA9557_Read_Output(uint8_t channel, uint8_t* out_data)
 	if(bsp.module[channel].mounted)
 	{
 
-		status = HAL_I2C_Master_Transmit(&hi2c4, (PCA9557_ADDR_MODULE1 + channel), &tx_data, 1, 500);
+		status = HAL_I2C_Master_Transmit(&hi2c4, (PCA9557_ADDR_MODULE1 + 2*channel), &tx_data, 1, 500);
 
 		if(BSP_OK != status)
 		{
 			return status;
 		}
 
-		status = HAL_I2C_Master_Receive(&hi2c4, (PCA9557_ADDR_MODULE1 + channel), out_data, 1, 500);
+		status = HAL_I2C_Master_Receive(&hi2c4, (PCA9557_ADDR_MODULE1 + 2*channel), out_data, 1, 500);
 
 	}
 
@@ -64,7 +65,7 @@ BSP_StatusTypeDef PCA9557_EEPROM_WP(uint8_t channel, GPIO_PinState state)
 		if(bsp.module[channel].mounted)
 		{
 
-			status = HAL_I2C_Master_Transmit(&hi2c4, PCA9557_ADDR_MODULE1 + channel, tx_data, 2, 500);
+			status = HAL_I2C_Master_Transmit(&hi2c4, (PCA9557_ADDR_MODULE1 + 2*channel), tx_data, 2, 500);
 
 
 			if(BSP_OK != status)
@@ -88,7 +89,7 @@ BSP_StatusTypeDef PCA9557_Init()
 	BSP_StatusTypeDef status = BSP_OK;
 	uint8_t tx_data[2];
 
-	for (uint8_t x = 0 ; x < 3; x++)
+	for (uint8_t x = 0 ; x < MODULE_MAX_CHANNELS; x++)
 	{
 		if(bsp.module[x].mounted)
 		{
@@ -115,4 +116,32 @@ BSP_StatusTypeDef PCA9557_Init()
 	}
 
 	return BSP_OK;
+}
+
+BSP_StatusTypeDef PCA9557_Gain_Select(uint8_t channel, uint8_t gain)
+{
+	BSP_StatusTypeDef status = BSP_OK;
+	uint8_t tx_data[2];
+	uint8_t out_data = 0;
+	uint8_t tmp = 0;
+
+	status = PCA9557_Read_Output(channel, &out_data);
+	tmp = out_data & 0x06;
+
+	tx_data[0] = PCA9557_REG_OUTPUT_PORT;
+
+	for (uint8_t x = 0 ; x < MODULE_MAX_CHANNELS; x++)
+	{
+		if(bsp.module[x].mounted)
+		{
+
+
+			tx_data[1] = gain | tmp;
+
+			status = HAL_I2C_Master_Transmit(&hi2c4, (PCA9557_ADDR_MODULE1 + 2*x), tx_data, 2, 500);
+
+		}
+	}
+
+	return status;
 }

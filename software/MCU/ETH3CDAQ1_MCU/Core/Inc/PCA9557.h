@@ -24,5 +24,6 @@
 
 BSP_StatusTypeDef PCA9557_Init();
 BSP_StatusTypeDef PCA9557_EEPROM_WP(uint8_t channel, GPIO_PinState state);
+BSP_StatusTypeDef PCA9557_Gain_Select(uint8_t channel, uint8_t gain);
 
 #endif /* INC_PCA9557_H_ */

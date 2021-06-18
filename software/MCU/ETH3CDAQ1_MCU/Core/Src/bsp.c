@@ -134,6 +134,7 @@ BSP_StatusTypeDef BSP_Init()
 			{
 				BSP_Init_DefualtEEPROM();
 				eeprom_status = EEPROM_Write(&bsp.eeprom, EEPROM_CFG_SIZE);
+				eeprom_status = EEPROM_Read(&bsp.eeprom, EEPROM_CFG_SIZE);
 				if(BSP_OK == eeprom_status)
 				{
 					BSP_Init_IP4Current();

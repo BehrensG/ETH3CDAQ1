@@ -33,6 +33,7 @@
 #include "DAC8564.h"
 #include "measure.h"
 #include "sdram.h"
+#include "module.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
