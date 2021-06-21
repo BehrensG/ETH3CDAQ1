@@ -225,6 +225,7 @@ typedef struct bsp_trigger
 	uint8_t out_slope;
 	uint32_t delay;
 	uint8_t source;
+	uint32_t count;
 
 }bsp_trigger_t;
 
@@ -278,10 +279,10 @@ struct _bsp
 
 enum trigger_enum
 {
-	IMM = 1,
-	EXT = 2,
-	BUS = 3,
-	OUT = 4
+	TRG_IMM = 1,
+	TRG_EXT = 2,
+	TRG_BUS = 3,
+	TRG_OUT = 4
 };
 
 enum trigger_slope_enum

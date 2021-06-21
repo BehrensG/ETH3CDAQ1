@@ -16,5 +16,6 @@
 
 BSP_StatusTypeDef MEAS_GetValues(float values[]);
 BSP_StatusTypeDef MEAS_ZeroOffset();
+BSP_StatusTypeDef MEAS_MeasToSDRAM(uint32_t samples);
 
 #endif /* INC_MEASURE_H_ */

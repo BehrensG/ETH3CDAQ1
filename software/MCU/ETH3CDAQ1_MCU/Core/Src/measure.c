@@ -10,7 +10,7 @@
 #include "math.h"
 
 extern double ADS8681_LSB[5];
-
+extern float global_sdram_meas[CHANNELS][SDRAM_CHx_SAMPLES_MAX];
 
 
 BSP_StatusTypeDef MEAS_ZeroOffset()
@@ -78,3 +78,27 @@ BSP_StatusTypeDef MEAS_GetValues(float values[])
 	return status;
 }
 
+BSP_StatusTypeDef MEAS_MeasToSDRAM(uint32_t samples)
+{
+	BSP_StatusTypeDef status;
+	float meas[3]={0,0,0};
+
+	for (uint32_t x = 0; x < samples; x++)
+	{
+
+		status = MEAS_GetValues(meas);
+		if(BSP_OK == status)
+		{
+			global_sdram_meas[0][x] = meas[0];
+			global_sdram_meas[1][x] = meas[1];
+			global_sdram_meas[2][x] = meas[2];
+
+		}
+		else
+		{
+			break;
+		}
+
+	}
+	return status;
+}

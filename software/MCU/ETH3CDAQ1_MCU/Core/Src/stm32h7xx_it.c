@@ -176,7 +176,7 @@ void EXTI9_5_IRQHandler(void)
   {
     LL_EXTI_ClearFlag_0_31(LL_EXTI_LINE_6);
     /* USER CODE BEGIN LL_EXTI_LINE_6 */
-    if(EXT == bsp.trigger.source)
+    if(TRG_EXT == bsp.trigger.source)
     	{
     		osMessageQueuePut(QueueTriggerHandle, &irq_trigger_signal, NULL, 0);
     	}

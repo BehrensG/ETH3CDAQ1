@@ -34,7 +34,8 @@ static void BSP_Init_Common()
 	bsp.trigger.delay = 0;
 	bsp.trigger.in_slope = POS;
 	bsp.trigger.out_slope = POS;
-	bsp.trigger.source = IMM;
+	bsp.trigger.source = TRG_IMM;
+	bsp.trigger.count = 0;
 
 }
 
