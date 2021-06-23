@@ -907,11 +907,12 @@ scpi_result_t SCPI_SystemServiceModuleInit(scpi_t * context)
 
 	    if(bsp.module[channel].mounted)
 	    {
-	    	MODULE_Init_EEPROM(channel,model);
+	    	MODULE_Init_EEPROM(channel, model);
 	    }
 	    else
 	    {
-	    	//TBD
+	    	SCPI_ErrorPush(context, SCPI_ERROR_INVALID_RANGE);
+	        return SCPI_RES_ERR;
 	    }
 
 	    return SCPI_RES_OK;
@@ -929,7 +930,7 @@ scpi_result_t SCPI_SystemServiceModuleReset(scpi_t * context)
     }
 
     if(!SCPI_ParamUInt32(context, &channel, TRUE))
-	    {
+	{
         return SCPI_RES_ERR;
     }
 
@@ -946,7 +947,8 @@ scpi_result_t SCPI_SystemServiceModuleReset(scpi_t * context)
     }
     else
     {
-    	//TBD
+    	SCPI_ErrorPush(context, SCPI_ERROR_INVALID_RANGE);
+        return SCPI_RES_ERR;
     }
 
     return SCPI_RES_OK;

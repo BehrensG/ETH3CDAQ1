@@ -21,11 +21,12 @@ BSP_StatusTypeDef MODULE_Write_EEPROM(uint8_t channel)
 
 	if(bsp.module[channel].mounted)
 	{
-		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_SET);
-		status = ee24_write((MODULE_EEPROM_CHANNEL1 + 2*channel), 0, &module_eeprom[channel].bytes, MODULE_EEPROM_CFG_SIZE);
 		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_RESET);
+		(ee24_write((MODULE_EEPROM_CHANNEL1 + 2*channel), 0, &module_eeprom[channel].bytes, MODULE_EEPROM_CFG_SIZE)) ? (status = BSP_OK) : (status = BSP_EEPROM_WRITE_ERROR);;
+		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_SET);
 	}
 
+	return status;
 }
 
 BSP_StatusTypeDef MODULE_Read_EEPROM(uint8_t channel)
@@ -35,17 +36,19 @@ BSP_StatusTypeDef MODULE_Read_EEPROM(uint8_t channel)
 
 	if(bsp.module[channel].mounted)
 	{
-		status = ee24_read((MODULE_EEPROM_CHANNEL1 + 2*channel), 0, &module_eeprom[channel].bytes, MODULE_EEPROM_CFG_SIZE);
+		(ee24_read((MODULE_EEPROM_CHANNEL1 + 2*channel), 0, &module_eeprom[channel].bytes, MODULE_EEPROM_CFG_SIZE)) ? (status = BSP_OK) : (status = BSP_EEPROM_WRITE_ERROR);
 
 	}
 
+	return status;
 }
 
 static void MODULE_Detect()
 {
-	(ee24_isConnected(MODULE_EEPROM_CHANNEL1)) ? (bsp.module[0].mounted = 1) : (bsp.module[0].mounted = 0);
-	(ee24_isConnected(MODULE_EEPROM_CHANNEL2)) ? (bsp.module[1].mounted = 1) : (bsp.module[1].mounted = 0);
-	(ee24_isConnected(MODULE_EEPROM_CHANNEL3)) ? (bsp.module[2].mounted = 1) : (bsp.module[2].mounted = 0);
+	bsp.module[0].mounted = ee24_isConnected(MODULE_EEPROM_CHANNEL1);
+	bsp.module[1].mounted = ee24_isConnected(MODULE_EEPROM_CHANNEL2);
+	bsp.module[2].mounted = ee24_isConnected(MODULE_EEPROM_CHANNEL3);
+
 }
 
 BSP_StatusTypeDef MODULE_Init()
@@ -79,18 +82,10 @@ BSP_StatusTypeDef MODULE_Init()
 	MODULE_Detect();
 	status = PCA9557_Init();
 
-
-	for (uint8_t channel = 0; channel < MODULE_MAX_CHANNELS; channel++ )
-	{
-		status = MODULE_Init_EEPROM(channel, CURRENT_ISO_TYPE1);
-	}
-
-
 	for (uint8_t channel = 0; channel < MODULE_MAX_CHANNELS; channel++ )
 	{
 		status = MODULE_Read_EEPROM(channel);
 	}
-
 
 	return status;
 
@@ -106,9 +101,9 @@ BSP_StatusTypeDef MODULE_Init_EEPROM(uint8_t channel, uint32_t model)
 		module_eeprom[channel].structure.serial_number = 0;
 		module_eeprom[channel].structure.model = model;
 
-		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_SET);
-		status = ee24_write((MODULE_EEPROM_CHANNEL1 + 2*channel), 0, &module_eeprom[channel].bytes, MODULE_EEPROM_CFG_SIZE);
 		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_RESET);
+		(ee24_write((MODULE_EEPROM_CHANNEL1 + 2*channel), 0, &module_eeprom[channel].bytes, MODULE_EEPROM_CFG_SIZE)) ? (status = BSP_OK) : (status = BSP_EEPROM_WRITE_ERROR);
+		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_SET);
 	}
 
 	return BSP_OK;
@@ -121,11 +116,11 @@ BSP_StatusTypeDef MODULE_Erase_EEPROM(uint8_t channel)
 
 	if(bsp.module[channel].mounted)
 	{
-		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_SET);
-		ee24_eraseChip((MODULE_EEPROM_CHANNEL1 + 2*channel));
 		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_RESET);
+		(ee24_eraseChip((MODULE_EEPROM_CHANNEL1 + 2*channel))) ? (status = BSP_OK) : (status = BSP_EEPROM_WRITE_ERROR);
+		status = PCA9557_EEPROM_WP(channel, GPIO_PIN_SET);
 	}
 
-	return BSP_OK;
+	return status;
 
 }

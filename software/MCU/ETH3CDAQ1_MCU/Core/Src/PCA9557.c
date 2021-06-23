@@ -104,7 +104,7 @@ BSP_StatusTypeDef PCA9557_Init()
 			}
 
 			tx_data[0] = PCA9557_REG_OUTPUT_PORT;
-			tx_data[1] = 0x00;
+			tx_data[1] = 0x02;
 
 			status = HAL_I2C_Master_Transmit(&hi2c4, (PCA9557_ADDR_MODULE1 + 2*x), tx_data, 2, 500);
 

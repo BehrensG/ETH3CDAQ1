@@ -34,6 +34,7 @@
 #include "measure.h"
 #include "sdram.h"
 #include "module.h"
+#include "scpi_server.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -222,6 +223,7 @@ int main(void)
 
   /* Start scheduler */
   osKernelStart();
+
 
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */

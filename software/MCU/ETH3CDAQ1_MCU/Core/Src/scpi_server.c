@@ -58,6 +58,7 @@
 #include "queue.h"
 #include "led.h"
 #include "bsp.h"
+#include "scpi_server.h"
 
 extern osThreadId_t LEDStatusHandle;
 
