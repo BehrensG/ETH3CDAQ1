@@ -26,7 +26,7 @@
 
 #define MODULE_EEPROM_CFG_SIZE		41
 
-#define MODULE_GAIN_1		0x20
+#define nMODULE_GAIN_1		0x20
 #define MODULE_GAIN_10		0x10
 #define MODULE_GAIN_100		0x08
 #define MODULE_AUTOZER		0x04

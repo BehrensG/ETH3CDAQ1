@@ -61,6 +61,8 @@
 #include "74HC595.h"
 #include "measure.h"
 #include "samples.h"
+#include "module.h"
+#include "PCA9557.h"
 
 extern I2C_HandleTypeDef hi2c4;
 extern SPI_HandleTypeDef hspi5;
@@ -204,14 +206,14 @@ scpi_choice_def_t boolean_select[] =
 static scpi_result_t TEST_TSQ(scpi_t * context)
 {
 	BSP_StatusTypeDef status;
-	uint8_t matrix[3] = {CHx_M_DAC, CHx_M_DAC, CHx_M_DAC};
+	uint8_t matrix[3] = {CHx_M_IN, CHx_M_DAC, CHx_M_DAC};
 	float tmp[3]={0,0,0};
 	uint8_t range[3] = {0,0,0};
 	char* buffer;
 	buffer = (char*)malloc(TCP_PACKGE_SIZE);
 
-
-	DAC8564_Set_Voltage(DAC8564_DAC_A,4.0);
+	PCA9557_Gain_Select(0, MODULE_GAIN_100);
+	DAC8564_Set_Voltage(DAC8564_DAC_A,0.0);
 	DAC8564_Set_Voltage(DAC8564_DAC_B,5.0);
 	DAC8564_Set_Voltage(DAC8564_DAC_C,6.0);
 

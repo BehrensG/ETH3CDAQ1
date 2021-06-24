@@ -126,7 +126,8 @@ BSP_StatusTypeDef PCA9557_Gain_Select(uint8_t channel, uint8_t gain)
 	uint8_t tmp = 0;
 
 	status = PCA9557_Read_Output(channel, &out_data);
-	tmp = out_data & 0x06;
+
+	tmp = out_data & 0x02;
 
 	tx_data[0] = PCA9557_REG_OUTPUT_PORT;
 
@@ -135,8 +136,15 @@ BSP_StatusTypeDef PCA9557_Gain_Select(uint8_t channel, uint8_t gain)
 		if(bsp.module[x].mounted)
 		{
 
+			if(nMODULE_GAIN_1 == gain)
+			{
+				tx_data[1] = tmp;
+			}
+			else
+			{
+				tx_data[1] = gain | tmp | nMODULE_GAIN_1;
+			}
 
-			tx_data[1] = gain | tmp;
 
 			status = HAL_I2C_Master_Transmit(&hi2c4, (PCA9557_ADDR_MODULE1 + 2*x), tx_data, 2, 500);
 
