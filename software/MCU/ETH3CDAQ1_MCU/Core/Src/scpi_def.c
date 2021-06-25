@@ -82,7 +82,6 @@ size_t SCPI_GetChannels(scpi_t* context, scpi_channel_value_t array[])
 
     /* get channel list */
     if (SCPI_Parameter(context, &channel_list_param, TRUE)) {
-        scpi_expr_result_t res;
         scpi_bool_t is_range;
         int32_t values_from[MAXDIM];
         int32_t values_to[MAXDIM];
@@ -356,6 +355,7 @@ const scpi_command_t scpi_commands[] = {
 	{.pattern = "SYSTem:HUMIdity?", .callback = SCPI_SystemHumidityQ,},
 	{.pattern = "SYSTem:SERVice:MODule:INIt", .callback = SCPI_SystemServiceModuleInit,},
 	{.pattern = "SYSTem:SERVice:MODule:RESET", .callback = SCPI_SystemServiceModuleReset,},
+	{.pattern = "SYSTem:MODule?", .callback = SCPI_SystemModuleQ,},
 
 	{.pattern = "FETCh?", .callback = SCPI_FetchQ,},
 

@@ -953,3 +953,35 @@ scpi_result_t SCPI_SystemServiceModuleReset(scpi_t * context)
 
     return SCPI_RES_OK;
 }
+
+scpi_result_t SCPI_SystemModuleQ(scpi_t * context)
+{
+	char buffer[10] = {'\0'};
+    uint32_t channel = 0;
+
+
+    if(!SCPI_ParamUInt32(context, &channel, TRUE))
+	{
+        return SCPI_RES_ERR;
+    }
+
+
+    if(channel > MODULE_MAX_CHANNELS)
+    {
+    	SCPI_ErrorPush(context, SCPI_ERROR_INVALID_RANGE);
+        return SCPI_RES_ERR;
+    }
+
+    if(bsp.module[channel].mounted)
+    {
+        sprintf(buffer, "%02x,%04x", module_eeprom.structure.model, module_eeprom.structure.serial_number);
+        SCPI_ResultCharacters(context, buffer, 10);
+    }
+    else
+    {
+    	SCPI_ErrorPush(context, SCPI_ERROR_INVALID_RANGE);
+        return SCPI_RES_ERR;
+    }
+
+    return SCPI_RES_OK;
+}
